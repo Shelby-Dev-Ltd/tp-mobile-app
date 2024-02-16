@@ -1,30 +1,9 @@
+// {
+//   "extends": "expo/tsconfig.base",
+//   "compilerOptions": {
+//     "strict": true
+//   }
+// }
 {
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "jsx": "react",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
-  },
-  "exclude": [
-    "app/__tests__/"
-  ],
-  "extends": "expo/tsconfig.base"
+  "extends": "@tsconfig/react-native/tsconfig.json"
 }

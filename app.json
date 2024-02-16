@@ -1,16 +1,5 @@
 {
   "expo": {
-    "plugins": [
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "./src/assets/fonts/Roboto-Medium.ttf",
-            "./src/assets/fonts/Roboto-Regular.ttf"
-          ]
-        }
-      ]
-    ],
     "name": "tp-mobile-app",
     "slug": "tp-mobile-app",
     "version": "1.0.0",

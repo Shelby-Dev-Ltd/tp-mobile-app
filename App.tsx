@@ -1,43 +1,20 @@
-import React, { useCallback } from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
-import Header from './src/components/layouts/header';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
 
-SplashScreen.preventAutoHideAsync();
-
-const App: React.FC = () => {
-  const [fontsLoaded, fontError] = useFonts({
-    'Roboto-Medium': require('./src/assets/fonts/Roboto-Medium.ttf')
-  })
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
-
+export default function App() {
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <Header />
-      <Text>Traffic Pulse </Text>
-      < StatusBar />
+    <View style={styles.container}>
+      <Text>Open up App.tsx to start working on your app!</Text>
+      <StatusBar style="auto" />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
-
-export default App;
