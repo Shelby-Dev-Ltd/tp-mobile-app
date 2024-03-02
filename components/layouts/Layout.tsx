@@ -10,13 +10,14 @@ type layoutProps = {
     content: React.JSX.Element,
     title: string,
     navigation: any,
+    openedPage: string,
 }
 
-const Layout = ({ content, title, navigation }: layoutProps) => {
+const Layout = ({ content, title, navigation, openedPage }: layoutProps) => {
     return (
         <View style={globalStyles.container}>
             <Content content={content} />
-            <MenuBar navigation={navigation} />
+            <MenuBar openedPage={openedPage} navigation={navigation} />
         </View>
     );
 }

@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import Layout from "../layouts/Layout";
 import { screenProps } from "../../types/screenprops";
 
-export default function RecordScreen({ title, navigation }: screenProps) {
+export default function RecordScreen({ title, navigation, openedPage }: screenProps) {
     const content =
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>{title}</Text>
@@ -10,6 +10,6 @@ export default function RecordScreen({ title, navigation }: screenProps) {
 
 
     return (
-        <Layout content={content} title={title} navigation={navigation} />
+        <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} />
     );
 }
