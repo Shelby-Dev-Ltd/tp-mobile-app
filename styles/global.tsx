@@ -21,7 +21,7 @@ export const globalStyles = StyleSheet.create({
     menuBarStyle: {
         height: 60,
         flexDirection: 'row',
-        backgroundColor: '#ededed',
+        backgroundColor: '#2F80ED',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 10,
@@ -34,14 +34,19 @@ export const globalStyles = StyleSheet.create({
         paddingRight: 10,
     },
     box: {
-        backgroundColor: '#bfbfbf',
+        backgroundColor: '#ffffff',
         width: 50,
         height: 50,
+        borderRadius: 50,
+        overflow: 'hidden',
     },
     bigBox: {
-        backgroundColor: '#bfbfbf',
+        backgroundColor: '#ffffff',
         width: 70,
         height: 70,
         marginTop: -20,
+        padding: 0,
+        borderRadius: 50,
+        overflow: 'hidden',
     },
 });
