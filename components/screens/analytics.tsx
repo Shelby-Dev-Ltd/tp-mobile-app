@@ -6,6 +6,7 @@ import { screenProps } from "../../types/screenprops";
 import { Colors, Image, LoaderScreen } from "react-native-ui-lib";
 import { useEffect, useState } from "react";
 import { BezierLineChart } from "../charts/BezierLineChart";
+import { imagePlaceholders } from "../../config/placeholders";
 
 export default function AnalyticsScreen({ title, navigation, openedPage }: screenProps) {
     const [isLoadingContent, setIsLoadingContent] = useState<boolean>(true)
@@ -15,10 +16,11 @@ export default function AnalyticsScreen({ title, navigation, openedPage }: scree
     }, [])
 
     const content =
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
+        <View style={{ flex: 1, alignItems: 'baseline', justifyContent: 'flex-start' }}>
             <View style={{ flex: 0.5 }}>
-                <Image cover source={{ uri: 'https://raw.githubusercontent.com/wix/react-native-ui-lib/master/demo/src/assets/images/card-example.jpg' }} />
+                <Image cover source={{ uri: imagePlaceholders.analytics.trafficThumbnail }} />
                 <BezierLineChart />
+
             </View>
         </View>
 
