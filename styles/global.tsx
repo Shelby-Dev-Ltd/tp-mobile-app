@@ -30,8 +30,7 @@ export const globalStyles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        paddingLeft: 10,
-        paddingRight: 10,
+        padding: 10,
     },
     box: {
         backgroundColor: '#ffffff',
