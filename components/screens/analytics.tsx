@@ -20,7 +20,6 @@ export default function AnalyticsScreen({ title, navigation, openedPage }: scree
             <View style={{ flex: 0.5 }}>
                 <Image cover source={{ uri: imagePlaceholders.analytics.trafficThumbnail }} />
                 <BezierLineChart />
-
             </View>
         </View>
 
