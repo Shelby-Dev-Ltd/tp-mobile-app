@@ -7,8 +7,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { useNavigation } from '@react-navigation/native';
 
 import { theme } from '../../constants/theme';
+import  Register from '../screens/register';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const AnimatedFeather = Animated.createAnimatedComponent(Feather);
@@ -17,8 +19,6 @@ type ButtonProps = {
   flatListRef: RefObject<FlatList>;
   flatListIndex: SharedValue<number>;
   dataLength: number;
-  onPress?: () => void;
-  title?: string;
 };
 
 export function Button({
@@ -26,6 +26,8 @@ export function Button({
   flatListIndex,
   flatListRef,
 }: ButtonProps) {
+  const navigation = useNavigation(); // Get navigation object
+
   const buttonAnimationStyle = useAnimatedStyle(() => {
     const isLastScreen = flatListIndex.value === dataLength - 1;
     return {
@@ -56,7 +58,9 @@ export function Button({
 
   const handleNextScreen = () => {
     const isLastScreen = flatListIndex.value === dataLength - 1;
-    if (!isLastScreen) {
+    if (isLastScreen) {
+      navigation.navigate('Register'); // Navigates to the register page
+    } else {
       flatListRef.current?.scrollToIndex({ index: flatListIndex.value + 1 });
     }
   };
