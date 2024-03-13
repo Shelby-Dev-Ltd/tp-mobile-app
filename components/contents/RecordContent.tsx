@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { Alert } from 'react-native';
 import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
 
-
-
-export const RecordContent = () => {
+export default function RecordContent(){
     let camera: Camera
     const [startCamera, setStartCamera] = useState(false)
 
@@ -21,13 +19,18 @@ export const RecordContent = () => {
 
     return (
         <>
-            startCamera ? (
-            <Camera
-                style={{ flex: 1, width: "100%" }}
-                ref={(r) => {
-                    camera = r as Camera
-                }}
-            ></Camera>
+            {startCamera ? (
+            <View
+                style={{flex: 1, width: '100%', height: '100%'}}
+            >
+                <Camera
+                    style={{ flex: 1, width: "100%", height: "100%" }}
+                    ref={(r) => {
+                        camera = r as Camera
+                    }}
+                />
+            </View>
+
             ) : (
             <View
                 style={{
@@ -60,9 +63,7 @@ export const RecordContent = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            )
+            )}
         </>
     )
 }
-
-export default Record;
