@@ -11,13 +11,15 @@ type layoutProps = {
     title: string,
     navigation: any,
     openedPage: string,
+    menuBar: boolean,
 }
 
-const Layout = ({ content, title, navigation, openedPage }: layoutProps) => {
+const Layout = ({ content, title, navigation, openedPage, menuBar = true }: layoutProps) => {
     return (
         <View style={globalStyles.container}>
             <Content content={content} />
-            <MenuBar openedPage={openedPage} navigation={navigation} />
+            {menuBar ? <MenuBar openedPage={openedPage} navigation={navigation} /> : null}
+
         </View>
     );
 }

@@ -1,14 +1,18 @@
-import { Camera } from 'expo-camera'
+import { AutoFocus, Camera } from 'expo-camera'
 import { useState } from 'react';
 import { Alert } from 'react-native';
-import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
+import { useIsFocused } from "@react-navigation/native";
 
-export default function RecordContent(){
+import { Text, TouchableOpacity, View } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
+
+export default function RecordContent() {
     let camera: Camera
+    const isFocused = useIsFocused();
     const [startCamera, setStartCamera] = useState(false)
 
     const __startCamera = async () => {
-        const { status } = await Camera.requestPermissionsAsync()
+        const { status } = await Camera.requestCameraPermissionsAsync()
         if (status === 'granted') {
             // start the camera
             setStartCamera(true)
@@ -17,53 +21,45 @@ export default function RecordContent(){
         }
     }
 
-    return (
-        <>
-            {startCamera ? (
+    if (isFocused) {
+        return (
             <View
-                style={{flex: 1, width: '100%', height: '100%'}}
+                style={{ flex: 1, width: '100%', height: '100%' }}
             >
+                <TouchableOpacity
+                    onPress={() => { }}
+                    style={{
+                        width: 70,
+                        borderRadius: 50,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: 70,
+                        backgroundColor: '#2F80ED',
+                        position: 'absolute',
+                        zIndex: 1,
+                        bottom: 20,
+                        left: '50%',
+                        marginLeft: -35,
+                    }}
+                >
+                    <View
+                        style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 50,
+                            backgroundColor: 'white',
+                        }}
+                    />
+                </TouchableOpacity>
                 <Camera
-                    style={{ flex: 1, width: "100%", height: "100%" }}
+                    style={{ flex: 1, width: "auto", height: "auto" }}
+                    ratio='16:9'
                     ref={(r) => {
                         camera = r as Camera
                     }}
                 />
             </View>
-
-            ) : (
-            <View
-                style={{
-                    flex: 1,
-                    backgroundColor: '#fff',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <TouchableOpacity
-                    onPress={__startCamera}
-                    style={{
-                        width: 130,
-                        borderRadius: 4,
-                        backgroundColor: '#14274e',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: 40
-                    }}
-                >
-                    <Text
-                        style={{
-                            color: '#fff',
-                            fontWeight: 'bold',
-                            textAlign: 'center'
-                        }}
-                    >
-                        Take picture
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            )}
-        </>
-    )
+        );
+    }
 }

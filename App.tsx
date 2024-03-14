@@ -39,7 +39,6 @@ export default function App() {
           name="record"
           options={{
             title: 'Record',
-            headerLeft: () => <></>,
             animation: 'none',
           }}
         >
