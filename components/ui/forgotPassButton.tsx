@@ -1,12 +1,12 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-interface loginButtonProps {
+interface forgotPassProps {
     textBtn: string;
     onPress: () => void;
 }
 
-const LoginButton: React.FC<loginButtonProps> = ({ textBtn, onPress }) => {
+const ForgotPassButton: React.FC<forgotPassProps> = ({ textBtn, onPress }) => {
     return (
         <TouchableOpacity style={styles.btn} onPress={onPress}>
         <Text style={styles.text}>{textBtn}</Text>
@@ -21,17 +21,15 @@ const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#2F80ED',
       padding: 10,
-      borderRadius: 10,
     },
     text: {
-      fontSize: 15,
+      fontSize: 12,
       fontWeight: 'bold',
-      color: '#fff',
+      color: '#2F80ED',
       textAlign: 'center',
     },
   });
   
-  export default LoginButton;
+  export default ForgotPassButton;
   

@@ -19,12 +19,14 @@ type ButtonProps = {
   flatListRef: RefObject<FlatList>;
   flatListIndex: SharedValue<number>;
   dataLength: number;
+  onPress: () => void; // Tambahkan properti onPress
 };
 
 export function Button({
   dataLength,
   flatListIndex,
   flatListRef,
+  onPress, // Terima properti onPress
 }: ButtonProps) {
   const navigation = useNavigation(); // Get navigation object
 
@@ -59,7 +61,7 @@ export function Button({
   const handleNextScreen = () => {
     const isLastScreen = flatListIndex.value === dataLength - 1;
     if (isLastScreen) {
-      navigation.navigate('Register'); // Navigates to the register page
+      onPress(); // Panggil properti onPress // Navigates to the register page
     } else {
       flatListRef.current?.scrollToIndex({ index: flatListIndex.value + 1 });
     }

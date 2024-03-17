@@ -20,7 +20,12 @@ import { Button } from '../ui/button';
 import { Pagination } from '../ui/pagination';
 import { theme } from '../../constants/theme';
 import { data, type Data } from '../../data/onboarding';
-// import { login } from './login';
+import Login from './login';
+import Register from './register';
+import Routes from '../../routes/routes';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStack } from '../../types/rootstack';
 
 const RenderItem = ({
   item,
@@ -105,7 +110,9 @@ const RenderItem = ({
   );
 };
 
-export function Onboarding() {
+export function Onboarding({navigation} : RootStack) {
+  // const navigation = useNavigation();
+
   const { width: SCREEN_WIDTH } = useWindowDimensions();
   const flatListRef = useAnimatedRef<FlatList>();
 
@@ -125,6 +132,10 @@ export function Onboarding() {
       x.value = event.contentOffset.x;
     },
   });
+
+  const handleSignUpPress = () => {
+    navigation.navigate('register');
+  };
 
   return (
     <View style={styles.container}>
@@ -151,6 +162,7 @@ export function Onboarding() {
           flatListRef={flatListRef}
           flatListIndex={flatListIndex}
           dataLength={data.length}
+          onPress={handleSignUpPress}
         />
 
       </View>
