@@ -1,70 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './components/screens/home';
-import HistoryScreen from './components/screens/history';
-import { screenProps } from './types/screenprops';
-import RecordScreen from './components/screens/record';
-import AnalyticscScreen from './components/screens/analytics';
-import SettingsScreen from './components/screens/settings';
+import React from 'react';
 
-const Stack = createNativeStackNavigator();
+import { 
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  View 
+} from 'react-native';
+
+import { 
+  NavigationContainer, 
+} from '@react-navigation/native';
+import { Onboarding } from './components/screens/Onboarding';
+import Register from './components/screens/register';
+import Login from './components/screens/Login';
+import Routes from './routes/routes';
+import BaseScreen from './components/screens/base';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="home"
-          options={{
-            title: 'Home',
-            headerLeft: () => <></>,
-            animation: 'none',
-          }}
-        >
-          {(props: any) => <HomeScreen {...props} title={props.route.name} navigation={props.navigation} openedPage={props.route.name} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name="history"
-          options={{
-            title: 'History',
-            headerLeft: () => <></>,
-            animation: 'none',
-          }}
-        >
-          {(props: any) => <HistoryScreen {...props} title={props.route.name} navigation={props.navigation} openedPage={props.route.name} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name="record"
-          options={{
-            title: 'Record',
-            animation: 'none',
-          }}
-        >
-          {(props: any) => <RecordScreen {...props} title={props.route.name} navigation={props.navigation} openedPage={props.route.name} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name="analytics"
-          options={{
-            title: 'Analytics',
-            headerLeft: () => <></>,
-            animation: 'none',
-          }}
-        >
-          {(props: any) => <AnalyticscScreen {...props} title={props.route.name} navigation={props.navigation} openedPage={props.route.name} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name="settings"
-          options={{
-            title: 'Settings',
-            headerLeft: () => <></>,
-            animation: 'none',
-          }}
-        >
-          {(props: any) => <SettingsScreen {...props} title={props.route.name} navigation={props.navigation} openedPage={props.route.name} />}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={styles.container}>
+      <NavigationContainer>
+        <StatusBar style="auto" />
+        <Routes/>
+      </NavigationContainer>
+    </SafeAreaView>     
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
