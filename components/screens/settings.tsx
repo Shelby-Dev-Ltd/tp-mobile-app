@@ -10,6 +10,6 @@ export default function SettingsScreen({ title, navigation, openedPage }: screen
 
 
     return (
-        <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} />
+        <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={true} />
     );
 }

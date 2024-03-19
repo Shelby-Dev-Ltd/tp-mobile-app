@@ -28,7 +28,8 @@ export default function AnalyticsScreen({ title, navigation, openedPage }: scree
             openedPage={openedPage}
             content={isLoadingContent ? <LoaderScreen message={`Loading ${title}`} color={Colors.grey40} /> : content}
             title={title}
-            navigation={navigation}
-        />
+            navigation={navigation} 
+            menuBar={true}
+            />
     )
 }
