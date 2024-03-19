@@ -24,6 +24,6 @@ export default function HistoryScreen({ title, navigation, openedPage }: screenP
 
 
     return (
-        <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={false} />
+        <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={true} />
     );
 }
