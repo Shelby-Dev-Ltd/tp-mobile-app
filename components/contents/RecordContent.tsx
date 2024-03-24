@@ -7,6 +7,25 @@ import { useIsFocused } from "@react-navigation/native";
 import { Text, TouchableOpacity, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 
+import { getStorage, ref, uploadBytes } from "firebase/storage"
+import { getApp } from "firebase/app"
+
+import { initializeApp } from 'firebase/app';
+
+// Your Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyA_FUasTG2j3E693gcmDFJ4ihuoaVHYIJ8",
+    authDomain: "traffic-pulse-app.firebaseapp.com",
+    projectId: "traffic-pulse-app",
+    storageBucket: "traffic-pulse-app.appspot.com",
+    messagingSenderId: "518077601368",
+    appId: "1:518077601368:web:888724f481c6022f095c2d"
+};
+
+// Initialize Firebase
+
+initializeApp(firebaseConfig);
+
 export default function RecordContent() {
     let camera: Camera
     const isFocused = useIsFocused();
@@ -30,14 +49,45 @@ export default function RecordContent() {
         try {
             const image: CameraCapturedPicture = await camera.takePictureAsync()
             const imageUri: string = image.uri
-
-            setCapturedImage(imageUri)
+            UploadToCloudStore(imageUri)
+            // setCapturedImage(imageUri)
         } catch (e) {
             console.error(e)
         } finally {
-            SubmitToGoogle()
+            // SubmitToGoogle()
         }
 
+    }
+
+    const UploadToCloudStore = async (imageUri: string) => {
+        try {
+            const app = getApp()
+            const storage = getStorage(app)
+            const storageRef = ref(storage, 'captures')
+
+            if (!storage) throw Error("No storage found!")
+
+            const response = await fetch(imageUri);
+            const blob = await response.blob();
+            const imageName = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+            const imageRef = ref(storage, imageUri)
+
+            const res = await DoUploadToStorage(storageRef, imageRef)
+            console.log(res)
+
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const DoUploadToStorage = async (storageRef: any, file: any) => {
+        try {
+            const res = await uploadBytes(storageRef, file)
+            return res
+        } catch (e) {
+            return e
+        }
     }
 
     const SubmitToGoogle = async () => {
@@ -47,20 +97,11 @@ export default function RecordContent() {
                 requests: [
                     {
                         features: [
-                            { type: "LABEL_DETECTION", maxResults: 10 },
-                            { type: "LANDMARK_DETECTION", maxResults: 5 },
-                            { type: "FACE_DETECTION", maxResults: 5 },
-                            { type: "LOGO_DETECTION", maxResults: 5 },
-                            { type: "TEXT_DETECTION", maxResults: 5 },
-                            { type: "DOCUMENT_TEXT_DETECTION", maxResults: 5 },
-                            { type: "SAFE_SEARCH_DETECTION", maxResults: 5 },
-                            { type: "IMAGE_PROPERTIES", maxResults: 5 },
-                            { type: "CROP_HINTS", maxResults: 5 },
-                            { type: "WEB_DETECTION", maxResults: 5 }
+                            { type: "LABEL_DETECTION", maxResults: 5 },
                         ],
                         image: {
                             source: {
-                                imageUri: capturedImage
+                                imageUri: "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"
                             }
                         }
                     }
@@ -79,7 +120,7 @@ export default function RecordContent() {
                 }
             );
             let responseJson = await response.json();
-            console.log(responseJson)
+            responseJson.responses[0].labelAnnotations.map((i: any) => console.log(i.description))
 
             setGoogleResponse(responseJson)
             setIsUploading(false)
@@ -87,12 +128,6 @@ export default function RecordContent() {
             console.error(error);
         }
     };
-
-    //Logs
-    useEffect(() => {
-        console.log(`UPLOADING: ${isUploading}`)
-        console.log(`RES: ${googleResponse}`)
-    }, [isUploading, googleResponse])
 
     if (isFocused) {
 
