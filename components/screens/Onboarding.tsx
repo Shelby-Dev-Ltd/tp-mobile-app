@@ -134,7 +134,7 @@ export function Onboarding({navigation} : RootStack) {
   });
 
   const handleSignUpPress = () => {
-    navigation.navigate('register');
+    navigation.navigate('signup');
   };
 
   return (

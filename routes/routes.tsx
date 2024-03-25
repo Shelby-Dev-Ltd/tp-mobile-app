@@ -5,6 +5,7 @@ import { Onboarding } from "../components/screens/Onboarding";
 import Login from "../components/screens/login";
 import Register from "../components/screens/register";
 import BaseScreen from "../components/screens/base";
+import Signup from "../components/screens/signup";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,7 @@ export default function Routes() {
         component={Onboarding}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="login"
         component={Login}
         options={{ headerShown: false }}
@@ -24,6 +25,11 @@ export default function Routes() {
       <Stack.Screen
         name="register"
         component={Register}
+        options={{ headerShown: false }}
+      /> */}
+      <Stack.Screen
+        name="signup"
+        component={Signup}
         options={{ headerShown: false }}
       />
       <Stack.Screen

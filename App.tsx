@@ -15,6 +15,7 @@ import { Onboarding } from './components/screens/Onboarding';
 import Register from './components/screens/register';
 import Login from './components/screens/Login';
 import Routes from './routes/routes';
+import Signup from './components/screens/signup';
 import BaseScreen from './components/screens/base';
 import { createStackNavigator } from '@react-navigation/stack';
 

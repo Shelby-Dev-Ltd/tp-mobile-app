@@ -73,7 +73,7 @@ export function Button({
       style={[styles.container, buttonAnimationStyle]}
     >
       <Animated.Text style={[styles.text, textAnimationStyle]}>
-        Register Now!
+        Get Started!
       </Animated.Text>
 
       <AnimatedFeather
