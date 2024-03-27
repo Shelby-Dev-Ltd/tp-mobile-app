@@ -1,17 +1,3 @@
-import Layout from "../layouts/Layout";
-import { screenProps } from "../../types/screenprops";
-
-// export default function SettingsScreen({ title, navigation, openedPage }: screenProps) {
-//     const content =
-        // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        //     <Text>{title}</Text>
-        // </View>
-
-
-    // return (
-    //     <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} />
-    // );
-// }
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native';

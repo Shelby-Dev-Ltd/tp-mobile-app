@@ -1,13 +1,14 @@
 import { Button, ImageComponent, LogBox, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../styles/global";
-import React from "react";
+import React, { useEffect } from "react";
 import { MenuItem } from "./MenuItem";
 
 type menuBarProps = {
-    navigation: any
+    navigation: any,
+    openedPage: string,
 }
 
-const MenuBar = ({ navigation }: menuBarProps) => {
+const MenuBar = ({ navigation, openedPage }: menuBarProps) => {
 
     const doNavigate = (destination: string) => {
         navigation.navigate(destination)
@@ -16,20 +17,20 @@ const MenuBar = ({ navigation }: menuBarProps) => {
     return (
         <View style={globalStyles.menuBarStyle} >
             <View style={globalStyles.box}>
-                <MenuItem doNavigate={doNavigate} page={{ title: "home", ioniconstring: "home", destination: "home" }} />
+                <MenuItem isOpen={openedPage === "home"} doNavigate={doNavigate} page={{ title: "home", ioniconstring: "home", destination: "home" }} />
             </View>
             <View style={globalStyles.box}>
-                <MenuItem doNavigate={doNavigate} page={{ title: "history", ioniconstring: "book", destination: "history" }} />
+                <MenuItem isOpen={openedPage === "history"} doNavigate={doNavigate} page={{ title: "history", ioniconstring: "book", destination: "history" }} />
             </View>
 
             <View style={globalStyles.bigBox}>
-                <MenuItem doNavigate={doNavigate} page={{ title: "record", ioniconstring: "camera", destination: "record" }} />
+                <MenuItem isOpen={openedPage === "record"} doNavigate={doNavigate} page={{ title: "record", ioniconstring: "camera", destination: "record" }} />
             </View>
             <View style={globalStyles.box}>
-                <MenuItem doNavigate={doNavigate} page={{ title: "chart", ioniconstring: "pie-chart", destination: "chart" }} />
+                <MenuItem isOpen={openedPage === "analytics"} doNavigate={doNavigate} page={{ title: "analytics", ioniconstring: "pie-chart", destination: "analytics" }} />
             </View>
             <View style={globalStyles.box}>
-                <MenuItem doNavigate={doNavigate} page={{ title: "settings", ioniconstring: "settings", destination: "settings" }} />
+                <MenuItem isOpen={openedPage === "settings"} doNavigate={doNavigate} page={{ title: "settings", ioniconstring: "settings", destination: "settings" }} />
             </View>
         </View>
     );

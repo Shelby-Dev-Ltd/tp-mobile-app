@@ -32,13 +32,14 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         paddingLeft: 10,
         paddingRight: 10,
+        paddingTop: 10,
     },
     box: {
         backgroundColor: '#ffffff',
         width: 50,
         height: 50,
         borderRadius: 50,
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
     bigBox: {
         backgroundColor: '#ffffff',
@@ -47,6 +48,6 @@ export const globalStyles = StyleSheet.create({
         marginTop: -20,
         padding: 0,
         borderRadius: 50,
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
 });
