@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
 import { RootStack } from "../../types/rootstack";
 import GoogleButton from "../ui/googleButton";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Signup({ navigation }: RootStack) {
+
+  const { login, isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    if (isLoggedIn) navigation.navigate('base')
+  }, [isLoggedIn])
+
+  const DoLogin = () => {
+    login()
+    navigation.navigate('base')
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.containerHeader}>
@@ -56,17 +69,15 @@ export default function Signup({ navigation }: RootStack) {
       </View>
 
       <View
-      style={{
-        marginLeft: 25,
-        marginRight: 25,
-        marginTop: 50,
-        alignItems: 'center',
-      }}>
-      <GoogleButton
-        textBtn="Continue with Google"
-        onPress={() => {
-            navigation.navigate("base");
-          }}
+        style={{
+          marginLeft: 25,
+          marginRight: 25,
+          marginTop: 50,
+          alignItems: 'center',
+        }}>
+        <GoogleButton
+          textBtn="Continue with Google"
+          onPress={() => DoLogin()}
         />
       </View>
     </View>
@@ -74,26 +85,26 @@ export default function Signup({ navigation }: RootStack) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-      },
+  container: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+  },
 
-      containerHeader: {
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        height: 150,
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingTop: 100,
-        paddingBottom: 30,
-      },
+  containerHeader: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    height: 150,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 100,
+    paddingBottom: 30,
+  },
 
-      image: {
-        width: 200,
-        height: 250,
-      },
-      
- })
+  image: {
+    width: 200,
+    height: 250,
+  },
+
+})

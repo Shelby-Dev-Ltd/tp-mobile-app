@@ -2,8 +2,6 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { Onboarding } from "../components/screens/Onboarding";
-import Login from "../components/screens/login";
-import Register from "../components/screens/register";
 import BaseScreen from "../components/screens/base";
 import Signup from "../components/screens/signup";
 
