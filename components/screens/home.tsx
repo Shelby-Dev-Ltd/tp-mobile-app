@@ -5,6 +5,7 @@ import Welcome from "../contents/Welcome";
 import Banner from "../ui/Banner";
 import VehicleCount from "../contents/VehicleCount";
 import LatestHistory from "../contents/history/LatestHistory";
+import { useAuth } from "../../contexts/AuthContext";
 
 const images = [
     "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg",
@@ -13,28 +14,27 @@ const images = [
 ]
 
 const locations = [
-    {location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023"},
-    {location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023"},
-    {location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023"},
-    {location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023"},
-    {location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023"},
-    {location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023"},
-    {location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023"}
+    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023" },
+    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023" },
+    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023" },
+    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023" },
+    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023" },
+    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023" },
+    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023" }
 ]
 
 export default function HomeScreen({ title, navigation, openedPage }: screenProps) {
     const content =
-        <View style={{ flex: 1}}>
-        <ScrollView 
-        showsVerticalScrollIndicator={false}
-        >
-            <Welcome/>
-            <Banner images={images}/>
-            <VehicleCount/>
-            <LatestHistory locations={locations}/>
-        </ScrollView>
+        <View style={{ flex: 1 }}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
+                <Welcome />
+                <Banner images={images} />
+                <VehicleCount />
+                <LatestHistory locations={locations} />
+            </ScrollView>
         </View>
-
 
     return (
         <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={true} />
