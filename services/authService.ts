@@ -28,3 +28,15 @@ export const removeTokens = async () => {
         console.error('Error removing tokens:', e);
     }
 };
+
+// export const DoLogin = async () => {
+//     try {
+//         const response = await fetch(`${process.env.EXPO_PUBLIC_BACKEND_API_URL}/auth/google`, {
+//             method: 'GET'
+//         })
+
+//         const responseData = await response.json()
+//     } catch (e) {
+
+//     }
+// }
