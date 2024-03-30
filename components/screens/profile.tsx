@@ -1,18 +1,3 @@
-import Layout from "../layouts/Layout";
-import { screenProps } from "../../types/screenprops";
-import { useAuth } from "../../contexts/AuthContext";
-
-// export default function SettingsScreen({ title, navigation, openedPage }: screenProps) {
-//     const content =
-// <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//     <Text>{title}</Text>
-// </View>
-
-
-// return (
-//     <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} />
-// );
-// }
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native';
@@ -38,14 +23,14 @@ const EditProfile: React.FC<Props> = ({ navigation }) => {
             aspect: [4, 4],
             quality: 1,
         });
-
+    
         console.log(result);
-
+    
         if (!result.canceled && result.assets && result.assets.length > 0) {
             setSelectedImage(result.assets[0].uri);
         }
     };
-
+    
 
     return (
         <SafeAreaView style={{ flex: 1, paddingHorizontal: 22 }}>
