@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from "react-native";
 import { globalStyles } from "../../styles/global";
 
 type contentProps = {
-    content: React.JSX.Element
+    content: React.JSX.Element,
+    noPadding?: boolean,
 }
 
-const Content = ({ content }: contentProps) => {
+const Content = ({ content, noPadding }: contentProps) => {
     return (
-        <View style={globalStyles.content}>
+        <View style={!noPadding ? globalStyles.content : { flex: 1 }}>
             {content}
         </View>
     );

@@ -51,9 +51,9 @@ export default function BaseScreen() {
       <Stack.Screen
         name="record"
         options={{
-          title: "Record",
-          headerLeft: () => <></>,
+          title: "",
           animation: "none",
+          headerTransparent: true,
         }}
       >
         {(props: any) => (

@@ -27,7 +27,7 @@ const Layout = ({ content, title, navigation, openedPage, menuBar = true }: layo
     }, [isLoggedIn])
     return (
         <View style={globalStyles.container}>
-            <Content content={content} />
+            <Content content={content} noPadding={openedPage == "record"} />
             {menuBar ? <MenuBar openedPage={openedPage} navigation={navigation} /> : null}
 
         </View>
