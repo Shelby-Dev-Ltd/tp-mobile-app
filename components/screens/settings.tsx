@@ -15,9 +15,9 @@ import { useAuth } from "../../contexts/AuthContext";
 // }
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, Pressable } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { imagesDataURL } from '../constants/data';
 
 interface Props {
@@ -25,6 +25,7 @@ interface Props {
 }
 
 const EditProfile: React.FC<Props> = ({ navigation }) => {
+    const { logout } = useAuth()
     const [selectedImage, setSelectedImage] = useState(imagesDataURL[0]);
     const [name, setName] = useState('Arina Sabilahaq');
     const [email, setEmail] = useState('arinasabilahaq@gmail.com');
@@ -104,6 +105,17 @@ const EditProfile: React.FC<Props> = ({ navigation }) => {
                 >
                     <Text>Save Change</Text>
                 </TouchableOpacity>
+                <Pressable
+                    onPress={() => logout()}
+                    style={{
+                        justifyContent: 'center',
+                        flexDirection: 'row',
+                        gap: 4,
+                    }}
+                >
+                    <Ionicons name="exit-outline" style={{ transform: 'rotate(180deg)' }} size={20} />
+                    <Text>Sign Out</Text>
+                </Pressable>
             </ScrollView>
         </SafeAreaView>
     );
