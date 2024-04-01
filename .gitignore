@@ -39,3 +39,5 @@ google-services.json
 
 # typescript
 *.tsbuildinfo
+
+google-services.json
