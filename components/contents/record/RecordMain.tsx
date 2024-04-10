@@ -1,6 +1,6 @@
 import { AutoFocus, Camera, CameraCapturedPicture } from 'expo-camera'
 import { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, ToastAndroid } from 'react-native';
 import { useIsFocused } from "@react-navigation/native";
 // import { useCameraDevice, Camera as VCamera } from "react-native-vision-camera"
 
@@ -11,6 +11,7 @@ import { getStorage, ref, uploadBytes } from "firebase/storage"
 import { getApp } from "firebase/app"
 
 import { initializeApp } from 'firebase/app';
+import RecordConfirmation from './RecordConfirmation';
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -26,14 +27,14 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-export default function RecordContent() {
+export default function RecordMain() {
     let camera: Camera
     const isFocused = useIsFocused();
     // const device = useCameraDevice('back');
     const [startCamera, setStartCamera] = useState<boolean>(false)
     const [isUploading, setIsUploading] = useState<boolean>(false)
     const [googleResponse, setGoogleResponse] = useState()
-    const [capturedImage, setCapturedImage] = useState<string>()
+    const [capturedImagePath, setCapturedImagePath] = useState<string>("")
 
     const __startCamera = async () => {
         const { status } = await Camera.requestCameraPermissionsAsync()
@@ -45,11 +46,21 @@ export default function RecordContent() {
         }
     }
 
+    useEffect(() => {
+        if (startCamera) return
+        __startCamera()
+    }, [startCamera])
+
     const CaptureImage = async () => {
         try {
             const image: CameraCapturedPicture = await camera.takePictureAsync()
             const imageUri: string = image.uri
-            UploadToCloudStore(imageUri)
+            ToastAndroid.show(imageUri, ToastAndroid.SHORT)
+            console.log(imageUri)
+            setCapturedImagePath(imageUri)
+
+
+            // UploadToCloudStore(imageUri)
             // setCapturedImage(imageUri)
         } catch (e) {
             console.error(e)
@@ -130,9 +141,11 @@ export default function RecordContent() {
     };
 
     if (isFocused) {
-
-        // if (device == null) return <Text>No Camera Device found!</Text>
-
+        if (capturedImagePath.length) {
+            return (
+                <RecordConfirmation imageUrlLocal={capturedImagePath} cancelImage={() => setCapturedImagePath("")} />
+            )
+        }
         return (
             <View
                 style={{ flex: 1, width: '100%', height: '100%' }}
@@ -149,7 +162,7 @@ export default function RecordContent() {
                         backgroundColor: '#2F80ED',
                         position: 'absolute',
                         zIndex: 1,
-                        bottom: 20,
+                        bottom: 100,
                         left: '50%',
                         marginLeft: -35,
                     }}
@@ -176,6 +189,6 @@ export default function RecordContent() {
                     isActive={true}
                 /> */}
             </View>
-        );
+        )
     }
 }
