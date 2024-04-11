@@ -85,7 +85,7 @@ export default function BaseScreen() {
       <Stack.Screen
         name="profile"
         options={{
-          title: "profile",
+          title: "Profile",
           headerLeft: () => <></>,
           animation: "none",
         }}
