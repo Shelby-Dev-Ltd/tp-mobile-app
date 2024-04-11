@@ -7,7 +7,7 @@ import HistoryScreen from "./history";
 import { screenProps } from "../../types/screenprops";
 import RecordScreen from "./record";
 import AnalyticscScreen from "./analytics";
-import SettingsScreen from "./settings";
+import EditProfile from "./profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -83,15 +83,15 @@ export default function BaseScreen() {
         )}
       </Stack.Screen>
       <Stack.Screen
-        name="settings"
+        name="profile"
         options={{
-          title: "Settings",
+          title: "profile",
           headerLeft: () => <></>,
           animation: "none",
         }}
       >
         {(props: any) => (
-          <SettingsScreen
+          <EditProfile
             {...props}
             title={props.route.name}
             navigation={props.navigation}

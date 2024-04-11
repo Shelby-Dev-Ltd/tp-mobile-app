@@ -30,7 +30,7 @@ const MenuBar = ({ navigation, openedPage }: menuBarProps) => {
                 <MenuItem isOpen={openedPage === "analytics"} doNavigate={doNavigate} page={{ title: "analytics", ioniconstring: "pie-chart", destination: "analytics" }} />
             </View>
             <View style={globalStyles.box}>
-                <MenuItem isOpen={openedPage === "settings"} doNavigate={doNavigate} page={{ title: "settings", ioniconstring: "settings", destination: "settings" }} />
+                <MenuItem isOpen={openedPage === "profile"} doNavigate={doNavigate} page={{ title: "profile", ioniconstring: "person", destination: "profile" }} />
             </View>
         </View>
     );
