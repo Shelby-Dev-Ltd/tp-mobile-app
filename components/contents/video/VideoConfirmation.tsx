@@ -1,44 +1,19 @@
 import { View, Image, Pressable, Text, Button, Dimensions } from "react-native";
 import { Video, ResizeMode } from 'expo-av';
-import { useEffect, useRef, useState } from "react";
-import { LoaderScreen } from "react-native-ui-lib";
+import { useRef, useState } from "react";
 
 type videoConfirmationProps = {
     videoUrlLocal?: string,
     cancelVideo: () => void,
     submitVideo: () => void,
-    isUploadingVideo: boolean,
 }
 
-const screenWidth = Dimensions.get('screen').width;
-const screenHeight = Dimensions.get('screen').height;
-
-const VideoConfirmation = ({ videoUrlLocal, cancelVideo, submitVideo, isUploadingVideo }: videoConfirmationProps) => {
+const VideoConfirmation = ({ videoUrlLocal, cancelVideo, submitVideo }: videoConfirmationProps) => {
     const video = useRef(null);
     const [status, setStatus] = useState({});
 
     return (
         <>
-            {
-                isUploadingVideo ?
-                    (
-                        <View
-                            style={{
-                                width: screenWidth,
-                                height: screenHeight,
-                                backgroundColor: 'white',
-                                opacity: 0.5,
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                zIndex: 10,
-                            }}
-                        >
-                            <LoaderScreen />
-                        </View>
-                    ) :
-                    null
-            }
             <View style={{ flex: 1, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <View
                     style={{

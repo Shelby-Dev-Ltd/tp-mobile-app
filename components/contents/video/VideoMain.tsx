@@ -12,7 +12,8 @@ import { getApp } from "firebase/app"
 
 import { initializeApp } from 'firebase/app';
 import RecordConfirmation from './VideoConfirmation';
-import { Toast } from 'react-native-ui-lib';
+import { LoaderScreen, Toast } from 'react-native-ui-lib';
+import RecordCreation from './RecordCreation';
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -28,7 +29,10 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-export default function VideoMain() {
+const screenWidth = Dimensions.get('screen').width;
+const screenHeight = Dimensions.get('screen').height;
+
+export default function VideoMain({ navigation }) {
     let camera: Camera
     const isFocused = useIsFocused();
     // const device = useCameraDevice('back');
@@ -36,6 +40,7 @@ export default function VideoMain() {
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [isUploadingVideo, setIsUploadingVideo] = useState<boolean>(false);
     const [capturedVideoPath, setCapturedVideoPath] = useState<string>("");
+    const [currentMediaId, setCurrentMediaId] = useState<number>(-1);
 
     const __startCamera = async () => {
         const { status: cameraPerm } = await Camera.requestCameraPermissionsAsync();
@@ -103,13 +108,12 @@ export default function VideoMain() {
         }
     }
 
-    const saveVideo = async (publicUrl: string, user: Object) => {
+    const saveVideo = async (publicUrl: string) => {
         try {
             const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/upload-video`, {
                 method: 'POST',
                 body: JSON.stringify({
                     url: publicUrl,
-                    user
                 }),
                 headers: {
                     'content-type': 'application/json',
@@ -124,7 +128,7 @@ export default function VideoMain() {
 
             if (data.error) throw Error(data.status.toString());
 
-            return data;
+            return data.data.media;
 
         } catch (e) {
             console.error(e);
@@ -140,67 +144,124 @@ export default function VideoMain() {
             const fullPath = res.ref.fullPath;
             const publicUrlLink = 'https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/captures';
             const publicUrl = `${publicUrlLink}%2F${fullPath.slice(fullPath.indexOf('/') + 1)}?alt=media`;
-            setIsUploadingVideo(false);
 
-            await saveVideo(publicUrl, { name: 'Ken', id: 2 }); //@TODO: SET USER HERE
+            const { id: mediaId } = await saveVideo(publicUrl);
 
-
+            setCurrentMediaId(mediaId);
         } catch (e) {
             console.error(e);
             ToastAndroid.show(e, ToastAndroid.LONG);
+        } finally {
             setIsUploadingVideo(false);
         }
     }
 
+    const onSubmit = async (location: string) => {
+        try {
+            setIsUploadingVideo(true);
+
+            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    user: { id: 1 }, // TODO PUT REAL USER HERE
+                    location,
+                    mediaId: currentMediaId,
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const data: ApiResponse = await res.json();
+
+            if (data.error) throw Error(data.status.toString());
+
+            navigation.navigate('/records');
+        } catch (e) {
+
+        } finally {
+            setIsUploadingVideo(false);
+        }
+    };
+
     if (isFocused) {
-        if (capturedVideoPath.length) {
+        if (capturedVideoPath.length && currentMediaId < 0) {
             return (
                 <RecordConfirmation
                     videoUrlLocal={capturedVideoPath}
                     cancelVideo={() => setCapturedVideoPath("")}
                     submitVideo={submitVideo}
-                    isUploadingVideo={isUploadingVideo}
+                />
+            )
+        }
+
+        if (capturedVideoPath.length && currentMediaId > -1) {
+            return (
+                <RecordCreation
+                    onSubmit={onSubmit}
                 />
             )
         }
         return (
-            <View
-                style={{ flex: 1, width: '100%', height: '100%' }}
-            >
-                <TouchableOpacity
-                    onPress={!isRecording ? () => StartRecording() : () => StopRecording()}
-                    style={{
-                        width: 70,
-                        borderRadius: 50,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: 70,
-                        backgroundColor: '#2F80ED',
-                        position: 'absolute',
-                        zIndex: 1,
-                        bottom: 100,
-                        left: '50%',
-                        marginLeft: -35,
-                    }}
+            <>
+                {
+                    isUploadingVideo ?
+                        (
+                            <View
+                                style={{
+                                    width: screenWidth,
+                                    height: screenHeight,
+                                    backgroundColor: 'white',
+                                    opacity: 0.5,
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    zIndex: 10,
+                                }}
+                            >
+                                <LoaderScreen />
+                            </View>
+                        ) :
+                        null
+                }
+                <View
+                    style={{ flex: 1, width: '100%', height: '100%' }}
                 >
-                    <View
+                    <TouchableOpacity
+                        onPress={!isRecording ? () => StartRecording() : () => StopRecording()}
                         style={{
-                            width: isRecording ? 0 : 50,
-                            height: isRecording ? 0 : 50,
+                            width: 70,
                             borderRadius: 50,
-                            backgroundColor: isRecording ? '' : 'white',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: 70,
+                            backgroundColor: '#2F80ED',
+                            position: 'absolute',
+                            zIndex: 1,
+                            bottom: 100,
+                            left: '50%',
+                            marginLeft: -35,
+                        }}
+                    >
+                        <View
+                            style={{
+                                width: isRecording ? 0 : 50,
+                                height: isRecording ? 0 : 50,
+                                borderRadius: 50,
+                                backgroundColor: isRecording ? '' : 'white',
+                            }}
+                        />
+                    </TouchableOpacity>
+                    <Camera
+                        style={{ flex: 1, width: "auto", height: "auto" }}
+                        ratio='16:9'
+                        ref={(r) => {
+                            camera = r as Camera
                         }}
                     />
-                </TouchableOpacity>
-                <Camera
-                    style={{ flex: 1, width: "auto", height: "auto" }}
-                    ratio='16:9'
-                    ref={(r) => {
-                        camera = r as Camera
-                    }}
-                />
-            </View>
+                </View>
+            </>
         )
     }
 }

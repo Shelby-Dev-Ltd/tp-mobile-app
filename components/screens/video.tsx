@@ -7,7 +7,7 @@ export default function VideoScreen({ title, navigation, openedPage }: screenPro
 
     const content =
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <VideoMain />
+            <VideoMain navigation={navigation} />
         </View>
 
 

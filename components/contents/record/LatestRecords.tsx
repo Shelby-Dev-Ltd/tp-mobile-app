@@ -12,7 +12,7 @@ const LatestRecords = () => {
     const mutate = async () => {
         setIsFetching(true);
         try {
-            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records`);
+            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records?take=3`);
             console.log(res);
             const data: ApiResponse = await res.json();
 
@@ -32,20 +32,17 @@ const LatestRecords = () => {
         mutate()
     }, []); //first fetch
 
-    const sortedLocations = records.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    const latestLocations = sortedLocations.slice(0, 3)
-
     return (
         <View>
             <View style={recordStyles.row}>
                 <Text style={recordStyles.text}>
-                    Latest Record
+                    Latest Records
                 </Text>
                 <Text style={recordStyles.textLink}>
                     View All
                 </Text>
             </View>
-            {latestLocations.map((location, index) => (
+            {records.map((location, index) => (
                 <Card
                     key={index}
                     location={location.location}
