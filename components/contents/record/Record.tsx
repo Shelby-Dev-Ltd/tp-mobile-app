@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
-import Card from "../../ui/Card";
+import RecordCard from "./RecordCard";
 import { Record as RecordType } from "../../../types/record";
 import { LoaderScreen } from "react-native-ui-lib";
 
@@ -14,7 +14,7 @@ const Record = ({ records }: RecordProps) => {
             {
                 records.map((record, index) => {
                     return (
-                        <Card
+                        <RecordCard
                             key={index}
                             location={record.location}
                             date={record.date}

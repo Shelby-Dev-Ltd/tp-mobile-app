@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Card from "../../ui/Card";
+import RecordCard from "./RecordCard";
 import { recordStyles } from "../../../styles/record";
 import { Record as RecordType } from "../../../types/record";
 
@@ -42,7 +42,7 @@ const LatestRecords = () => {
                 </Text>
             </View>
             {records.map((location, index) => (
-                <Card
+                <RecordCard
                     key={index}
                     location={location.location}
                     date={location.date}
