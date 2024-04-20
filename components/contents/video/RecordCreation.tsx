@@ -4,7 +4,7 @@ import { Dimensions, Pressable, SafeAreaView, Text, TextInput, View } from "reac
 type RecordCreationProps = {
     // mediaId: number,
     // user: Object,
-    onSubmit: (location: string) => any,
+    onSubmit: (location: string) => void,
 }
 
 const windowWidth = Dimensions.get('window').width;
@@ -43,7 +43,10 @@ const RecordCreation: React.FC<RecordCreationProps> = ({ onSubmit }) => {
                     value={inputLocation}
                 />
                 <Pressable
-                    onPress={() => onSubmit(inputLocation)}
+                    onPress={() => {
+                        onSubmit(inputLocation)
+
+                    }}
                     style={{
                         width: windowWidth / 3,
                         height: 40,

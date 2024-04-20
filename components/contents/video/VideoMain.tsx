@@ -15,20 +15,6 @@ import RecordConfirmation from './VideoConfirmation';
 import { LoaderScreen, Toast } from 'react-native-ui-lib';
 import RecordCreation from './RecordCreation';
 
-// Your Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyA_FUasTG2j3E693gcmDFJ4ihuoaVHYIJ8",
-    authDomain: "traffic-pulse-app.firebaseapp.com",
-    projectId: "traffic-pulse-app",
-    storageBucket: "traffic-pulse-app.appspot.com",
-    messagingSenderId: "518077601368",
-    appId: "1:518077601368:web:888724f481c6022f095c2d"
-};
-
-// Initialize Firebase
-
-initializeApp(firebaseConfig);
-
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
 
@@ -171,14 +157,13 @@ export default function VideoMain({ navigation }) {
                     'Content-Type': 'application/json',
                 }
             });
-
             const data: ApiResponse = await res.json();
 
             if (data.error) throw Error(data.status.toString());
 
-            navigation.navigate('/records');
+            return navigation.navigate('records');
         } catch (e) {
-
+            console.error('Error in onSubmit:', e);
         } finally {
             setIsUploadingVideo(false);
         }

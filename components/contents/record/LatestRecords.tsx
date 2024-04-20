@@ -13,7 +13,6 @@ const LatestRecords = () => {
         setIsFetching(true);
         try {
             const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records?take=3`);
-            console.log(res);
             const data: ApiResponse = await res.json();
 
             if (data.error) throw Error(data.status.toString());

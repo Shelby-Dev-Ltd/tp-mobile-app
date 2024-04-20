@@ -6,12 +6,9 @@ import { LoaderScreen } from "react-native-ui-lib";
 
 type RecordProps = {
     records: RecordType[];
-    isLoading: boolean;
 }
 
-const Record = ({ records, isLoading }: RecordProps) => {
-    if (isLoading) return <LoaderScreen />;
-
+const Record = ({ records }: RecordProps) => {
     return (
         <View>
             {

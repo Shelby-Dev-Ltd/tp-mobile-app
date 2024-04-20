@@ -12,8 +12,11 @@ import {
 import Routes from './routes/routes';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider } from './contexts/AuthContext';
+import { app } from './config/firebase';
 
 const Stack = createStackNavigator();
+
+const firebaseApp = app; // to trigger firebase initialization 
 
 export default function App() {
   return (

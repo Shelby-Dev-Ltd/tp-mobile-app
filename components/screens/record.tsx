@@ -1,7 +1,7 @@
-import { Button, ScrollView, Text, View } from "react-native";
+import { Button, RefreshControl, ScrollView, Text, View } from "react-native";
 import Layout from "../layouts/Layout";
 import { screenProps } from "../../types/screenprops";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Record as RecordType } from "../../types/record";
 import Record from "../contents/record/Record";
 
@@ -32,10 +32,21 @@ export default function RecordScreen({ title, navigation, openedPage }: screenPr
         mutate()
     }, []); //first fetch
 
+    const onRefresh = () => {
+        mutate();
+    }
+
     const content =
         (<View style={{ flex: 1 }}>
-            <ScrollView>
-                <Record records={records} isLoading={isFetching} />
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isFetching}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
+                <Record records={records} />
             </ScrollView>
         </View>)
 
