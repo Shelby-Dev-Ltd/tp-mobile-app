@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as WebBrowser from 'expo-web-browser';
 
 export const saveTokens = async (accessToken: string, refreshToken: string) => {
     try {
@@ -29,14 +30,16 @@ export const removeTokens = async () => {
     }
 };
 
-// export const DoLogin = async () => {
-//     try {
-//         const response = await fetch(`${process.env.EXPO_PUBLIC_BACKEND_API_URL}/auth/google`, {
-//             method: 'GET'
-//         })
+export const DoLogin = async () => {
+    try {
+        const loginLink = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/auth/google`, {
+            method: 'GET'
+        })
 
-//         const responseData = await response.json()
-//     } catch (e) {
+        const result = await WebBrowser.openAuthSessionAsync(loginLink.url);
 
-//     }
-// }
+    } catch (e) {
+        console.error(`authService: ${e}`);
+        return { error: e }
+    }
+}

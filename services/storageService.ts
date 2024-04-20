@@ -23,7 +23,7 @@ const storageService = (): UploadResult => {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
             const userToken = userInfo?.idToken || '';
-            const response = await fetch('your-server-url', {
+            const response = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

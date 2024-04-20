@@ -1,20 +1,45 @@
-import { Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 import Layout from "../layouts/Layout";
 import { screenProps } from "../../types/screenprops";
 import { useEffect, useState } from "react";
-import { LoaderScreen } from "react-native-ui-lib";
-import RecordMain from "../contents/record/RecordMain";
+import { Record as RecordType } from "../../types/record";
+import Record from "../contents/record/Record";
 
 export default function RecordScreen({ title, navigation, openedPage }: screenProps) {
 
+    const [records, setRecords] = useState<RecordType[]>([]);
+    const [isFetching, setIsFetching] = useState<boolean>(false);
+
+    const mutate = async () => {
+        setIsFetching(true);
+        try {
+            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records`);
+            const data: ApiResponse = await res.json();
+
+            if (data.error) throw Error(data.status.toString());
+
+            const records: ApiResponse = data.data.records;
+
+            setRecords(records as RecordType[]);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setIsFetching(false);
+        }
+    }
+
+    useEffect(() => {
+        mutate()
+    }, []); //first fetch
+
     const content =
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <RecordMain />
-        </View>
-
-
+        (<View style={{ flex: 1 }}>
+            <ScrollView>
+                <Record records={records} isLoading={isFetching} />
+            </ScrollView>
+        </View>)
 
     return (
-        <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={false} />
+        <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={true} />
     );
 }

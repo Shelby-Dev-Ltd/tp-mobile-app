@@ -1,15 +1,19 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { DoLogin } from '../services/authService';
+import { ToastAndroid } from 'react-native';
 
 type AuthContextType = {
     isLoggedIn: boolean;
-    login: () => void;
+    login: () => any;
     logout: () => void;
+    user: any,
 };
 
 const AuthContext = createContext<AuthContextType>({
     isLoggedIn: false,
     login: () => { },
     logout: () => { },
+    user: undefined,
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -20,15 +24,34 @@ type AuthProviderProps = {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState();
 
-    useEffect(() => console.log(isLoggedIn), [isLoggedIn])
+    const login = async () => {
+        try {
+            // const user = await DoLogin();
 
-    const login = () => setIsLoggedIn(true);
-    const logout = () => setIsLoggedIn(false);
+            // if (user.hasOwnProperty('error')) {
+            //     return console.error(user);
+            // }
+            // console.log(user);
+            // setUser(user);
+            setIsLoggedIn(true);
+        } catch (e) {
+            setUser(undefined);
+            return ToastAndroid.show(e, ToastAndroid.LONG);
+        }
+
+    };
+
+    const logout = () => {
+        setUser(undefined);
+        setIsLoggedIn(false);
+    };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, login, logout, user }}>
             {children}
         </AuthContext.Provider>
     );
 };
+

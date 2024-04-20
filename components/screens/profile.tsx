@@ -40,8 +40,6 @@ const EditProfile: React.FC<Props> = ({ navigation }) => {
             quality: 1,
         });
 
-        console.log(result);
-
         if (!result.canceled && result.assets && result.assets.length > 0) {
             setSelectedImage(result.assets[0].uri);
         }

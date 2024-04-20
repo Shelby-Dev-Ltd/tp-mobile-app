@@ -4,7 +4,7 @@ import { screenProps } from "../../types/screenprops";
 import Welcome from "../contents/Welcome";
 import Banner from "../ui/Banner";
 import VehicleCount from "../contents/VehicleCount";
-import LatestHistory from "../contents/history/LatestHistory";
+import LatestRecords from "../contents/record/LatestRecords";
 import { useAuth } from "../../contexts/AuthContext";
 
 const images = [
@@ -13,17 +13,8 @@ const images = [
     "https://img.freepik.com/free-vector/abstract-geometric-round-shape-blue-background-design_1017-42785.jpg"
 ]
 
-const locations = [
-    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023" },
-    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023" },
-    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-04-2023" },
-    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023" },
-    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023" },
-    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023" },
-    { location: "Jl. Mekarmukti, Bekasi, Jawa Barat, Indonesia", date: "10-03-2023" }
-]
-
 export default function HomeScreen({ title, navigation, openedPage }: screenProps) {
+
     const content =
         <View style={{ flex: 1 }}>
             <ScrollView
@@ -32,7 +23,7 @@ export default function HomeScreen({ title, navigation, openedPage }: screenProp
                 <Welcome />
                 <Banner images={images} />
                 <VehicleCount />
-                <LatestHistory locations={locations} />
+                <LatestRecords />
             </ScrollView>
         </View>
 

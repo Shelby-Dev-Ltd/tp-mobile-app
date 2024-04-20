@@ -15,16 +15,6 @@ export default function Routes() {
         component={Onboarding}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="login"
-        component={Login}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="register"
-        component={Register}
-        options={{ headerShown: false }}
-      /> */}
       <Stack.Screen
         name="signup"
         component={Signup}

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const historyStyles = StyleSheet.create({
+export const recordStyles = StyleSheet.create({
     text: {
         fontSize: 20,
     },
@@ -15,4 +15,4 @@ export const historyStyles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 10
     }
-  });
+});

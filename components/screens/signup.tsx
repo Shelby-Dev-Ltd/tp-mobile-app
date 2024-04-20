@@ -13,9 +13,16 @@ export default function Signup({ navigation }: RootStack) {
     if (isLoggedIn) navigation.navigate('base')
   }, [isLoggedIn])
 
-  const DoLogin = () => {
-    login()
-    navigation.navigate('base')
+  const DoLogin = async () => {
+    try {
+      const res = login();
+      if (!res) {
+        throw Error(res);
+      }
+      navigation.navigate('base')
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (

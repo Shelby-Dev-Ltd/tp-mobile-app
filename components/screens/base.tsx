@@ -3,9 +3,9 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./home";
-import HistoryScreen from "./history";
-import { screenProps } from "../../types/screenprops";
 import RecordScreen from "./record";
+import { screenProps } from "../../types/screenprops";
+import VideoScreen from "./video";
 import AnalyticscScreen from "./analytics";
 import EditProfile from "./profile";
 
@@ -32,15 +32,15 @@ export default function BaseScreen() {
         )}
       </Stack.Screen>
       <Stack.Screen
-        name="history"
+        name="records"
         options={{
-          title: "History",
+          title: "Records",
           headerLeft: () => <></>,
           animation: "none",
         }}
       >
         {(props: any) => (
-          <HistoryScreen
+          <RecordScreen
             {...props}
             title={props.route.name}
             navigation={props.navigation}
@@ -49,7 +49,7 @@ export default function BaseScreen() {
         )}
       </Stack.Screen>
       <Stack.Screen
-        name="record"
+        name="video"
         options={{
           title: "",
           animation: "none",
@@ -57,7 +57,7 @@ export default function BaseScreen() {
         }}
       >
         {(props: any) => (
-          <RecordScreen
+          <VideoScreen
             {...props}
             title={props.route.name}
             navigation={props.navigation}

@@ -1,0 +1,1 @@
+export type Record = { location: string; date: string }
