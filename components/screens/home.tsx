@@ -5,7 +5,6 @@ import Welcome from "../contents/Welcome";
 import Banner from "../ui/Banner";
 import VehicleCount from "../contents/VehicleCount";
 import LatestRecords from "../contents/record/LatestRecords";
-import { useAuth } from "../../contexts/AuthContext";
 
 const images = [
     "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg",

@@ -2,15 +2,16 @@ import { Button, ImageComponent, LogBox, StyleSheet, Text, TouchableOpacity, Vie
 import { globalStyles } from "../../styles/global";
 import React, { useEffect } from "react";
 import { MenuItem } from "./MenuItem";
+import { DestinationType, NavigationType } from "../../types/navigation";
 
 type menuBarProps = {
-    navigation: any,
+    navigation: NavigationType,
     openedPage: string,
 }
 
 const MenuBar = ({ navigation, openedPage }: menuBarProps) => {
 
-    const doNavigate = (destination: string) => {
+    const doNavigate = (destination: DestinationType) => {
         navigation.navigate(destination)
     }
 
