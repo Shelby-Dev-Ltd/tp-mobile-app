@@ -1,28 +1,28 @@
 import { Dimensions, StyleSheet } from "react-native";
 
-const {width} = Dimensions.get("window")
-const height = width * 0.6 
+const { width } = Dimensions.get("window")
+const height = width * 0.6
 
 export const bannerStyles = StyleSheet.create({
     container: {
-        marginTop: 20, 
-        width, 
+        marginTop: 20,
+        width,
         height
     },
     scroll: {
         width,
-        height
+        height,
     },
     image: {
-        width, 
-        height, 
+        width: width - 20,
+        height,
         resizeMode: "cover",
         borderRadius: 40
     },
     pagination: {
-        flexDirection: "row", 
-        position: "absolute", 
-        bottom: 0, 
+        flexDirection: "row",
+        position: "absolute",
+        bottom: 0,
         alignSelf: "center"
     },
     pagingText: {
@@ -35,5 +35,5 @@ export const bannerStyles = StyleSheet.create({
         color: "#fff",
         margin: 3
     }
-    
+
 })
