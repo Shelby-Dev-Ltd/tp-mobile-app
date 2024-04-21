@@ -65,7 +65,6 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
                     />
                 </View>
                 <View style={{ marginBottom: 20 }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Bike</Text>
                     <BezierLineChart
                         labels={labels}
                         datasets={datasets}

@@ -18,7 +18,6 @@ export const BezierLineChart: React.FC<LineChartProps> = ({ labels, datasets }) 
                 alignContent: 'center',
             }}
         >
-            <Text text60>Bezier Line Chart</Text>
             <LineChart
                 data={{
                     labels,
@@ -26,12 +25,13 @@ export const BezierLineChart: React.FC<LineChartProps> = ({ labels, datasets }) 
                 }}
                 width={Dimensions.get("window").width - 40}
                 height={220}
-                yAxisLabel="$"
-                yAxisSuffix="k"
+                yAxisSuffix=" unit"
                 yAxisInterval={1}
                 chartConfig={{
-                    backgroundColor: "#2F80ED",
-                    decimalPlaces: 2,
+                    backgroundColor: "rgba(255, 255, 255, 1)",
+                    backgroundGradientFrom: "#2F80ED",
+                    backgroundGradientTo: "#91c0ff",
+                    decimalPlaces: 0,
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     style: {
@@ -49,6 +49,19 @@ export const BezierLineChart: React.FC<LineChartProps> = ({ labels, datasets }) 
                     borderRadius: 16
                 }}
             />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    gap: 10,
+                    alignItems: 'flex-start',
+                    width: '100%',
+                }}
+            >
+                <Text>🔴 Bike</Text>
+                <Text>🔵 Car</Text>
+                <Text>🟢 Truck</Text>
+            </View>
         </View>
     )
 }
