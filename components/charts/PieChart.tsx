@@ -1,14 +1,15 @@
 import { Dimensions, View } from "react-native";
 import { Text } from "react-native-ui-lib";
 import {
-    LineChart,
+    PieChart as NativePieChart
 } from "react-native-chart-kit";
-import React, { useEffect } from "react";
-import { LineChartProps } from "../../types/chart";
+import React from "react";
+import { PieChartProps } from "../../types/chart";
 
-export const BezierLineChart: React.FC<LineChartProps> = ({ labels, datasets }) => {
+// TODO: UNDONE
+export const PieChart: React.FC<PieChartProps> = ({ data }) => {
 
-    if (!datasets) return <></>;
+    if (!data) return <></>;
 
     return (
         <View
@@ -19,16 +20,10 @@ export const BezierLineChart: React.FC<LineChartProps> = ({ labels, datasets }) 
             }}
         >
             <Text text60>Bezier Line Chart</Text>
-            <LineChart
-                data={{
-                    labels,
-                    datasets,
-                }}
+            <NativePieChart
+                data={data}
                 width={Dimensions.get("window").width - 40}
                 height={220}
-                yAxisLabel="$"
-                yAxisSuffix="k"
-                yAxisInterval={1}
                 chartConfig={{
                     backgroundColor: "#2F80ED",
                     decimalPlaces: 2,
@@ -43,11 +38,11 @@ export const BezierLineChart: React.FC<LineChartProps> = ({ labels, datasets }) 
                         stroke: "#ffa726"
                     }
                 }}
-                bezier
-                style={{
-                    marginVertical: 8,
-                    borderRadius: 16
-                }}
+                accessor={"population"}
+                backgroundColor={"transparent"}
+                paddingLeft={"15"}
+                center={[10, 50]}
+                absolute
             />
         </View>
     )
