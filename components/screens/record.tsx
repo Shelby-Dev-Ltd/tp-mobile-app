@@ -1,15 +1,34 @@
-import { Text, View } from "react-native";
+import { RefreshControl, ScrollView, Text, View } from "react-native";
 import Layout from "../layouts/Layout";
 import { screenProps } from "../../types/screenprops";
+import Record from "../contents/record/Record";
+import useRecords from "../../data/records";
+import { Record as RecordType } from "../../types/record";
+import { useEffect } from "react";
 
-export default function RecordScreen({ title, navigation }: screenProps) {
+export default function RecordScreen({ title, navigation, openedPage }: screenProps) {
+
+    const { isLoading, mutate, data: records } = useRecords();
+
+    const onRefresh = () => {
+        mutate();
+    }
+
     const content =
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>{title}</Text>
-        </View>
-
+        (<View style={{ flex: 1 }}>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isLoading}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
+                <Record records={records || []} />
+            </ScrollView>
+        </View>)
 
     return (
-        <Layout content={content} title={title} navigation={navigation} />
+        <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={true} />
     );
 }
