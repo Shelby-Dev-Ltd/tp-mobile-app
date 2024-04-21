@@ -1,9 +1,9 @@
 import { ScrollView, Text, View } from "react-native";
 import Layout from "../layouts/Layout";
 import { screenProps } from "../../types/screenprops";
-import Welcome from "../contents/Welcome";
+import Welcome from "../contents/home/Welcome";
 import Banner from "../ui/Banner";
-import VehicleCount from "../contents/VehicleCount";
+import VehicleCount from "../contents/home/VehicleCount";
 import LatestRecords from "../contents/record/LatestRecords";
 
 const images = [

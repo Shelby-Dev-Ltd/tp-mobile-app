@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Avatar from '../ui/Avatar';
-import { welcomeStyles } from '../../styles/welcome';
+import Avatar from '../../ui/Avatar';
+import { welcomeStyles } from '../../../styles/welcome';
 
 const Welcome = () => {
   return (
