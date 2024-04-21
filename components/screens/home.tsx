@@ -23,7 +23,7 @@ export default function HomeScreen({ title, navigation, openedPage }: screenProp
                 <Welcome />
                 <Banner images={images} />
                 <VehicleCount />
-                <LatestRecords />
+                <LatestRecords navigation={navigation} />
             </ScrollView>
         </View>
 

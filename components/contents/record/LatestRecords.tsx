@@ -1,35 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import RecordCard from "./RecordCard";
 import { recordStyles } from "../../../styles/record";
 import { Record as RecordType } from "../../../types/record";
+import useRecords from "../../../data/records";
+import { LoaderScreen } from "react-native-ui-lib";
 
-const LatestRecords = () => {
+type LatestRecordProps = {
+    navigation: any
+};
 
-    const [records, setRecords] = useState<RecordType[]>([]);
-    const [isFetching, setIsFetching] = useState<boolean>(false);
+const LatestRecords: React.FC<LatestRecordProps> = ({ navigation }) => {
 
-    const mutate = async () => {
-        setIsFetching(true);
-        try {
-            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records?take=3`);
-            const data: ApiResponse = await res.json();
+    const { isLoading, data: records } = useRecords();
 
-            if (data.error) throw Error(data.status.toString());
-
-            const records: ApiResponse = data.data.records;
-
-            setRecords(records as RecordType[]);
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setIsFetching(false);
-        }
-    }
-
-    useEffect(() => {
-        mutate()
-    }, []); //first fetch
+    if (isLoading) return <LoaderScreen />
 
     return (
         <View>
@@ -37,9 +22,14 @@ const LatestRecords = () => {
                 <Text style={recordStyles.text}>
                     Latest Records
                 </Text>
-                <Text style={recordStyles.textLink}>
-                    View All
-                </Text>
+                <Pressable
+                    onPress={() => navigation.navigate('records')}
+                >
+                    <Text style={recordStyles.textLink}>
+                        View All
+                    </Text>
+                </Pressable>
+
             </View>
             {records.map((location, index) => (
                 <RecordCard
