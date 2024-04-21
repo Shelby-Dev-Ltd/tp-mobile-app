@@ -1,7 +1,7 @@
-import { NavigationAction } from "@react-navigation/native";
+import { NavigationType } from "./navigation";
 
 export type screenProps = {
     title: string,
-    navigation: any,
+    navigation: NavigationType,
     openedPage: string,
 }

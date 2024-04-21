@@ -6,11 +6,12 @@ import Content from "./Content";
 import React, { useEffect } from "react";
 import { NavigationAction } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
+import { NavigationType } from "../../types/navigation";
 
 type layoutProps = {
     content: React.JSX.Element,
     title: string,
-    navigation: any,
+    navigation: NavigationType,
     openedPage: string,
     menuBar: boolean,
 }

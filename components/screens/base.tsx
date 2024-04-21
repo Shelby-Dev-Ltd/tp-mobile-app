@@ -1,13 +1,10 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./home";
 import RecordScreen from "./record";
-import { screenProps } from "../../types/screenprops";
 import VideoScreen from "./video";
 import AnalyticscScreen from "./analytics";
 import EditProfile from "./profile";
+import { RoutePropsType } from "../../types/navigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +19,7 @@ export default function BaseScreen() {
           animation: "none",
         }}
       >
-        {(props: any) => (
+        {(props: RoutePropsType) => (
           <HomeScreen
             {...props}
             title={props.route.name}
@@ -39,7 +36,7 @@ export default function BaseScreen() {
           animation: "none",
         }}
       >
-        {(props: any) => (
+        {(props: RoutePropsType) => (
           <RecordScreen
             {...props}
             title={props.route.name}
@@ -56,7 +53,7 @@ export default function BaseScreen() {
           headerTransparent: true,
         }}
       >
-        {(props: any) => (
+        {(props: RoutePropsType) => (
           <VideoScreen
             {...props}
             title={props.route.name}
@@ -73,7 +70,7 @@ export default function BaseScreen() {
           animation: "none",
         }}
       >
-        {(props: any) => (
+        {(props: RoutePropsType) => (
           <AnalyticscScreen
             {...props}
             title={props.route.name}
@@ -90,7 +87,7 @@ export default function BaseScreen() {
           animation: "none",
         }}
       >
-        {(props: any) => (
+        {(props: RoutePropsType) => (
           <EditProfile
             {...props}
             title={props.route.name}

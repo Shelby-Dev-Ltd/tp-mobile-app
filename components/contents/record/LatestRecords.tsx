@@ -5,9 +5,10 @@ import { recordStyles } from "../../../styles/record";
 import { Record as RecordType } from "../../../types/record";
 import useRecords from "../../../data/records";
 import { LoaderScreen } from "react-native-ui-lib";
+import { NavigationType } from "../../../types/navigation";
 
 type LatestRecordProps = {
-    navigation: any
+    navigation: NavigationType
 };
 
 const LatestRecords: React.FC<LatestRecordProps> = ({ navigation }) => {

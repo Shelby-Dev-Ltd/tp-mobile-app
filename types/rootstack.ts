@@ -1,3 +1,5 @@
-export type RootStack= {
-    navigation: any,
-  };
+import { NavigationType } from "./navigation";
+
+export type RootStack = {
+  navigation: NavigationType,
+};

@@ -1,13 +1,18 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Dimensions, Image, Pressable, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useAuth } from "../../contexts/AuthContext";
-import { useState } from "react";
+import React, { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import { imagesDataURL } from '../constants/data';
+import { NavigationType } from "../../types/navigation";
 
 const windowHeight = Dimensions.get('window').height;
 
-const Profile = ({ navigation }: { navigation: any }) => {
+type ProfileProps = {
+    navigation: NavigationType
+}
+
+const Profile: React.FC<ProfileProps> = ({ navigation }) => {
     const { logout } = useAuth()
     const [selectedImage, setSelectedImage] = useState(imagesDataURL[0]);
     const [name, setName] = useState('Arina Sabilahaq');
