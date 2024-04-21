@@ -21,4 +21,4 @@ const useRecords = () => {
     return { data, error, isLoading, mutate };
 }
 
-export default useRecords
+export default useRecords;

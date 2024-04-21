@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View } from "react-native";
 import RecordCard from "./RecordCard";
 import { Record as RecordType } from "../../../types/record";
-import { LoaderScreen } from "react-native-ui-lib";
 
 type RecordProps = {
     records: RecordType[];

@@ -32,7 +32,7 @@ const LatestRecords: React.FC<LatestRecordProps> = ({ navigation }) => {
                 </Pressable>
 
             </View>
-            {records.map((location, index) => (
+            {records.slice(0, 3).map((location, index) => (
                 <RecordCard
                     key={index}
                     location={location.location}
