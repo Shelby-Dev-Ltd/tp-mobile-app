@@ -29,7 +29,20 @@ const Layout = ({ content, title, navigation, openedPage, menuBar = true }: layo
     return (
         <View style={globalStyles.container}>
             <Content content={content} noPadding={openedPage == "video"} />
-            {menuBar ? <MenuBar openedPage={openedPage} navigation={navigation} /> : null}
+            {
+                menuBar ?
+                    <View style={{
+                        backgroundColor: 'white',
+                        width: '100%',
+                        shadowOffset: { width: 2, height: 2, },
+                        elevation: 10,
+                        overflow: 'visible',
+                    }}>
+                        <MenuBar openedPage={openedPage} navigation={navigation} />
+                    </View>
+                    :
+                    null
+            }
 
         </View>
     );

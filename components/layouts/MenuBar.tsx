@@ -24,7 +24,7 @@ const MenuBar = ({ navigation, openedPage }: menuBarProps) => {
                 <MenuItem isOpen={openedPage === "records"} doNavigate={doNavigate} page={{ title: "records", ioniconstring: "book", destination: "records" }} />
             </View>
 
-            <View style={globalStyles.bigBox}>
+            <View style={globalStyles.box}>
                 <MenuItem isOpen={openedPage === "video"} doNavigate={doNavigate} page={{ title: "video", ioniconstring: "camera", destination: "video" }} />
             </View>
             <View style={globalStyles.box}>
