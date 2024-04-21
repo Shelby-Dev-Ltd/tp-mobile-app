@@ -1,15 +1,16 @@
-import { initializeApp } from 'firebase/app';
+import { FirebaseOptions, initializeApp } from 'firebase/app';
+import * as serviceJson from '../.serviceAccount.json';
 
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyA_FUasTG2j3E693gcmDFJ4ihuoaVHYIJ8",
-    authDomain: "traffic-pulse-app.firebaseapp.com",
-    projectId: "traffic-pulse-app",
-    storageBucket: "traffic-pulse-app.appspot.com",
-    messagingSenderId: "518077601368",
-    appId: "1:518077601368:web:888724f481c6022f095c2d"
+    apiKey: serviceJson.client[0].api_key,
+    authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: serviceJson.project_info.project_id,
+    storageBucket: serviceJson.project_info.storage_bucket,
+    messagingSenderId: serviceJson.project_info.project_number,
+    appId: serviceJson.client[0].client_info.mobilesdk_app_id,
 };
 
 // Initialize Firebase
 
-export const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig as unknown as FirebaseOptions);
