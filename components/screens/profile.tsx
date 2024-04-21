@@ -111,7 +111,7 @@ const EditProfile: React.FC<Props> = ({ navigation }) => {
                         gap: 4,
                     }}
                 >
-                    <Ionicons name="exit-outline" style={{ transform: 'rotate(180deg)' }} size={20} />
+                    <Ionicons name="exit-outline" style={{ transform: [{ rotate: '180deg' }] }} size={20} />
                     <Text>Sign Out</Text>
                 </Pressable>
             </ScrollView>
