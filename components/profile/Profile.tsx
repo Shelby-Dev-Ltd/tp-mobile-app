@@ -32,12 +32,6 @@ const Profile = ({ navigation }: { navigation: any }) => {
         <ScrollView style={{ flex: 1, paddingHorizontal: 22 }} showsVerticalScrollIndicator={false}>
             <View style={{ minHeight: windowHeight }}>
                 <View style={{ marginHorizontal: 12, flexDirection: 'row', justifyContent: 'center' }}>
-                    <TouchableOpacity
-                        onPress={() => navigation.goBack()}
-                        style={{ position: 'absolute', left: 0 }}
-                    >
-                        <MaterialIcons name="keyboard-arrow-left" size={24} />
-                    </TouchableOpacity>
                     <Text style={{ fontSize: 30, fontWeight: 'bold' }}>My Profile</Text>
                 </View>
                 <View style={{ alignItems: 'center', marginVertical: 22 }}>
