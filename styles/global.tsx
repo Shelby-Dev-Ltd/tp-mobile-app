@@ -25,7 +25,7 @@ export const globalStyles = StyleSheet.create({
     },
     box: {
         width: windowWidth / 5,
-        height: 50,
+        height: 60,
         overflow: 'hidden',
     },
 });
