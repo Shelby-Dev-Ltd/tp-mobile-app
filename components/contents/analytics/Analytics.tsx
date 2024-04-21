@@ -64,8 +64,8 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
                         source={{ uri: imagePlaceholders.analytics.trafficThumbnail }}
                     />
                 </View>
-                <View style={{ marginBottom: 20 }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Bike</Text>
+                <View style={{ marginBottom: 20, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Monthly Basis</Text>
                     <BezierLineChart
                         labels={labels}
                         datasets={datasets}
