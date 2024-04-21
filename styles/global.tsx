@@ -21,6 +21,7 @@ export const globalStyles = StyleSheet.create({
     },
     content: {
         flex: 1,
+        paddingHorizontal: 10,
     },
     box: {
         width: windowWidth / 5,

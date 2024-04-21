@@ -27,8 +27,10 @@ const Layout = ({ content, title, navigation, openedPage, menuBar = true }: layo
         }
     }, [isLoggedIn])
     return (
-        <View style={globalStyles.container}>
-            <Content content={content} noPadding={openedPage == "video"} />
+        <>
+            <View style={globalStyles.container}>
+                <Content content={content} noPadding={openedPage === "video"} />
+            </View>
             {
                 menuBar ?
                     <View style={{
@@ -37,14 +39,16 @@ const Layout = ({ content, title, navigation, openedPage, menuBar = true }: layo
                         shadowOffset: { width: 2, height: 2, },
                         elevation: 10,
                         overflow: 'visible',
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
                     }}>
                         <MenuBar openedPage={openedPage} navigation={navigation} />
                     </View>
                     :
                     null
             }
-
-        </View>
+        </>
     );
 }
 
