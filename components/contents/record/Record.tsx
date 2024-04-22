@@ -11,10 +11,6 @@ type RecordProps = {
 
 const Record = ({ navigation, records }: RecordProps) => {
 
-    const NavigateToRecordDetail = (id: number) => {
-        navigation.navigate("recordDetail", { id })
-    };
-
     return (
         <View>
             {
@@ -25,7 +21,7 @@ const Record = ({ navigation, records }: RecordProps) => {
                             id={record.id}
                             location={record.location}
                             date={record.date}
-                            onClick={NavigateToRecordDetail}
+                            onClick={() => navigation.navigate("recordDetail", { id: record.id })}
                         />
                     )
                 }

@@ -16,9 +16,9 @@ const fetcher = async () => {
 
         if (data.error) throw Error(data.status.toString());
 
-        const result = data.data.monthlyAnalytics as AnalyticsData[] || []
+        const result = data.data.monthlyAnalytics || []
 
-        return result;
+        return result as AnalyticsData[];
 
     } catch (e) {
         console.error(e);

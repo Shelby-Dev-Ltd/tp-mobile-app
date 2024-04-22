@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { useAnalyticsSingle } from "../../../data/analytics";
 import { LoaderScreen } from "react-native-ui-lib";
+import { BezierLineChart } from "../../charts/BezierLineChart";
 
 type RecordDetailProps = {
     id: number;
@@ -21,10 +22,10 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
     )
 
     return (
-        <View style={{ flexDirection: 'column' }}>
-            <Text>{record.BikeCount}</Text>
-            <Text>{record.CarCount}</Text>
-            <Text>{record.TruckCount}</Text>
+        <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <BezierLineChart
+                analyticsData={[record]}
+            />
         </View>
     )
 };
