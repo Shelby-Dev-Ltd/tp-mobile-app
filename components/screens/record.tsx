@@ -24,7 +24,10 @@ export default function RecordScreen({ title, navigation, openedPage }: screenPr
                     />
                 }
             >
-                <Record records={records || []} />
+                <Record
+                    records={records || []}
+                    navigation={navigation}
+                />
             </ScrollView>
         </View>)
 
