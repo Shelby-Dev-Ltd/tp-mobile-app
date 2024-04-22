@@ -15,7 +15,7 @@ const images = [
 export default function HomeScreen({ title, navigation, openedPage }: screenProps) {
 
     const content =
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, paddingTop: 30, }}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >

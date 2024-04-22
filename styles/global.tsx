@@ -23,7 +23,6 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
         paddingBottom: 60,
-        paddingTop: 30,
     },
     box: {
         width: windowWidth / 5,

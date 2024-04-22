@@ -3,12 +3,49 @@ import { Text } from "react-native-ui-lib";
 import {
     LineChart,
 } from "react-native-chart-kit";
-import React, { useEffect } from "react";
-import { LineChartProps } from "../../types/chart";
+import React, { useEffect, useState } from "react";
+import { DatasetsType, LineChartProps } from "../../types/chart";
+import { Dataset } from "react-native-chart-kit/dist/HelperTypes";
 
-export const BezierLineChart: React.FC<LineChartProps> = ({ labels, datasets }) => {
+export const BezierLineChart: React.FC<LineChartProps> = ({ analyticsData }) => {
 
-    if (!datasets) return <></>;
+    const [labels, setLabels] = useState<Array<string>>([]);
+    const [datasets, setDatasets] = useState<DatasetsType>([]);
+
+    // process data into chart input type
+    useEffect(() => {
+        const newLabels: Array<string> = analyticsData.map((data) => new Date(data.date.toString()).toLocaleDateString());
+
+        const newBikeData: Dataset = {
+            data: analyticsData.map((data) => {
+                const { BikeCount } = data;
+                return BikeCount;
+            }),
+            color: () => "red"
+        }
+
+        const newCarData: Dataset = {
+            data: analyticsData.map((data) => {
+                const { CarCount } = data;
+                return CarCount;
+            }),
+            color: () => "blue"
+        }
+
+        const newTruckData: Dataset = {
+            data: analyticsData.map((data) => {
+                const { TruckCount } = data;
+                return TruckCount;
+            }),
+            color: () => "green"
+        }
+
+        setLabels(newLabels);
+        setDatasets([newBikeData, newCarData, newTruckData]);
+
+    }, [analyticsData]);
+
+    if (!analyticsData || !datasets.length || !labels.length) return <></>;
 
     return (
         <View

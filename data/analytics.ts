@@ -1,5 +1,7 @@
 import useSWR from "swr";
 import { AnalyticsData } from "../types/analytics";
+import { RecordAnalysisApiResponse } from "../types/api/recordAnalysisApiResponse";
+import { useEffect } from "react";
 
 const fetcher = async () => {
     try {
@@ -14,9 +16,9 @@ const fetcher = async () => {
 
         if (data.error) throw Error(data.status.toString());
 
-        const result = data.data.monthlyAnalytics as AnalyticsData[] || []
+        const result = data.data.monthlyAnalytics || []
 
-        return result;
+        return result as AnalyticsData[];
 
     } catch (e) {
         console.error(e);
@@ -29,4 +31,26 @@ const useAnalytics = () => {
     return { data, error, isLoading, mutate };
 }
 
-export default useAnalytics
+const useAnalyticsSingle = (id: number) => {
+    const fetcher = async () => {
+        try {
+            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records/${id}/analytics`);
+
+            const data: ApiResponse = await res.json();
+
+            if (data.error) throw Error(data.status.toString());
+
+            const result = data.data || {}
+
+            return result as AnalyticsData;
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+    const { data, error, isLoading, mutate } = useSWR(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records/${id}/analytics`, fetcher)
+
+    return { data, error, isLoading, mutate };
+}
+
+export { useAnalytics, useAnalyticsSingle }

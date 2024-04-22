@@ -5,6 +5,7 @@ import VideoScreen from "./video";
 import AnalyticscScreen from "./analytics";
 import EditProfile from "./profile";
 import { RoutePropsType } from "../../types/navigation";
+import RecordDetailScreen from "./record-detail";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,22 @@ export default function BaseScreen() {
       >
         {(props: RoutePropsType) => (
           <RecordScreen
+            {...props}
+            title={props.route.name}
+            navigation={props.navigation}
+            openedPage={props.route.name}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen
+        name="recordDetail"
+        options={{
+          title: "Record Detail",
+          animation: "none",
+        }}
+      >
+        {(props: RoutePropsType) => (
+          <RecordDetailScreen
             {...props}
             title={props.route.name}
             navigation={props.navigation}

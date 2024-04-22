@@ -1,15 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { recordCardStyles } from "../../../styles/recordCard";
 import { Entypo } from "@expo/vector-icons";
 
 type cardProps = {
     location: String,
-    date: String
+    date: String,
+    id: number, //record id
+    onClick: (id: number) => void,
 }
 
-const RecordCard = ({ location, date }: cardProps) => {
+const RecordCard = ({ id, location, date, onClick }: cardProps) => {
     return (
-        <View style={[recordCardStyles.card, recordCardStyles.shadowProp]}>
+        <Pressable
+            style={[recordCardStyles.card, recordCardStyles.shadowProp]}
+            onPress={() => onClick(id)}
+        >
             <View style={recordCardStyles.headingContainer}>
                 <Entypo name={"location-pin"} size={40} color="black" />
                 <Text style={recordCardStyles.heading}>
@@ -29,7 +34,7 @@ const RecordCard = ({ location, date }: cardProps) => {
                     })}
                 </Text>
             </View>
-        </View>
+        </Pressable>
     );
 }
 

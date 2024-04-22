@@ -1,10 +1,15 @@
 import { Dataset } from "react-native-chart-kit/dist/HelperTypes";
+import { AnalyticsData } from "./analytics";
 
 export type DatasetsType = Array<Dataset>;
 
+// export type LineChartProps = {
+//     labels: Array<string>;
+//     datasets: DatasetsType;
+// }
+
 export type LineChartProps = {
-    labels: Array<string>;
-    datasets: DatasetsType;
+    analyticsData: AnalyticsData[];
 }
 
 export type PieChartData = {

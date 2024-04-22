@@ -15,13 +15,15 @@ type RootStackParamList = {
 
     profile: undefined;
 
+    recordDetail: { id: number }
+
     // // Page with params sample
     // ScreenTwo: { slug: string };
 
     // ScreenThree: { data: Array<string> };
 };
 
-export type DestinationType = "home" | "analytics" | "video" | "records" | "signup" | "profile";
+export type DestinationType = "home" | "analytics" | "video" | "records" | "signup" | "profile" | "recordDetail";
 
 export type NavigationType = NativeStackNavigationProp<RootStackParamList, any>
 
