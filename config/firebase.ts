@@ -1,5 +1,5 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
-import * as serviceJson from '../.serviceAccount.json';
+import serviceJson from './serviceAccount';
 
 // Your Firebase configuration
 const firebaseConfig = {
