@@ -13,7 +13,6 @@ import Routes from './routes/routes';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider } from './contexts/AuthContext';
 import { app } from './config/firebase';
-// import Mapview from './components/screens/mapview';
 import RecordCreation from './components/contents/video/RecordCreation';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 
@@ -28,7 +27,6 @@ export default function App() {
         <NavigationContainer>
           <StatusBar style="auto" />
           <Routes />
-          {/* <Mapview/> */}
           {/* <RecordCreation onSubmit={function (location: string): void {
             throw new Error('Function not implemented.');
           } }/> */}
