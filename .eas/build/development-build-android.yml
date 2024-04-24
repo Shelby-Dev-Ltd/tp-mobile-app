@@ -1,0 +1,7 @@
+build:
+  name: Run dev
+  steps:
+    - eas/checkout
+    - run:
+        name: Install dependencies
+        command: npm install --legacy-peer-deps
