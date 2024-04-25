@@ -21,7 +21,7 @@ import { Constants } from "react-native-ui-lib";
 type RecordCreationProps = {
   // mediaId: number,
   // user: Object,
-  onSubmit: (location: string) => void;
+  onSubmit: (address: string, longitude: string, latitude: string) => void;
 };
 
 const { width, height } = Dimensions.get("window");
@@ -72,7 +72,9 @@ function InputAutocomplete({
 }
 
 const RecordCreation: React.FC<RecordCreationProps> = ({ onSubmit }) => {
-  const [inputLocation, setInputLocation] = useState("");
+  const [inputAddress, setInputAddress] = useState("");
+  const [inputLatitude, setInputLatitude] = useState("");
+  const [inputLongitude, setInputLongitude] = useState("");
   //   const [searchText, setSearchText] = useState("");
   //   const [results, setResults] = useState<any[]>([]);
   //   const map = useRef<MapView | null>(null);
@@ -109,6 +111,10 @@ const RecordCreation: React.FC<RecordCreationProps> = ({ onSubmit }) => {
         longitude: details.geometry.location.lng,
       };
       setOrigin(position);
+      setInputAddress(details.formatted_address);
+      setInputLatitude(position.latitude.toString());
+      setInputLongitude(position.longitude.toString());
+
       if (mapLoaded) {
         moveTo(position);
       }
@@ -143,7 +149,7 @@ const RecordCreation: React.FC<RecordCreationProps> = ({ onSubmit }) => {
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => {
-              onSubmit(inputLocation);
+              onSubmit(inputAddress, inputLongitude, inputLatitude);
             }}
           >
             <Text style={styles.buttonLabel}>Submit</Text>

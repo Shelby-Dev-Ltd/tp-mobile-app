@@ -36,7 +36,9 @@ const LatestRecords: React.FC<LatestRecordProps> = ({ navigation }) => {
                 <RecordCard
                     key={index}
                     id={record.id}
-                    location={record.location}
+                    address={record.address}
+                    longitude={record.longitude}
+                    latitude={record.latitude}
                     date={record.date}
                     onClick={() => navigation.navigate("recordDetail", { id: record.id })}
                 />
