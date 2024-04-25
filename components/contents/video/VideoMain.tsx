@@ -177,8 +177,6 @@ export default function VideoMain({ navigation }) {
             quality: 1,
         });
 
-        console.log(result);
-
         if (!result.canceled) {
             setCapturedVideoPath(result.assets[0].uri);
         }

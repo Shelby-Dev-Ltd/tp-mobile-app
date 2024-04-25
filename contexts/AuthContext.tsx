@@ -29,13 +29,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = async () => {
         try {
-            // const user = await DoLogin();
-
-            // if (user.hasOwnProperty('error')) {
-            //     return console.error(user);
-            // }
-            // console.log(user);
-            // setUser(user);
             setIsLoggedIn(true);
             ToastAndroid.show('Logged in..', ToastAndroid.LONG);
         } catch (e) {
