@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { DoLogin } from '../services/authService';
 import { ToastAndroid } from 'react-native';
+import { User } from '../types/user';
 
 type AuthContextType = {
     isLoggedIn: boolean;
@@ -24,7 +25,7 @@ type AuthProviderProps = {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState();
+    const [user, setUser] = useState<User>();
 
     const login = async () => {
         try {
@@ -36,6 +37,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             // console.log(user);
             // setUser(user);
             setIsLoggedIn(true);
+            ToastAndroid.show('Logged in..', ToastAndroid.LONG);
         } catch (e) {
             setUser(undefined);
             return ToastAndroid.show(e, ToastAndroid.LONG);

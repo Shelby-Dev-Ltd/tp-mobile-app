@@ -4,9 +4,11 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "build:dev": "eas build --profile development --platform android",
+    "eas-build-pre-install": "echo $GOOGLE_SERVICES_BASE64 | base64 --decode > /path/to/google-services.json"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
@@ -17,6 +19,7 @@
     "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-community/google-signin": "^5.0.0",
     "@react-native-community/netinfo": "11.1.0",
+    "@react-native-google-signin/google-signin": "^11.0.1",
     "@react-native-picker/picker": "^2.6.1",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
@@ -43,7 +46,8 @@
     "react-native-ui-lib": "^7.17.2",
     "react-native-vision-camera": "^3.9.1",
     "swr": "^2.2.5",
-    "tamagui": "^1.94.4"
+    "tamagui": "^1.94.4",
+    "expo-dev-client": "~3.3.11"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
