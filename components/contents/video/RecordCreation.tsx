@@ -24,8 +24,9 @@ type RecordCreationProps = {
   onSubmit: (location: string) => void;
 };
 
-const windowWidth = Dimensions.get("window").width;
 const { width, height } = Dimensions.get("window");
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.02;
@@ -72,12 +73,13 @@ function InputAutocomplete({
 
 const RecordCreation: React.FC<RecordCreationProps> = ({ onSubmit }) => {
   const [inputLocation, setInputLocation] = useState("");
-//   const [searchText, setSearchText] = useState("");
-//   const [results, setResults] = useState<any[]>([]);
-//   const map = useRef<MapView | null>(null);
+  //   const [searchText, setSearchText] = useState("");
+  //   const [results, setResults] = useState<any[]>([]);
+  //   const map = useRef<MapView | null>(null);
 
   const mapRef = useRef<MapView>(null); //new
   const [origin, setOrigin] = useState<LatLng | null>(); //new
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   const moveTo = async (position: LatLng) => {
     const camera = await mapRef.current?.getCamera();
@@ -98,47 +100,55 @@ const RecordCreation: React.FC<RecordCreationProps> = ({ onSubmit }) => {
 
   //new
   const onPlaceSelected = (
-  details: GooglePlaceDetail | null,
-  flag: "origin"
-) => {
-  if (flag === "origin" && details) {
-    const position = {
-      latitude: details.geometry.location.lat,
-      longitude: details.geometry.location.lng,
-    };
-    setOrigin(position);
-    moveTo(position);
-  }
-};
+    details: GooglePlaceDetail | null,
+    flag: "origin"
+  ) => {
+    if (flag === "origin" && details) {
+      const position = {
+        latitude: details.geometry.location.lat,
+        longitude: details.geometry.location.lng,
+      };
+      setOrigin(position);
+      if (mapLoaded) {
+        moveTo(position);
+      }
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <MapView
-        ref={mapRef}
-        style={styles.map}
-        provider={PROVIDER_GOOGLE}
-        initialRegion={INITIAL_POSITION}
-      >
-        {origin && <Marker coordinate={origin} />}
-      </MapView>
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchBoxLabel}>Input Location</Text>
-        <InputAutocomplete
-          placeholder="Search location..."
-          onPlaceSelected={(details) => {
-            onPlaceSelected(details, "origin");
-          }}
-          
-          label={""}
-        />
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => {
-            onSubmit(inputLocation);
+    <View style={styles.container} >
+      <View style={styles.mapContainer} onLayout={() => setMapLoaded(true)}>
+        <MapView
+          ref={mapRef}
+          style={styles.map}
+          provider={PROVIDER_GOOGLE}
+          initialRegion={INITIAL_POSITION}
+          onMapReady={() => {
+            if (origin) {
+              moveTo(origin);
+            }
           }}
         >
-          <Text style={styles.buttonLabel}>Submit</Text>
-        </TouchableOpacity>
+          {origin && <Marker coordinate={origin} />}
+        </MapView>
+        <View style={styles.searchContainer}>
+          <Text style={styles.searchBoxLabel}>Input Location</Text>
+          <InputAutocomplete
+            placeholder="Search location..."
+            onPlaceSelected={(details) => {
+              onPlaceSelected(details, "origin");
+            }}
+            label={""}
+          />
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => {
+              onSubmit(inputLocation);
+            }}
+          >
+            <Text style={styles.buttonLabel}>Submit</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -149,6 +159,10 @@ export default RecordCreation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  mapContainer: {
+    width: windowWidth, // Set explicit width
+    height: windowHeight, // Set explicit height
   },
   map: {
     width: "100%",
