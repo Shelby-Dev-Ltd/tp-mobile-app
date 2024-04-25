@@ -3,6 +3,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type RootStackParamList = {
 
+    base: undefined;
+
     home: undefined; //current screen
 
     records: undefined;
@@ -23,7 +25,7 @@ type RootStackParamList = {
     // ScreenThree: { data: Array<string> };
 };
 
-export type DestinationType = "home" | "analytics" | "video" | "records" | "signup" | "profile" | "recordDetail";
+export type DestinationType = "home" | "analytics" | "video" | "records" | "signup" | "profile" | "recordDetail" | "base";
 
 export type NavigationType = NativeStackNavigationProp<RootStackParamList, any>
 
