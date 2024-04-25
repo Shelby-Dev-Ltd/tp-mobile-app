@@ -16,8 +16,6 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
 
     const { isLoading, mutate, data: analyticsData } = useAnalytics();
 
-    useEffect(() => { console.log(analyticsData) }, [analyticsData])
-
     if (isLoading) return <LoaderScreen />;
 
     if (!analyticsData.length) return (

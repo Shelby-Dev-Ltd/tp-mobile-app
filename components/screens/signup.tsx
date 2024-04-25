@@ -15,7 +15,7 @@ export default function Signup({ navigation }: RootStack) {
 
   const DoLogin = async () => {
     try {
-      const res = login();
+      const res = await login();
       if (!res) {
         throw Error(res);
       }
