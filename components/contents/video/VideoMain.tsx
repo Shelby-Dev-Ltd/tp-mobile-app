@@ -5,15 +5,15 @@ import { useIsFocused } from "@react-navigation/native";
 // import { useCameraDevice, Camera as VCamera } from "react-native-vision-camera"
 
 import { Text, TouchableOpacity, View } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
 
 import { UploadResult, getStorage, ref, uploadBytes } from "firebase/storage"
 import { getApp } from "firebase/app"
 
-import { initializeApp } from 'firebase/app';
 import RecordConfirmation from './VideoConfirmation';
 import { LoaderScreen, Toast } from 'react-native-ui-lib';
 import RecordCreation from './RecordCreation';
+import * as ImagePicker from 'expo-image-picker';
+import { Ionicons } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
@@ -169,6 +169,21 @@ export default function VideoMain({ navigation }) {
         }
     };
 
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+            setCapturedVideoPath(result.assets[0].uri);
+        }
+    };
+
     if (isFocused) {
         if (capturedVideoPath.length && currentMediaId < 0) {
             return (
@@ -238,6 +253,25 @@ export default function VideoMain({ navigation }) {
                             }}
                         />
                     </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => pickImage()}
+                        style={{
+                            width: 70,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: 70,
+                            position: 'absolute',
+                            zIndex: 1,
+                            bottom: 100,
+                            right: '10%',
+                            marginLeft: -35,
+                        }}
+                    >
+                        <Ionicons name='image' color='white' size={32} />
+                    </TouchableOpacity>
+
+
                     <Camera
                         style={{ flex: 1, width: "auto", height: "auto" }}
                         ratio='16:9'

@@ -27,7 +27,8 @@
     "expo": "~50.0.15",
     "expo-av": "~13.10.6",
     "expo-camera": "~14.1.2",
-    "expo-image-picker": "^14.7.1",
+    "expo-dev-client": "~3.3.11",
+    "expo-image-picker": "~14.7.1",
     "expo-status-bar": "~1.11.1",
     "expo-web-browser": "~12.8.2",
     "firebase": "^10.9.0",
@@ -44,8 +45,7 @@
     "react-native-ui-lib": "^7.17.2",
     "react-native-vision-camera": "^3.9.1",
     "swr": "^2.2.5",
-    "tamagui": "^1.94.4",
-    "expo-dev-client": "~3.3.11"
+    "tamagui": "^1.94.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
