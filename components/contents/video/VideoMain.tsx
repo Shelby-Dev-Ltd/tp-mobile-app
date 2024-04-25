@@ -142,7 +142,7 @@ export default function VideoMain({ navigation }) {
         }
     }
 
-    const onSubmit = async (location: string) => {
+    const onSubmit = async (address: string, longitude: string, latitude: string) => {
         try {
             setIsUploadingVideo(true);
 
@@ -150,7 +150,7 @@ export default function VideoMain({ navigation }) {
                 method: 'POST',
                 body: JSON.stringify({
                     user: { id: 1 }, // TODO PUT REAL USER HERE
-                    location,
+                    address,
                     mediaId: currentMediaId,
                 }),
                 headers: {
