@@ -41,11 +41,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             })
             console.log(response);
 
-            if (response.status !== 200 || !response.ok) throw Error(response.statusText);
+            if (response.status !== 200 || !response.ok) console.error(response.statusText);
 
             const user: ApiResponse = await response.json();
-
-            if (!user) throw Error('No user found');
 
             // Set user to local
             setUser(user.data.user);

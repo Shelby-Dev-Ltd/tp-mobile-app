@@ -17,7 +17,7 @@ export default function Signup({ navigation }: RootStack) {
     try {
       const res = await login();
       if (!res) {
-        throw Error(res);
+        console.error(res);
       }
       navigation.navigate('base')
     } catch (e) {
