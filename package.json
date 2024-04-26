@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "build:dev": "eas build --profile development --platform android",
     "build:prod": "eas build --profile production --platform android",
-    "eas-build-pre-install": "echo $GOOGLE_SERVICES_BASE64 | base64 --decode > /path/to/google-services.json"
+    "eas-build-pre-install": "echo $GOOGLE_SERVICES_BASE64 | base64 --decode > ./google-services.json"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
