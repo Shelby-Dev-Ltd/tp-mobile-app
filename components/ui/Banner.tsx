@@ -11,7 +11,9 @@ export default class Banner extends React.Component<BannerProps> {
     state = {
         active: 0
     }
-
+    scrollView: any;
+    interval: NodeJS.Timeout;
+    
     // Function to handle manual slide change
     change = (event: { nativeEvent: { contentOffset: { x: number; }; layoutMeasurement: { width: number; }; }; }) => {
         const slide = Math.ceil(event.nativeEvent.contentOffset.x / event.nativeEvent.layoutMeasurement.width);
@@ -29,8 +31,6 @@ export default class Banner extends React.Component<BannerProps> {
         const screenWidth = Dimensions.get('window').width;
         this.scrollView.scrollTo({ x: nextSlide * screenWidth, animated: true });
     }
-    scrollView: any;
-    interval: NodeJS.Timeout;
 
     // Start auto-scroll when component mounts
     componentDidMount() {
