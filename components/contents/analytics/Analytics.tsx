@@ -9,6 +9,7 @@ import { DatasetsType } from "../../../types/chart";
 import { Dataset } from "react-native-chart-kit/dist/HelperTypes";
 import DonutChart from "../../charts/DonutChart";
 import DonutChartContainer from "./DonutChartContainer";
+import MapView from "react-native-maps";
 
 type AnalyticsProps = {
     navigation: NavigationType
@@ -27,6 +28,18 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
     return (
         <ScrollView 
         style={{ flex: 1 }}>
+           <MapView
+            initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            }}
+            pitchEnabled={false}
+            zoomEnabled={false}
+            scrollEnabled={false}
+            rotateEnabled={false}
+            />
             <DonutChartContainer analyticsData={analyticsData}/>
             {/* <View style={{ padding: 10 }}>
                 <View style={{ marginBottom: 20 }}>
