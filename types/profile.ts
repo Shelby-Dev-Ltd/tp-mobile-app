@@ -3,7 +3,7 @@ import { User } from "./user";
 
 export type ProfileProps = {
     profile: User,
-    updateProfile: (email: string, name: string) => Promise<User | null>;
+    updateProfile: (email: string, name: string, photoUrl?: string) => Promise<User | null>;
     logout: () => void;
     navigation: NavigationType,
 }

@@ -1,20 +1,19 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Dimensions, Image, Pressable, ScrollView, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
-import { imagesDataURL } from '../constants/data';
 import { ProfileProps } from "../../types/profile";
+import { getStorage, ref } from "@firebase/storage";
+import { app } from "../../config/firebase";
+import { DoUploadToStorage } from "../../services/storageService";
+import { useAuth } from "../../contexts/AuthContext";
 
 const windowHeight = Dimensions.get('window').height;
 
 const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updateProfile }) => {
-    const [selectedImage, setSelectedImage] = useState(imagesDataURL[0]);
-    const [id, setId] = useState<number>(1);
-    const [name, setName] = useState<string>('Arina Sabilahaq');
-    const [email, setEmail] = useState<string>('arinasabilahaq@gmail.com');
+    const [name, setName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [isEditing, setIsEditing] = useState(false);
-    // const [password, setPassword] = useState('1234567');
-    // const [country, setCountry] = useState('Jababeka, Bekasi Regency');
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -22,7 +21,7 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
 
     const handleSaveChanges = async () => {
         try {
-            const updatedUser = await updateProfile(email, name);
+            const updatedUser = await updateProfile(email, name, profile.profile.photoUrl);
             if (!updatedUser) throw Error();
         } catch (e) {
             console.error("Failed to save profile!");
@@ -33,25 +32,63 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
 
     };
 
-
+    // on fetch profile, set default input data
     useEffect(() => {
-        setId(profile.id);
         setName(profile.name);
         setEmail(profile.email);
     }, [profile]);
 
+    const UploadToCloudStore = async (pictureUri: string) => {
+        try {
+            const response: any = await fetch(pictureUri);
+            const blob = await response.blob();
+            const pictureName = pictureUri.substring(pictureUri.lastIndexOf('/') + 1);
+
+            const storage = getStorage(app)
+            const storageRef = ref(storage, `user/${profile.id}/${pictureName}`)
+
+            if (!storage) throw Error("No storage found!")
+
+            const res = await DoUploadToStorage(storageRef, blob);
+            return res;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
+
     const handleImageSelection = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 4],
             quality: 1,
         });
 
         if (!result.canceled && result.assets && result.assets.length > 0) {
-            setSelectedImage(result.assets[0].uri);
+            uploadPhoto(result.assets[0].uri);
         }
     };
+
+    const uploadPhoto = async (localImagePath: string) => {
+        try {
+            const res = await UploadToCloudStore(localImagePath);
+
+            if (!res) throw Error('failed to upload picture')
+
+            const publicUrlLink = `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/user/${profile.id}`;
+
+            const fullPath = res.ref.fullPath;
+            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/${encodeURIComponent(fullPath)}?alt=media`;
+
+            console.log(publicUrl);
+            updateProfile(profile.email, profile.name, publicUrl);
+
+        } catch (e) {
+            console.error(e);
+            ToastAndroid.show(e, ToastAndroid.LONG);
+        }
+    }
 
     return (
         <ScrollView style={{ flex: 1, paddingHorizontal: 22 }} showsVerticalScrollIndicator={false}>
@@ -62,7 +99,7 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
                 <View style={{ alignItems: 'center', marginVertical: 22 }}>
                     <TouchableOpacity onPress={handleImageSelection}>
                         <Image
-                            source={{ uri: selectedImage }}
+                            source={{ uri: profile.profile.photoUrl }}
                             style={{ height: 170, width: 170, borderRadius: 85, borderWidth: 2 }}
                         />
                         <View style={{ position: 'absolute', bottom: 0, right: 10, zIndex: 9999 }}>
@@ -111,7 +148,7 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
                     </Text>
                 </TouchableOpacity>
                 <Pressable
-                    onPress={() => logout()}
+                    onPress={() => { logout(); navigation.replace('signup') }}
                     style={{
                         justifyContent: 'center',
                         flexDirection: 'row',
