@@ -40,7 +40,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 }
             })
 
-            if (response.status !== 200 || !response.ok) console.error(response.statusText);
+            if (response.status !== 200 || !response.ok) {
+                setIsLoggedIn(false);
+                return console.error(response)
+            };
 
             const user: ApiResponse = await response.json();
 
