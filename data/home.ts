@@ -8,7 +8,6 @@ import { Vehicles } from "../types/home";
 const fetcher = async () => {
     try {
         const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/analytics/count/1`)
-        console.log(res);
         const data: ApiResponse = await res.json();
 
         if (data.error) throw Error(data.status.toString());

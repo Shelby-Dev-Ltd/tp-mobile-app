@@ -9,6 +9,11 @@ import { useAuth } from "../../contexts/AuthContext";
 const ProfileScreen: React.FC<screenProps> = ({ title, navigation, openedPage }) => {
     const { logout, user, update } = useAuth();
 
+    const handleProfileUpdate = (email: string, name: string, photoUrl: string) => {
+        update(email, name, photoUrl);
+
+    }
+
     const content = (
         <View style={{ flex: 1 }}>
             <Profile

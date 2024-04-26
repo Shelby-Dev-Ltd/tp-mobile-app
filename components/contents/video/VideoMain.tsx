@@ -14,6 +14,8 @@ import { LoaderScreen, Toast } from 'react-native-ui-lib';
 import RecordCreation from './RecordCreation';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
+import { DoUploadToStorage } from '../../../services/storageService';
+import { app } from '../../../config/firebase';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
@@ -70,7 +72,6 @@ export default function VideoMain({ navigation }) {
             const blob = await response.blob();
             const videoName = videoUri.substring(videoUri.lastIndexOf('/') + 1);
 
-            const app = getApp()
             const storage = getStorage(app)
             const storageRef = ref(storage, `captures/${videoName}`)
 
@@ -85,14 +86,6 @@ export default function VideoMain({ navigation }) {
         }
     };
 
-    const DoUploadToStorage = async (storageRef: any, file: any): Promise<UploadResult> => {
-        try {
-            const res: UploadResult = await uploadBytes(storageRef, file);
-            return res;
-        } catch (e) {
-            return e
-        }
-    }
 
     const saveVideo = async (publicUrl: string) => {
         try {
