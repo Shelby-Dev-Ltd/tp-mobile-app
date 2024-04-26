@@ -3,6 +3,7 @@ import { Text, View, FlatList, StyleSheet } from "react-native";
 import { useAnalyticsSingle } from "../../../data/analytics";
 import { LoaderScreen } from "react-native-ui-lib";
 import { BezierLineChart } from "../../charts/BezierLineChart";
+import DonutChartContainer from "../analytics/DonutChartContainer";
 
 type RecordDetailProps = {
     id: number;
@@ -30,10 +31,8 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
 
     return (
         <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center', alignItems: 'center', gap: 16 }}>
-            <BezierLineChart
-                analyticsData={[record]}
-            />
-            <FlatList
+            <DonutChartContainer analyticsData={[record]}/>
+            {/* <FlatList
                 data={tableData}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => {
@@ -55,7 +54,7 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
                         )
                     }
                 }}
-            />
+            /> */}
         </View>
     )
 };

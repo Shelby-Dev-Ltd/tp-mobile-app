@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import DonutChart from '../../charts/DonutChart';
 import {useFont} from '@shopify/react-native-skia';
@@ -57,6 +57,10 @@ export const DonutChartContainer = ({analyticsData}) => {
     
     const font = useFont(require('../../../assets/fonts/Roboto-Bold.ttf'), 60);
     const smallFont = useFont(require('../../../assets/fonts/Roboto-Light.ttf'), 25);
+
+    useEffect(() => {
+        generateData()
+      }, [analyticsData]);
     
     if (!font || !smallFont) {
         return <View />;
@@ -81,9 +85,9 @@ export const DonutChartContainer = ({analyticsData}) => {
             colors={colors}
           />
         </View>
-        <TouchableOpacity onPress={generateData} style={styles.button}>
+        {/* <TouchableOpacity onPress={generateData} style={styles.button}>
           <Text style={styles.buttonText}>Generate</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {data.map((item, index) => {
           return <RenderItem item={item} key={index} index={index} />;
         })}
