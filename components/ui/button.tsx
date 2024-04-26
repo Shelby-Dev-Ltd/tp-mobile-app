@@ -10,7 +10,6 @@ import Animated, {
 import { useNavigation } from '@react-navigation/native';
 
 import { theme } from '../../constants/theme';
-import  Register from '../screens/register';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const AnimatedFeather = Animated.createAnimatedComponent(Feather);

@@ -20,8 +20,6 @@ import { Button } from '../ui/button';
 import { Pagination } from '../ui/pagination';
 import { theme } from '../../constants/theme';
 import { data, type Data } from '../../data/onboarding';
-import Login from './login';
-import Register from './register';
 import Routes from '../../routes/routes';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
