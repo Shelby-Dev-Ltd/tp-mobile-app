@@ -144,6 +144,8 @@ export default function VideoMain({ navigation }) {
                 body: JSON.stringify({
                     user: { id: 1 }, // TODO PUT REAL USER HERE
                     address,
+                    longitude,
+                    latitude,
                     mediaId: currentMediaId,
                 }),
                 headers: {
