@@ -7,6 +7,7 @@ import { screenProps } from "../../types/screenprops";
 import { BezierLineChart } from "../charts/BezierLineChart";
 import { imagePlaceholders } from "../../config/placeholders";
 import Analytics from "../contents/analytics/Analytics";
+import DonutChartContainer from "../contents/analytics/DonutChartContainer";
 
 export default function AnalyticsScreen({ title, navigation, openedPage }: screenProps) {
 

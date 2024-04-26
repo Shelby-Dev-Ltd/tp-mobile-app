@@ -7,6 +7,8 @@ import { useAnalytics } from "../../../data/analytics";
 import { LoaderScreen } from "react-native-ui-lib";
 import { DatasetsType } from "../../../types/chart";
 import { Dataset } from "react-native-chart-kit/dist/HelperTypes";
+import DonutChart from "../../charts/DonutChart";
+import DonutChartContainer from "./DonutChartContainer";
 
 type AnalyticsProps = {
     navigation: NavigationType
@@ -23,8 +25,10 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
     )
 
     return (
-        <ScrollView style={{ flex: 1 }}>
-            <View style={{ padding: 10 }}>
+        <ScrollView 
+        style={{ flex: 1 }}>
+            <DonutChartContainer analyticsData={analyticsData}/>
+            {/* <View style={{ padding: 10 }}>
                 <View style={{ marginBottom: 20 }}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginBottom: -30 }}></Text>
                     <Image
@@ -36,7 +40,7 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
                     <BezierLineChart
                         analyticsData={analyticsData}
                     />
-                </View>
+                </View> */}
                 {/* TODO: ADD PIE CHART */}
                 {/* <View>
                     <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Pie Chart</Text>
@@ -55,7 +59,7 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
                         absolute
                     />
                 </View> */}
-            </View>
+            {/* </View> */}
         </ScrollView>
     );
 }
