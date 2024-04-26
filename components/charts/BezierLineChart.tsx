@@ -2,44 +2,73 @@ import { Dimensions, View } from "react-native";
 import { Text } from "react-native-ui-lib";
 import {
     LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
 } from "react-native-chart-kit";
-import { ReactNode } from "react";
+import React, { useEffect, useState } from "react";
+import { DatasetsType, LineChartProps } from "../../types/chart";
+import { Dataset } from "react-native-chart-kit/dist/HelperTypes";
 
-export const BezierLineChart: () => ReactNode = () => {
+export const BezierLineChart: React.FC<LineChartProps> = ({ analyticsData }) => {
+
+    const [labels, setLabels] = useState<Array<string>>([]);
+    const [datasets, setDatasets] = useState<DatasetsType>([]);
+
+    // process data into chart input type
+    useEffect(() => {
+        const newLabels: Array<string> = analyticsData.map((data) => new Date(data.date.toString()).toLocaleDateString());
+
+        const newBikeData: Dataset = {
+            data: analyticsData.map((data) => {
+                const { BikeCount } = data;
+                return BikeCount;
+            }),
+            color: () => "red"
+        }
+
+        const newCarData: Dataset = {
+            data: analyticsData.map((data) => {
+                const { CarCount } = data;
+                return CarCount;
+            }),
+            color: () => "blue"
+        }
+
+        const newTruckData: Dataset = {
+            data: analyticsData.map((data) => {
+                const { TruckCount } = data;
+                return TruckCount;
+            }),
+            color: () => "green"
+        }
+
+        setLabels(newLabels);
+        setDatasets([newBikeData, newCarData, newTruckData]);
+
+    }, [analyticsData]);
+
+    if (!analyticsData || !datasets.length || !labels.length) return <></>;
+
     return (
-        <View>
-            <Text text60>Bezier Line Chart</Text>
+        <View
+            style={{
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignContent: 'center',
+            }}
+        >
             <LineChart
                 data={{
-                    labels: ["January", "February", "March", "April", "May", "June"],
-                    datasets: [
-                        {
-                            data: [
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100
-                            ]
-                        }
-                    ]
+                    labels,
+                    datasets,
                 }}
-                width={Dimensions.get("window").width} // from react-native
+                width={Dimensions.get("window").width - 40}
                 height={220}
-                yAxisLabel="$"
-                yAxisSuffix="k"
-                yAxisInterval={1} // optional, defaults to 1
+                yAxisSuffix=" unit"
+                yAxisInterval={1}
                 chartConfig={{
-                    backgroundColor: "#e26a00",
-                    backgroundGradientFrom: "#fb8c00",
-                    backgroundGradientTo: "#ffa726",
-                    decimalPlaces: 2, // optional, defaults to 2dp
+                    backgroundColor: "rgba(255, 255, 255, 1)",
+                    backgroundGradientFrom: "#2F80ED",
+                    backgroundGradientTo: "#91c0ff",
+                    decimalPlaces: 0,
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     style: {
@@ -57,6 +86,19 @@ export const BezierLineChart: () => ReactNode = () => {
                     borderRadius: 16
                 }}
             />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    gap: 10,
+                    alignItems: 'flex-start',
+                    width: '100%',
+                }}
+            >
+                <Text>🔴 Bike</Text>
+                <Text>🔵 Car</Text>
+                <Text>🟢 Truck</Text>
+            </View>
         </View>
     )
 }

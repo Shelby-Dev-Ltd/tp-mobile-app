@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View } from "react-native";
 import RecordCard from "./RecordCard";
 import { Record as RecordType } from "../../../types/record";
-import { LoaderScreen } from "react-native-ui-lib";
+import { NavigationType } from "../../../types/navigation";
 
 type RecordProps = {
+    navigation: NavigationType;
     records: RecordType[];
 }
 
-const Record = ({ records }: RecordProps) => {
+const Record = ({ navigation, records }: RecordProps) => {
+
     return (
         <View>
             {
@@ -16,8 +18,12 @@ const Record = ({ records }: RecordProps) => {
                     return (
                         <RecordCard
                             key={index}
-                            location={record.location}
+                            id={record.id}
+                            address={record.address}
+                            longitude={record.longitude}
+                            latitude={record.latitude}
                             date={record.date}
+                            onClick={() => navigation.navigate("recordDetail", { id: record.id })}
                         />
                     )
                 }

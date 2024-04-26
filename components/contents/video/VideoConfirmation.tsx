@@ -1,4 +1,4 @@
-import { View, Image, Pressable, Text, Button, Dimensions } from "react-native";
+import { View, Image, Pressable, Text, Button, Dimensions, TouchableOpacity } from "react-native";
 import { Video, ResizeMode } from 'expo-av';
 import { useRef, useState } from "react";
 
@@ -23,7 +23,7 @@ const VideoConfirmation = ({ videoUrlLocal, cancelVideo, submitVideo }: videoCon
                         zIndex: 1,
                     }}
                 >
-                    <Pressable
+                    <TouchableOpacity
                         onPress={() => submitVideo()}
                         style={{
                             borderRadius: 30,
@@ -44,7 +44,7 @@ const VideoConfirmation = ({ videoUrlLocal, cancelVideo, submitVideo }: videoCon
                         >
                             Proceed
                         </Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
 
                 <View

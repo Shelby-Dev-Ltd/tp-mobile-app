@@ -58,7 +58,7 @@ export const MenuItem = ({ page, doNavigate, isOpen }: menuItemProps) => {
                 <Ionicons
                     name={page.ioniconstring as any}
                     size={(containerSize ? containerSize - 50 : 0) || 0}
-                    color="#2F80ED"
+                    color={isOpen ? "#2F80ED" : 'grey'}
                 />
             </TouchableOpacity>
         </View>

@@ -22,10 +22,11 @@ export const globalStyles = StyleSheet.create({
     content: {
         flex: 1,
         paddingHorizontal: 10,
+        paddingBottom: 60,
     },
     box: {
         width: windowWidth / 5,
-        height: 50,
+        height: 60,
         overflow: 'hidden',
     },
 });

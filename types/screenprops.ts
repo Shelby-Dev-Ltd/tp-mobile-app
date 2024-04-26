@@ -4,4 +4,5 @@ export type screenProps = {
     title: string,
     navigation: NavigationType,
     openedPage: string,
+    params?: unknown,
 }

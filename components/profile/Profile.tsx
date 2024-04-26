@@ -1,37 +1,94 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Dimensions, Image, Pressable, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { useAuth } from "../../contexts/AuthContext";
-import React, { useState } from "react";
+import { Dimensions, Image, Pressable, ScrollView, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
-import { imagesDataURL } from '../constants/data';
-import { NavigationType } from "../../types/navigation";
+import { ProfileProps } from "../../types/profile";
+import { getStorage, ref } from "@firebase/storage";
+import { app } from "../../config/firebase";
+import { DoUploadToStorage } from "../../services/storageService";
+import { useAuth } from "../../contexts/AuthContext";
 
 const windowHeight = Dimensions.get('window').height;
 
-type ProfileProps = {
-    navigation: NavigationType
-}
+const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updateProfile }) => {
+    const [name, setName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [isEditing, setIsEditing] = useState(false);
 
-const Profile: React.FC<ProfileProps> = ({ navigation }) => {
-    const { logout } = useAuth()
-    const [selectedImage, setSelectedImage] = useState(imagesDataURL[0]);
-    const [name, setName] = useState('Arina Sabilahaq');
-    const [email, setEmail] = useState('arinasabilahaq@gmail.com');
-    const [password, setPassword] = useState('1234567');
-    const [country, setCountry] = useState('Jababeka, Bekasi Regency');
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleSaveChanges = async () => {
+        try {
+            const updatedUser = await updateProfile(email, name, profile.profile.photoUrl);
+            if (!updatedUser) throw Error();
+        } catch (e) {
+            console.error("Failed to save profile!");
+            ToastAndroid.show("Failed to save profile!", ToastAndroid.LONG);
+        } finally {
+            setIsEditing(false);
+        }
+
+    };
+
+    // on fetch profile, set default input data
+    useEffect(() => {
+        setName(profile.name);
+        setEmail(profile.email);
+    }, [profile]);
+
+    const UploadToCloudStore = async (pictureUri: string) => {
+        try {
+            const response: any = await fetch(pictureUri);
+            const blob = await response.blob();
+            const pictureName = pictureUri.substring(pictureUri.lastIndexOf('/') + 1);
+
+            const storage = getStorage(app)
+            const storageRef = ref(storage, `user/${profile.id}/${pictureName}`)
+
+            if (!storage) throw Error("No storage found!")
+
+            const res = await DoUploadToStorage(storageRef, blob);
+            return res;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
 
     const handleImageSelection = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 4],
             quality: 1,
         });
 
         if (!result.canceled && result.assets && result.assets.length > 0) {
-            setSelectedImage(result.assets[0].uri);
+            uploadPhoto(result.assets[0].uri);
         }
     };
+
+    const uploadPhoto = async (localImagePath: string) => {
+        try {
+            const res = await UploadToCloudStore(localImagePath);
+
+            if (!res) throw Error('failed to upload picture')
+
+            const publicUrlLink = `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/user/${profile.id}`;
+
+            const fullPath = res.ref.fullPath;
+            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/${encodeURIComponent(fullPath)}?alt=media`; ``
+
+            console.log(publicUrl);
+            updateProfile(profile.email, profile.name, publicUrl);
+
+        } catch (e) {
+            console.error(e);
+            ToastAndroid.show(e, ToastAndroid.LONG);
+        }
+    }
 
     return (
         <ScrollView style={{ flex: 1, paddingHorizontal: 22 }} showsVerticalScrollIndicator={false}>
@@ -42,7 +99,7 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
                 <View style={{ alignItems: 'center', marginVertical: 22 }}>
                     <TouchableOpacity onPress={handleImageSelection}>
                         <Image
-                            source={{ uri: selectedImage }}
+                            source={{ uri: profile.profile.photoUrl }}
                             style={{ height: 170, width: 170, borderRadius: 85, borderWidth: 2 }}
                         />
                         <View style={{ position: 'absolute', bottom: 0, right: 10, zIndex: 9999 }}>
@@ -57,39 +114,49 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
                     <View style={{ flexDirection: 'column', marginBottom: 6 }}>
                         <Text style={{ fontWeight: 'bold' }}>Name</Text>
                         <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
-                            <TextInput value={name} onChangeText={(value) => setName(value)} editable={true} />
+                            <TextInput value={name} onChangeText={(value) => setName(value)} editable={isEditing} />
                         </View>
                     </View>
                     <View style={{ flexDirection: 'column', marginBottom: 6 }}>
                         <Text style={{ fontWeight: 'bold' }}>Email</Text>
                         <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
-                            <TextInput value={email} onChangeText={(value) => setEmail(value)} editable={true} />
-                        </View>
-                    </View>
-                    <View style={{ flexDirection: 'column', marginBottom: 6 }}>
-                        <Text style={{ fontWeight: 'bold' }}>Password</Text>
-                        <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
-                            <TextInput value={password} onChangeText={(value) => setPassword(value)} editable={true} secureTextEntry />
+                            <TextInput value={email} onChangeText={(value) => setEmail(value)} editable={isEditing} />
                         </View>
                     </View>
                 </View>
-                <View style={{ flexDirection: 'column', marginBottom: 6 }}>
+                {/* <View style={{ flexDirection: 'column', marginBottom: 6 }}>
                     <Text style={{ fontWeight: 'bold' }}>Location</Text>
                     <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
                         <TextInput value={country} onChangeText={(value) => setCountry(value)} editable={true} />
                     </View>
-                </View>
+                </View> */}
                 <TouchableOpacity
-                    style={{ height: 44, borderRadius: 6, alignItems: 'center', justifyContent: 'center' }}
+                    onPress={isEditing ? handleSaveChanges : handleEditClick}
+                    style={{
+                        height: 44,
+                        borderRadius: 50,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: isEditing ? '#69ff84' : '#2F80ED',
+                        paddingVertical: 10,
+                        marginVertical: 10,
+                    }}
                 >
-                    <Text>Save Change</Text>
+                    <Text>
+                        {isEditing ? "Save Changes" : "Edit"}
+
+                    </Text>
                 </TouchableOpacity>
                 <Pressable
-                    onPress={() => logout()}
+                    onPress={() => { logout(); navigation.replace('signup') }}
                     style={{
                         justifyContent: 'center',
                         flexDirection: 'row',
                         gap: 4,
+                        backgroundColor: '#ff4d4d',
+                        paddingVertical: 10,
+                        marginVertical: 10,
+                        borderRadius: 50
                     }}
                 >
                     <Ionicons name="exit-outline" style={{ transform: [{ rotate: '180deg' }] }} size={20} />

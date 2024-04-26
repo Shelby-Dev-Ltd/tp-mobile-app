@@ -5,15 +5,17 @@ import { useIsFocused } from "@react-navigation/native";
 // import { useCameraDevice, Camera as VCamera } from "react-native-vision-camera"
 
 import { Text, TouchableOpacity, View } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
 
 import { UploadResult, getStorage, ref, uploadBytes } from "firebase/storage"
 import { getApp } from "firebase/app"
 
-import { initializeApp } from 'firebase/app';
 import RecordConfirmation from './VideoConfirmation';
 import { LoaderScreen, Toast } from 'react-native-ui-lib';
 import RecordCreation from './RecordCreation';
+import * as ImagePicker from 'expo-image-picker';
+import { Ionicons } from '@expo/vector-icons';
+import { DoUploadToStorage } from '../../../services/storageService';
+import { app } from '../../../config/firebase';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
@@ -70,7 +72,6 @@ export default function VideoMain({ navigation }) {
             const blob = await response.blob();
             const videoName = videoUri.substring(videoUri.lastIndexOf('/') + 1);
 
-            const app = getApp()
             const storage = getStorage(app)
             const storageRef = ref(storage, `captures/${videoName}`)
 
@@ -85,14 +86,6 @@ export default function VideoMain({ navigation }) {
         }
     };
 
-    const DoUploadToStorage = async (storageRef: any, file: any): Promise<UploadResult> => {
-        try {
-            const res: UploadResult = await uploadBytes(storageRef, file);
-            return res;
-        } catch (e) {
-            return e
-        }
-    }
 
     const saveVideo = async (publicUrl: string) => {
         try {
@@ -142,7 +135,7 @@ export default function VideoMain({ navigation }) {
         }
     }
 
-    const onSubmit = async (location: string) => {
+    const onSubmit = async (address: string, longitude: string, latitude: string) => {
         try {
             setIsUploadingVideo(true);
 
@@ -150,7 +143,7 @@ export default function VideoMain({ navigation }) {
                 method: 'POST',
                 body: JSON.stringify({
                     user: { id: 1 }, // TODO PUT REAL USER HERE
-                    location,
+                    address,
                     mediaId: currentMediaId,
                 }),
                 headers: {
@@ -166,6 +159,19 @@ export default function VideoMain({ navigation }) {
             console.error('Error in onSubmit:', e);
         } finally {
             setIsUploadingVideo(false);
+        }
+    };
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setCapturedVideoPath(result.assets[0].uri);
         }
     };
 
@@ -238,6 +244,25 @@ export default function VideoMain({ navigation }) {
                             }}
                         />
                     </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => pickImage()}
+                        style={{
+                            width: 70,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: 70,
+                            position: 'absolute',
+                            zIndex: 1,
+                            bottom: 100,
+                            right: '10%',
+                            marginLeft: -35,
+                        }}
+                    >
+                        <Ionicons name='image' color='white' size={32} />
+                    </TouchableOpacity>
+
+
                     <Camera
                         style={{ flex: 1, width: "auto", height: "auto" }}
                         ratio='16:9'
