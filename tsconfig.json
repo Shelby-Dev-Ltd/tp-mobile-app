@@ -8,5 +8,20 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "strict": false
-  }
+  },
+  "baseUrl": ".",
+  "paths": {
+    "*": [
+      "./"
+    ],
+    "@components/*": [
+      "components/*"
+    ],
+    "@hooks/*": [
+      "hooks/*"
+    ],
+    "@assets/*": [
+      "assets/*"
+    ],
+  },
 }
