@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { vehicleCountStyles } from "../../../styles/vehicleCount";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { VehicleCountProps } from "../../../types/home";
@@ -20,13 +20,16 @@ const VehicleCount: React.FC<VehicleCountProps> = ({ vehicles }) => {
                 {vehicles.map((vehicle, index) => (
                     <View
                         key={index}
-                        style={[vehicleCountStyles.card, vehicleCountStyles.elevation, { backgroundColor: vehicle.cardColor }]}
+                        style={[vehicleCountStyles.card, { backgroundColor: vehicle.cardColor }]}
                     >
                         <View style={vehicleCountStyles.icon}>
-                            <FontAwesome5 name={vehicle.icon ? vehicle.icon : "truck-pickup"} size={70} color="black" />
+                            <Image
+                             source={vehicle.icon}
+                             style={{ width: 100, height: 100 }}
+                            />
                         </View>
                         <Text style={vehicleCountStyles.contentText}>
-                            {`${vehicle.name}`}
+                            {`${vehicle.name}`}:
                             {"\n"}
                             {`${vehicle.count}`}
                         </Text>

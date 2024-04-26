@@ -4,7 +4,7 @@ export type Vehicles = {
     name: string,
     count: number,
     cardColor: string,
-    icon?: string,
+    icon?: any,
 }
 
 export type VehicleCountProps = {

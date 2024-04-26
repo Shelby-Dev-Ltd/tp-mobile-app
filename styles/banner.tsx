@@ -17,7 +17,7 @@ export const bannerStyles = StyleSheet.create({
         width: width - 20,
         height,
         resizeMode: "cover",
-        borderRadius: 40
+        borderRadius: 40,
     },
     pagination: {
         flexDirection: "row",
