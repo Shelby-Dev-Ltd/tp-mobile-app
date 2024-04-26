@@ -79,7 +79,7 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
             const publicUrlLink = `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/user/${profile.id}`;
 
             const fullPath = res.ref.fullPath;
-            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/${encodeURIComponent(fullPath)}?alt=media`;
+            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/${encodeURIComponent(fullPath)}?alt=media`; ``
 
             console.log(publicUrl);
             updateProfile(profile.email, profile.name, publicUrl);

@@ -6,6 +6,8 @@ import AnalyticscScreen from "./analytics";
 import EditProfile from "./profile";
 import { RoutePropsType } from "../../types/navigation";
 import RecordDetailScreen from "./record-detail";
+import { Image, Text, View } from "react-native";
+import { SERVERLOGO } from "../../assets";;
 
 const Stack = createNativeStackNavigator();
 
@@ -15,10 +17,18 @@ export default function BaseScreen() {
       <Stack.Screen
         name="home"
         options={{
-          title: "Home",
-          headerLeft: () => <></>,
-          animation: "none",
+          title: "Traffic Pulse",
+          headerLeft: () =>
+            <View style={{ width: 50, height: 50 }}>
+              <Image
+                style={{ width: 50, height: 50 }}
+                source={require("../../assets/server-logo.png")}
+              />
+            </View>,
+          animation: "fade",
+          headerShadowVisible: false,
         }}
+
       >
         {(props: RoutePropsType) => (
           <HomeScreen
@@ -35,6 +45,7 @@ export default function BaseScreen() {
           title: "Records",
           headerLeft: () => <></>,
           animation: "none",
+          headerShadowVisible: false,
         }}
       >
         {(props: RoutePropsType) => (
@@ -51,6 +62,7 @@ export default function BaseScreen() {
         options={{
           title: "Record Detail",
           animation: "none",
+          headerShadowVisible: false,
         }}
       >
         {(props: RoutePropsType) => (
@@ -85,6 +97,7 @@ export default function BaseScreen() {
           title: "Analytics",
           headerLeft: () => <></>,
           animation: "none",
+          headerShadowVisible: false,
         }}
       >
         {(props: RoutePropsType) => (
@@ -99,9 +112,11 @@ export default function BaseScreen() {
       <Stack.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: "",
           headerLeft: () => <></>,
           animation: "none",
+          headerShadowVisible: false,
+
         }}
       >
         {(props: RoutePropsType) => (
