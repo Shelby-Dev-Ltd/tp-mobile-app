@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "build:dev": "eas build --profile development --platform android",
     "build:prod": "eas build --profile production --platform android",
-    "eas-build-pre-install": "echo $GOOGLE_SERVICES_BASE64 | base64 --decode > ./google-services.json"
+    "eas-build-pre-install": "echo $GOOGLE_SERVICES_BASE64 | base64 --decode > ./.serviceAccount.json"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
@@ -26,6 +26,7 @@
     "@react-navigation/native-stack": "^6.9.18",
     "@react-navigation/stack": "^6.3.28",
     "@shopify/react-native-skia": "^1.2.3",
+    "babel-plugin-module-resolver": "^5.0.2",
     "expo": "~50.0.15",
     "expo-av": "~13.10.6",
     "expo-camera": "~14.1.2",
