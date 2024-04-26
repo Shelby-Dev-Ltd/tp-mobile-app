@@ -5,6 +5,8 @@ import Welcome from "../contents/home/Welcome";
 import Banner from "../ui/Banner";
 import VehicleCount from "../contents/home/VehicleCount";
 import LatestRecords from "../contents/record/LatestRecords";
+import { useAuth } from "../../contexts/AuthContext";
+import useVehicleCount from "../../data/home";
 
 const images = [
     "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg",
@@ -12,21 +14,34 @@ const images = [
     "https://img.freepik.com/free-vector/abstract-geometric-round-shape-blue-background-design_1017-42785.jpg"
 ]
 
-export default function HomeScreen({ title, navigation, openedPage }: screenProps) {
+const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
 
-    const content =
+    const { user } = useAuth();
+
+    if (!user) return null;
+
+    const { data } = useVehicleCount();
+
+    const content = (
         <View style={{ flex: 1, paddingTop: 30, }}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
-                <Welcome />
+                <Welcome
+                    user={user}
+                />
                 <Banner images={images} />
-                <VehicleCount />
+                <VehicleCount
+                    vehicles={data}
+                />
                 <LatestRecords navigation={navigation} />
             </ScrollView>
         </View>
+    )
 
     return (
         <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={true} />
     );
 }
+
+export default HomeScreen;

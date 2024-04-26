@@ -39,7 +39,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     "Content-Type": 'application/json',
                 }
             })
-            console.log(response);
 
             if (response.status !== 200 || !response.ok) console.error(response.statusText);
 
@@ -49,7 +48,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setUser(user.data.user);
 
             setIsLoggedIn(true);
-            ToastAndroid.show('Logged in..', ToastAndroid.LONG);
+            ToastAndroid.show('Logged in', ToastAndroid.LONG);
         } catch (e) {
             setUser(undefined);
             console.error(e);
@@ -70,7 +69,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     'Content-type': 'application/json',
                 }
             }) // TODO: Use real user Id
-            console.log(response);
 
             const result: ApiResponse = await response.json();
             if (result.error) throw (result.error);
@@ -80,7 +78,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setUser(updatedUser);
             return updatedUser;
         } catch (e) {
-            console.log(e);
+            console.error(e);
             return null;
         }
     }
