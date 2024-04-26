@@ -1,16 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { vehicleCountStyles } from "../../../styles/vehicleCount";
 import { FontAwesome5 } from '@expo/vector-icons';
+import { VehicleCountProps } from "../../../types/home";
 
-const vehicles = [
-    { type: "car", count: 11, color: "#DFF1FF" },
-    { type: "motorcycle", count: 5, color: "#E8FFEB" },
-    { type: "bicycle", count: 5, color: "#FFECEF" },
-    { type: "truck", count: 8, color: "#DFF1FF" }
-];
+const VehicleCount: React.FC<VehicleCountProps> = ({ vehicles }) => {
 
-const VehicleCount = () => {
+    if (!vehicles || !vehicles.length) return null;
+
     return (
         <View>
             <Text style={vehicleCountStyles.text}>
@@ -23,13 +20,13 @@ const VehicleCount = () => {
                 {vehicles.map((vehicle, index) => (
                     <View
                         key={index}
-                        style={[vehicleCountStyles.card, vehicleCountStyles.elevation, { backgroundColor: vehicle.color }]}
+                        style={[vehicleCountStyles.card, vehicleCountStyles.elevation, { backgroundColor: vehicle.cardColor }]}
                     >
                         <View style={vehicleCountStyles.icon}>
-                            <FontAwesome5 name={vehicle.type} size={70} color="black" />
+                            <FontAwesome5 name={vehicle.icon ? vehicle.icon : "truck-pickup"} size={70} color="black" />
                         </View>
                         <Text style={vehicleCountStyles.contentText}>
-                            {`${vehicle.type}:`}
+                            {`${vehicle.name}`}
                             {"\n"}
                             {`${vehicle.count}`}
                         </Text>

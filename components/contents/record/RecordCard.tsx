@@ -14,7 +14,7 @@ type cardProps = {
 const RecordCard = ({ id, address, longitude, latitude, date, onClick }: cardProps) => {
     return (
         <Pressable
-            style={[recordCardStyles.card, recordCardStyles.shadowProp]}
+            style={[recordCardStyles.card, recordCardStyles.shadowProp, { paddingRight: 50 }]}
             onPress={() => onClick(id)}
         >
             <View style={recordCardStyles.headingContainer}>

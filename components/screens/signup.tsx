@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
 import { RootStack } from "../../types/rootstack";
@@ -8,6 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function Signup({ navigation }: RootStack) {
 
   const { login, isLoggedIn } = useAuth();
+  const [isLoading, setIsLoading] = useState<boolean>();
 
   useEffect(() => {
     if (isLoggedIn) navigation.navigate('base')
@@ -15,10 +16,7 @@ export default function Signup({ navigation }: RootStack) {
 
   const DoLogin = async () => {
     try {
-      const res = await login();
-      if (!res) {
-        console.error(res);
-      }
+      await login();
       navigation.navigate('base')
     } catch (e) {
       console.error(e);
@@ -84,7 +82,7 @@ export default function Signup({ navigation }: RootStack) {
         }}>
         <GoogleButton
           textBtn="Continue with Google"
-          onPress={() => DoLogin()}
+          onPress={!isLoading ? () => { setIsLoading(true); DoLogin() } : () => { }}
         />
       </View>
     </View>

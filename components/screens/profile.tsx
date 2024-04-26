@@ -20,6 +20,10 @@ const ProfileScreen: React.FC<screenProps> = ({ title, navigation, openedPage })
         </View>
     )
 
+    if (!user) {
+        return null;
+    }
+
     return (
         <Layout openedPage={openedPage} content={content} title={title} navigation={navigation} menuBar={true} />
     );
