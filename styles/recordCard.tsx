@@ -13,9 +13,11 @@ export const recordCardStyles = StyleSheet.create({
   },
   dateContainer: {
     flexDirection: "row",
-    paddingLeft: 10,
+    paddingLeft: 18,
     paddingTop: 10,
     gap: 10,
+    position: "absolute",
+    top: 110
   },
   card: {
     backgroundColor: 'white',

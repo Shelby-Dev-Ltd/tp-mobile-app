@@ -156,6 +156,7 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
                     {
                         getDecision(data.record.analytics.decision).map((d, i) => (
                             <View
+                                key={i}
                                 style={{
                                     height: 150,
                                 }}
@@ -165,6 +166,7 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
                                     width={width - 40}
                                 >
                                     <View
+                                        key={i}
                                         style={{
                                             overflow: 'scroll',
                                             height: 150,
