@@ -8,6 +8,7 @@ import RenderItem from '../../charts/RenderItem';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAnalytics } from '../../../data/analytics';
 import { AnalyticsData } from '../../../types/analytics';
+import { LoaderScreen } from 'react-native-ui-lib';
 
 interface Data {
   value: number;
@@ -20,7 +21,7 @@ const STROKE_WIDTH = 30;
 const OUTER_STROKE_WIDTH = 46;
 const GAP = 0.04;
 
-export const DonutChartContainer = ({ analyticsData }: { analyticsData: AnalyticsData[] }) => {
+export const DonutChartContainer = ({ analyticsData, isLoading }: { analyticsData: AnalyticsData[], isLoading: boolean }) => {
 
   const n = 3;
   const [data, setData] = useState<Data[]>([]);
@@ -63,9 +64,11 @@ export const DonutChartContainer = ({ analyticsData }: { analyticsData: Analytic
     generateData()
   }, [analyticsData]);
 
-  if (!font || !smallFont) {
+  if (!font || !smallFont || !analyticsData.length) {
     return null;
   }
+
+  if (isLoading) return <LoaderScreen />
 
   return (
     <SafeAreaView style={{

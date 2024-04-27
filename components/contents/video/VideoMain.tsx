@@ -16,11 +16,12 @@ import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { DoUploadToStorage } from '../../../services/storageService';
 import { app } from '../../../config/firebase';
+import { NavigationType } from '../../../types/navigation';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
 
-export default function VideoMain({ navigation }) {
+export default function VideoMain({ navigation }: { navigation: NavigationType }) {
     let camera: Camera
     const isFocused = useIsFocused();
     // const device = useCameraDevice('back');
@@ -156,6 +157,7 @@ export default function VideoMain({ navigation }) {
 
             if (data.error) throw Error(data.status.toString());
 
+            navigation.pop();
             return navigation.navigate('records');
         } catch (e) {
             console.error('Error in onSubmit:', e);

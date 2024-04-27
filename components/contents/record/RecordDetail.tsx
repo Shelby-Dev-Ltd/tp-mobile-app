@@ -37,7 +37,7 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
     };
 
     return (
-        <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
             <View
                 style={{
                     height: 200,
@@ -59,7 +59,7 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
                     <Marker coordinate={INITIAL_POSITION} />
                 </MapView>
             </View>
-            <DonutChartContainer analyticsData={[data.record.analytics]} />
+            <DonutChartContainer isLoading={isLoading} analyticsData={[data.record.analytics]} />
         </View >
     )
 };

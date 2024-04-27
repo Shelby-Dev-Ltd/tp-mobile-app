@@ -22,7 +22,7 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
     return (
         <ScrollView
             style={{ flex: 1 }}>
-            <DonutChartContainer analyticsData={analyticsData} />
+            <DonutChartContainer isLoading={isLoading} analyticsData={analyticsData} />
             {/* <View style={{ padding: 10 }}>
                 <View style={{ marginBottom: 20 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginBottom: -30 }}></Text>
