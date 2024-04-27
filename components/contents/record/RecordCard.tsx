@@ -22,9 +22,6 @@ const RecordCard = ({ id, address, longitude, latitude, date, onClick }: cardPro
                 <Text style={recordCardStyles.heading}>
                     {address}
                 </Text>
-                <Text style={recordCardStyles.heading}>
-                    {longitude + " " + latitude}
-                </Text>
             </View>
             <View style={recordCardStyles.dateContainer}>
                 <Entypo name={"calendar"} size={20} color="black" />
