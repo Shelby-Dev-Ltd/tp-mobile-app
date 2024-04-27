@@ -64,11 +64,14 @@ export const DonutChartContainer = ({ analyticsData }: { analyticsData: Analytic
   }, [analyticsData]);
 
   if (!font || !smallFont) {
-    return <View />;
+    return null;
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{
+      flex: 1,
+      backgroundColor: 'white',
+    }}>
       <ScrollView
         contentContainerStyle={{ alignItems: 'center' }}
         showsVerticalScrollIndicator={false}>
@@ -105,13 +108,11 @@ const styles = StyleSheet.create({
   chartContainer: {
     width: RADIUS * 2,
     height: RADIUS * 2,
-    marginTop: 10,
   },
   button: {
     marginVertical: 40,
     backgroundColor: '#f4f7fc',
     paddingHorizontal: 60,
-    paddingVertical: 15,
     borderRadius: 10,
   },
   buttonText: {

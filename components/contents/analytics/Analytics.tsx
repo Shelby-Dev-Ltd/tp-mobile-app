@@ -4,8 +4,6 @@ import { NavigationType } from "../../../types/navigation";
 import { useAnalytics } from "../../../data/analytics";
 import { LoaderScreen } from "react-native-ui-lib";
 import DonutChartContainer from "./DonutChartContainer";
-import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { vehicleCountStyles } from "../../../styles/vehicleCount";
 
 type AnalyticsProps = {
     navigation: NavigationType
@@ -13,20 +11,7 @@ type AnalyticsProps = {
 
 const Analytics = ({ navigation }: AnalyticsProps) => {
 
-    const [origin, setOrigin] = useState<LatLng | null>(); //new
     const { isLoading, mutate, data: analyticsData } = useAnalytics();
-    const { width, height } = Dimensions.get("window");
-    const ASPECT_RATIO = width / (height / 3);
-    const LATITUDE_DELTA = 0.02;
-    const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-    const INITIAL_LAT = -6.284512;
-    const INITIAL_LNG = 107.170716;
-    const INITIAL_POSITION = {
-        latitude: INITIAL_LAT,
-        longitude: INITIAL_LNG,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-    };
 
     if (isLoading) return <LoaderScreen />;
 
@@ -37,26 +22,6 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
     return (
         <ScrollView
             style={{ flex: 1 }}>
-            <Text style={vehicleCountStyles.text}>
-                Map Address:
-            </Text>
-            <MapView
-                provider={PROVIDER_GOOGLE}
-                initialRegion={INITIAL_POSITION}
-                style={{
-                    height: 200,
-                    borderRadius: 20
-                }}
-                pitchEnabled
-                zoomEnabled
-                scrollEnabled={false}
-                rotateEnabled={false}
-            >
-                <Marker coordinate={INITIAL_POSITION} />
-            </MapView>
-            <Text style={vehicleCountStyles.text}>
-                Donut Chart:
-            </Text>
             <DonutChartContainer analyticsData={analyticsData} />
             {/* <View style={{ padding: 10 }}>
                 <View style={{ marginBottom: 20 }}>
