@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { RefreshControl, ScrollView, Text, View } from "react-native";
 import Layout from "../layouts/Layout";
 import { screenProps } from "../../types/screenprops";
 import Welcome from "../contents/home/Welcome";
@@ -7,6 +7,7 @@ import VehicleCount from "../contents/home/VehicleCount";
 import LatestRecords from "../contents/record/LatestRecords";
 import { useAuth } from "../../contexts/AuthContext";
 import useVehicleCount from "../../data/home";
+import { useEffect } from "react";
 
 const images = [
     "https://img.jakpost.net/c/2023/02/01/2023_02_01_135079_1675230408._large.jpg",
@@ -20,12 +21,25 @@ const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
 
     if (!user) return null;
 
-    const { data } = useVehicleCount();
+    const { data, mutate, isLoading } = useVehicleCount();
+
+    const onRefresh = () => {
+        mutate();
+    };
+
+    useEffect(() => { console.log(data) }, [data]);
 
     const content = (
-        <View style={{ flex: 1}}>
+        <View style={{ flex: 1 }}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isLoading}
+                        onRefresh={onRefresh}
+                        colors={['#2F80ED']}
+                    />
+                }
             >
                 <Welcome
                     user={user}

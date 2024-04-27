@@ -14,22 +14,23 @@ const fetcher = async () => {
 
         const vehicles = data.data as VehicleAPIResponse;
 
-        const colors = ["#e28743", "#abdbe3", "#8A76F7"];
+        const colors = ["#e28743", "#abdbe3", "#8A76F7", "#c4ffec"];
 
         const images = [
             require("../assets/vehicleCount/3d-car.png"),
             require("../assets/vehicleCount/3d-bikes.png"),
-            require("../assets/vehicleCount/3d-truck.png")
+            require("../assets/vehicleCount/3d-truck.png"),
+            require("../assets/vehicleCount/3d-bus.png"),
         ];
 
         let structuredVehicles: Vehicles[] = [];
 
-        Object.keys(vehicles).forEach((v, index)=> {
+        Object.keys(vehicles).forEach((v, index) => {
             structuredVehicles.push({
                 name: v.slice(0, 1).toLocaleUpperCase() + v.slice(1, v.length),
                 count: vehicles[v],
-                cardColor: colors[index % colors.length],
-                icon: images[index % images.length],
+                cardColor: colors[index],
+                icon: images[index],
             })
         })
 

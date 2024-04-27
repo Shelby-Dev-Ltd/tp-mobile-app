@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dimensions, Image, ScrollView, Text, View } from "react-native";
+import { Dimensions, Image, RefreshControl, ScrollView, Text, View } from "react-native";
 import { NavigationType } from "../../../types/navigation";
 import { useAnalytics } from "../../../data/analytics";
 import { LoaderScreen } from "react-native-ui-lib";
@@ -19,9 +19,21 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>No data found!</Text></View>
     )
 
+    const onRefresh = () => {
+        mutate();
+    };
+
     return (
         <ScrollView
-            style={{ flex: 1 }}>
+            style={{ flex: 1 }}
+            refreshControl={
+                <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={onRefresh}
+                    colors={['#2F80ED']}
+                />
+            }
+        >
             <DonutChartContainer isLoading={isLoading} analyticsData={analyticsData} />
             {/* <View style={{ padding: 10 }}>
                 <View style={{ marginBottom: 20 }}>

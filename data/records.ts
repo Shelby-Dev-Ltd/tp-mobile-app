@@ -1,7 +1,5 @@
 import useSWR from "swr";
 import { Record, RecordWithAnalytics } from "../types/record";
-import { AnalyticsData } from "../types/analytics";
-import { useEffect } from "react";
 
 const fetcher = async () => {
     try {

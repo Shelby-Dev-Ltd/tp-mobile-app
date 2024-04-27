@@ -11,7 +11,7 @@ type cardProps = {
     onClick: (id: number) => void,
 }
 
-const RecordCard = ({ id, address, longitude, latitude, date, onClick }: cardProps) => {
+const RecordCard = ({ id, address, date, onClick }: cardProps) => {
     return (
         <Pressable
             style={[recordCardStyles.card, recordCardStyles.shadowProp, { paddingRight: 50 }]}

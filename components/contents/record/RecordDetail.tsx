@@ -59,6 +59,9 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
                     <Marker coordinate={INITIAL_POSITION} />
                 </MapView>
             </View>
+            <Text>
+                {data.record.address}
+            </Text>
             <DonutChartContainer isLoading={isLoading} analyticsData={[data.record.analytics]} />
         </View >
     )

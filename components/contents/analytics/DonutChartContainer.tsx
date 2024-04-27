@@ -27,18 +27,20 @@ export const DonutChartContainer = ({ analyticsData, isLoading }: { analyticsDat
   const [data, setData] = useState<Data[]>([]);
   const totalValue = useSharedValue(0);
   const decimals = useSharedValue<number[]>([]);
-  const colors = ["#e28743", "#abdbe3", "#8A76F7"];
+  const colors = ["#e28743", "#abdbe3", "#8A76F7", "#c4ffec"];
 
   const generateData = () => {
     const totalCar = analyticsData.reduce((acc, item) => acc + item.CarCount, 0);
     const totalBike = analyticsData.reduce((acc, item) => acc + item.BikeCount, 0);
     const totalTruck = analyticsData.reduce((acc, item) => acc + item.TruckCount, 0);
-    const total = totalCar + totalBike + totalTruck;
+    const totalBus = analyticsData.reduce((acc, item) => acc + item.BusCount, 0);
+    const total = totalCar + totalBike + totalTruck + totalBus;
 
     const generatePercentages = [
       (totalCar / total) * 100,
       (totalBike / total) * 100,
-      (totalTruck / total) * 100
+      (totalTruck / total) * 100,
+      (totalBus / total) * 100
     ];
 
     const generateDecimals = generatePercentages.map(
@@ -51,7 +53,8 @@ export const DonutChartContainer = ({ analyticsData, isLoading }: { analyticsDat
     const arrayOfObjects = [
       { value: totalCar, percentage: Math.round(generatePercentages[0]), color: colors[0] },
       { value: totalBike, percentage: Math.round(generatePercentages[1]), color: colors[1] },
-      { value: totalTruck, percentage: Math.round(generatePercentages[2]), color: colors[2] }
+      { value: totalTruck, percentage: Math.round(generatePercentages[2]), color: colors[2] },
+      { value: totalBus, percentage: Math.round(generatePercentages[3]), color: colors[3] },
     ];
 
     setData(arrayOfObjects);
