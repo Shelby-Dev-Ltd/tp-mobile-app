@@ -7,8 +7,9 @@ import { getStorage, ref } from "@firebase/storage";
 import { app } from "../../../config/firebase";
 import { DoUploadToStorage } from "../../../services/storageService";
 import { useAuth } from "../../../contexts/AuthContext";
+import Card from "../../ui/Card";
 
-const windowHeight = Dimensions.get('window').height;
+const { width, height } = Dimensions.get('window');
 
 const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updateProfile }) => {
     const [name, setName] = useState<string>('');
@@ -88,79 +89,107 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
     }
 
     return (
-        <ScrollView style={{ flex: 1, paddingHorizontal: 22 }} showsVerticalScrollIndicator={false}>
-            <View style={{ minHeight: windowHeight }}>
-                <View style={{ marginHorizontal: 12, flexDirection: 'row', justifyContent: 'center' }}>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>My Profile</Text>
-                </View>
-                <View style={{ alignItems: 'center', marginVertical: 22 }}>
-                    <TouchableOpacity onPress={handleImageSelection}>
-                        <Image
-                            source={{ uri: profile.profile.photoUrl }}
-                            style={{ height: 170, width: 170, borderRadius: 85, borderWidth: 2 }}
-                        />
-                        <View style={{ position: 'absolute', bottom: 0, right: 10, zIndex: 9999 }}>
-                            <MaterialIcons name="photo-camera" size={32} />
+        <ScrollView
+            style={{
+                flex: 1,
+            }}
+            showsVerticalScrollIndicator={false}
+        >
+            <View style={{
+                height: '100%',
+                width: '100%',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                paddingBottom: 10,
+                paddingTop: 10,
+            }}>
+                <Card
+                    width={width - 40}
+                >
+                    <View style={{
+                        marginHorizontal: 12,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                    }}>
+                        <Text
+                            style={{
+                                fontSize: 30,
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            Profile
+                        </Text>
+                    </View>
+                    <View style={{ alignItems: 'center', marginVertical: 22 }}>
+                        <TouchableOpacity onPress={handleImageSelection}>
+                            <Image
+                                source={{ uri: profile.profile.photoUrl }}
+                                style={{ height: 170, width: 170, borderRadius: 85, borderWidth: 2 }}
+                            />
+                            <View style={{ position: 'absolute', bottom: 0, right: 10, zIndex: 9999 }}>
+                                <MaterialIcons name="photo-camera" size={32} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <View style={{ flexDirection: 'column', marginBottom: 6 }}>
+                            <Text style={{ fontWeight: 'bold' }}>Name</Text>
+                            <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
+                                <TextInput value={name} onChangeText={(value) => setName(value)} editable={isEditing} />
+                            </View>
                         </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ backgroundColor: 'blue', borderRadius: 10, marginVertical: 10 }}>
-                    <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Personal Info</Text>
-                </View>
-                <View>
-                    <View style={{ flexDirection: 'column', marginBottom: 6 }}>
-                        <Text style={{ fontWeight: 'bold' }}>Name</Text>
-                        <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
-                            <TextInput value={name} onChangeText={(value) => setName(value)} editable={isEditing} />
+                        <View style={{ flexDirection: 'column', marginBottom: 6 }}>
+                            <Text style={{ fontWeight: 'bold' }}>Email</Text>
+                            <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
+                                <TextInput value={email} onChangeText={(value) => setEmail(value)} editable={isEditing} />
+                            </View>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'column', marginBottom: 6 }}>
-                        <Text style={{ fontWeight: 'bold' }}>Email</Text>
-                        <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
-                            <TextInput value={email} onChangeText={(value) => setEmail(value)} editable={isEditing} />
-                        </View>
-                    </View>
-                </View>
-                {/* <View style={{ flexDirection: 'column', marginBottom: 6 }}>
+                    {/* <View style={{ flexDirection: 'column', marginBottom: 6 }}>
                     <Text style={{ fontWeight: 'bold' }}>Location</Text>
                     <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
                         <TextInput value={country} onChangeText={(value) => setCountry(value)} editable={true} />
                     </View>
                 </View> */}
-                <TouchableOpacity
-                    onPress={isEditing ? handleSaveChanges : handleEditClick}
-                    style={{
-                        height: 44,
-                        borderRadius: 50,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: isEditing ? '#69ff84' : '#2F80ED',
-                        paddingVertical: 10,
-                        marginVertical: 10,
-                    }}
-                >
-                    <Text>
-                        {isEditing ? "Save Changes" : "Edit"}
+                    <TouchableOpacity
+                        onPress={isEditing ? handleSaveChanges : handleEditClick}
+                        style={{
+                            height: 44,
+                            borderRadius: 50,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: isEditing ? '#69ff84' : '#2F80ED',
+                            paddingVertical: 10,
+                            marginVertical: 10,
+                            width: 100,
+                        }}
+                    >
+                        <Text>
+                            {isEditing ? "Save Changes" : "Edit"}
 
-                    </Text>
-                </TouchableOpacity>
-                <Pressable
-                    onPress={() => { logout(); navigation.replace('signup') }}
-                    style={{
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                        gap: 4,
-                        backgroundColor: '#ff4d4d',
-                        paddingVertical: 10,
-                        marginVertical: 10,
-                        borderRadius: 50
-                    }}
-                >
-                    <Ionicons name="exit-outline" style={{ transform: [{ rotate: '180deg' }] }} size={20} />
-                    <Text>Sign Out</Text>
-                </Pressable>
+                        </Text>
+                    </TouchableOpacity>
+                    <Pressable
+                        onPress={() => { logout(); navigation.replace('signup') }}
+                        style={{
+                            justifyContent: 'center',
+                            flexDirection: 'row',
+                            gap: 4,
+                            backgroundColor: '#ff4d4d',
+                            paddingVertical: 10,
+                            marginVertical: 10,
+                            borderRadius: 50,
+                            width: 100,
+                        }}
+                    >
+                        <Ionicons name="exit-outline" style={{ transform: [{ rotate: '180deg' }] }} size={20} />
+                        <Text>Sign Out</Text>
+                    </Pressable>
+                </Card>
+
             </View>
-        </ScrollView>
+        </ScrollView >
     );
 }
 

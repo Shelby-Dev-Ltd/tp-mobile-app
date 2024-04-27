@@ -4,6 +4,7 @@ import { useRecordSingle } from "../../../data/records";
 import { LoaderScreen } from "react-native-ui-lib";
 import DonutChartContainer from "../analytics/DonutChartContainer";
 import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import Card from "../../ui/Card";
 
 type RecordDetailProps = {
     id: number;
@@ -49,35 +50,66 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
                     colors={['#2F80ED']}
                 />
             }
+            showsVerticalScrollIndicator={false}
+            style={{
+                height,
+            }}
         >
-            <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+            <View
+                style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                }}
+            >
                 <View
                     style={{
-                        height: 200,
-                        width,
-                    }}
-                >
-                    <MapView
-                        provider={PROVIDER_GOOGLE}
-                        initialRegion={INITIAL_POSITION}
-                        style={{
-                            height: 200,
-                            borderRadius: 20
-                        }}
-                        pitchEnabled
-                        zoomEnabled
-                        scrollEnabled={false}
-                        rotateEnabled={false}
+                        flexDirection: 'column',
+                        flex: 1,
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        gap: 10,
+                    }}>
+                    <Card
+                        width={width - 40}
+                        height={280}
                     >
-                        <Marker coordinate={INITIAL_POSITION} />
-                    </MapView>
+                        <View
+                            style={{
+                                height: 200,
+                                width: width - 50,
+                            }}
+                        >
+                            <MapView
+                                provider={PROVIDER_GOOGLE}
+                                initialRegion={INITIAL_POSITION}
+                                style={{
+                                    height: 200,
+                                    borderRadius: 20
+                                }}
+                                pitchEnabled
+                                zoomEnabled
+                                scrollEnabled={false}
+                                rotateEnabled={false}
+                            >
+                                <Marker coordinate={INITIAL_POSITION} />
+                            </MapView>
+                        </View>
+                        <Text>
+                            {data.record.address}
+                        </Text>
+                    </Card>
                 </View>
-                <Text>
-                    {data.record.address}
-                </Text>
-                <DonutChartContainer isLoading={isLoading} analyticsData={[data.record.analytics]} />
-            </View >
-        </ScrollView>
+
+                <Card
+                    width={width - 40}
+                    height={'100%'}
+                >
+                    <DonutChartContainer isLoading={isLoading} analyticsData={[data.record.analytics]} />
+                </Card>
+            </View>
+
+        </ScrollView >
 
     )
 };

@@ -80,27 +80,40 @@ export const DonutChartContainer = ({ analyticsData, isLoading }: { analyticsDat
     }}>
       <ScrollView
         contentContainerStyle={{ alignItems: 'center' }}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.chartContainer}>
-          <DonutChart
-            radius={RADIUS}
-            gap={GAP}
-            strokeWidth={STROKE_WIDTH}
-            outerStrokeWidth={OUTER_STROKE_WIDTH}
-            font={font}
-            smallFont={smallFont}
-            totalValue={totalValue}
-            n={n}
-            decimals={decimals}
-            colors={colors}
-          />
-        </View>
-        {/* <TouchableOpacity onPress={generateData} style={styles.button}>
+        showsVerticalScrollIndicator={false}
+      >
+        <View
+          style={{
+            gap: 20,
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <View style={styles.chartContainer}>
+            <DonutChart
+              radius={RADIUS}
+              gap={GAP}
+              strokeWidth={STROKE_WIDTH}
+              outerStrokeWidth={OUTER_STROKE_WIDTH}
+              font={font}
+              smallFont={smallFont}
+              totalValue={totalValue}
+              n={n}
+              decimals={decimals}
+              colors={colors}
+            />
+          </View>
+          {/* <TouchableOpacity onPress={generateData} style={styles.button}>
           <Text style={styles.buttonText}>Generate</Text>
         </TouchableOpacity> */}
-        {data.map((item, index) => {
-          return <RenderItem item={item} key={index} index={index} />;
-        })}
+          <View>
+            {data.map((item, index) => {
+              return (<RenderItem item={item} key={index} index={index} />);
+            })}
+          </View>
+
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   );

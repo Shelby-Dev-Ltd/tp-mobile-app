@@ -4,10 +4,12 @@ export const recordCardStyles = StyleSheet.create({
   heading: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 13
+    marginBottom: 13,
+    flex: 1
   },
   headingContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: 'flex-start',
   },
   dateContainer: {
     flexDirection: "row",
@@ -23,6 +25,7 @@ export const recordCardStyles = StyleSheet.create({
     paddingHorizontal: 5,
     width: '100%',
     marginVertical: 10,
+    height: 200,
   },
   shadowProp: {
     shadowColor: '#171717',

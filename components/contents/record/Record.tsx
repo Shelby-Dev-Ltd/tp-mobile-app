@@ -20,8 +20,6 @@ const Record = ({ navigation, records }: RecordProps) => {
                             key={index}
                             id={record.id}
                             address={record.address}
-                            longitude={record.longitude}
-                            latitude={record.latitude}
                             date={record.date}
                             onClick={() => navigation.navigate("recordDetail", { id: record.id })}
                         />
