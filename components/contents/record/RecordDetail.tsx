@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions, RefreshControl, ScrollView, Text, View } from "react-native";
 import { useRecordSingle } from "../../../data/records";
 import { LoaderScreen } from "react-native-ui-lib";
 import DonutChartContainer from "../analytics/DonutChartContainer";
@@ -36,33 +36,48 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
         longitudeDelta: LONGITUDE_DELTA,
     };
 
+    const onRefresh = () => {
+        mutate();
+    };
+
     return (
-        <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
-            <View
-                style={{
-                    height: 200,
-                    width,
-                }}
-            >
-                <MapView
-                    provider={PROVIDER_GOOGLE}
-                    initialRegion={INITIAL_POSITION}
+        <ScrollView
+            refreshControl={
+                <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={onRefresh}
+                    colors={['#2F80ED']}
+                />
+            }
+        >
+            <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+                <View
                     style={{
                         height: 200,
-                        borderRadius: 20
+                        width,
                     }}
-                    pitchEnabled
-                    zoomEnabled
-                    scrollEnabled={false}
-                    rotateEnabled={false}
                 >
-                    <Marker coordinate={INITIAL_POSITION} />
-                </MapView>
-            </View>
-            <Text>
-                {data.record.address}
-            </Text>
-            <DonutChartContainer isLoading={isLoading} analyticsData={[data.record.analytics]} />
-        </View >
+                    <MapView
+                        provider={PROVIDER_GOOGLE}
+                        initialRegion={INITIAL_POSITION}
+                        style={{
+                            height: 200,
+                            borderRadius: 20
+                        }}
+                        pitchEnabled
+                        zoomEnabled
+                        scrollEnabled={false}
+                        rotateEnabled={false}
+                    >
+                        <Marker coordinate={INITIAL_POSITION} />
+                    </MapView>
+                </View>
+                <Text>
+                    {data.record.address}
+                </Text>
+                <DonutChartContainer isLoading={isLoading} analyticsData={[data.record.analytics]} />
+            </View >
+        </ScrollView>
+
     )
 };

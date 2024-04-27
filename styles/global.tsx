@@ -2,6 +2,8 @@ import { Dimensions, StyleSheet } from "react-native";
 
 const windowWidth = Dimensions.get('window').width;
 
+
+
 export const globalStyles = StyleSheet.create({
     container: {
         flexDirection: 'column',

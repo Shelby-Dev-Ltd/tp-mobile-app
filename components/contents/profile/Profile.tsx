@@ -2,11 +2,11 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Dimensions, Image, Pressable, ScrollView, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
-import { ProfileProps } from "../../types/profile";
+import { ProfileProps } from "../../../types/profile";
 import { getStorage, ref } from "@firebase/storage";
-import { app } from "../../config/firebase";
-import { DoUploadToStorage } from "../../services/storageService";
-import { useAuth } from "../../contexts/AuthContext";
+import { app } from "../../../config/firebase";
+import { DoUploadToStorage } from "../../../services/storageService";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const windowHeight = Dimensions.get('window').height;
 

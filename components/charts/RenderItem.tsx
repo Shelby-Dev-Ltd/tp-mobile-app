@@ -4,7 +4,7 @@ import Animated, { FadeInDown, FadeOutDown } from 'react-native-reanimated';
 
 interface Data {
   value: number;
-  percentage: number;
+  percentage: number | string;
   color: string;
 }
 

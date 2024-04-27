@@ -12,7 +12,7 @@ import { LoaderScreen } from 'react-native-ui-lib';
 
 interface Data {
   value: number;
-  percentage: number;
+  percentage: number | string;
   color: string;
 }
 
@@ -23,7 +23,7 @@ const GAP = 0.04;
 
 export const DonutChartContainer = ({ analyticsData, isLoading }: { analyticsData: AnalyticsData[], isLoading: boolean }) => {
 
-  const n = 3;
+  const n = 4;
   const [data, setData] = useState<Data[]>([]);
   const totalValue = useSharedValue(0);
   const decimals = useSharedValue<number[]>([]);
@@ -51,10 +51,10 @@ export const DonutChartContainer = ({ analyticsData, isLoading }: { analyticsDat
     decimals.value = [...generateDecimals];
 
     const arrayOfObjects = [
-      { value: totalCar, percentage: Math.round(generatePercentages[0]), color: colors[0] },
-      { value: totalBike, percentage: Math.round(generatePercentages[1]), color: colors[1] },
-      { value: totalTruck, percentage: Math.round(generatePercentages[2]), color: colors[2] },
-      { value: totalBus, percentage: Math.round(generatePercentages[3]), color: colors[3] },
+      { value: totalCar, percentage: generatePercentages[0].toFixed(1), color: colors[0] },
+      { value: totalBike, percentage: generatePercentages[1].toFixed(1), color: colors[1] },
+      { value: totalTruck, percentage: generatePercentages[2].toFixed(1), color: colors[2] },
+      { value: totalBus, percentage: generatePercentages[3].toFixed(1), color: colors[3] },
     ];
 
     setData(arrayOfObjects);
