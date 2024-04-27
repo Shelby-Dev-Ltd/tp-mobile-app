@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     padding: 8,
     alignSelf: "center",
     borderRadius: 8,
-    marginTop: 60,
+    marginTop: 95,
   },
   searchBoxField: {
     borderColor: "#777",
