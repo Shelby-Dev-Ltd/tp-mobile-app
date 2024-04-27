@@ -5,6 +5,7 @@ import Record from "../contents/record/Record";
 import { useRecords } from "../../data/records";
 import { Record as RecordType } from "../../types/record";
 import { useEffect } from "react";
+import { colorsPalette } from "react-native-ui-lib/src/style/colorsPalette";
 
 export default function RecordScreen({ title, navigation, openedPage }: screenProps) {
 
@@ -21,6 +22,7 @@ export default function RecordScreen({ title, navigation, openedPage }: screenPr
                     <RefreshControl
                         refreshing={isLoading}
                         onRefresh={onRefresh}
+                        colors={['#2F80ED']}
                     />
                 }
             >
