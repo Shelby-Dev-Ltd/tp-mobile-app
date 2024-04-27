@@ -27,8 +27,6 @@ const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
         mutate();
     };
 
-    useEffect(() => { console.log(data) }, [data]);
-
     const content = (
         <View style={{ flex: 1 }}>
             <ScrollView
