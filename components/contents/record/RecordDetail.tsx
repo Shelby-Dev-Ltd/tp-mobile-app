@@ -37,6 +37,39 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
         longitudeDelta: LONGITUDE_DELTA,
     };
 
+    const getDecision = (d: string): Array<string> => {
+        switch (d) {
+            case 'MIDDLE_HIGH':
+                return [
+                    "This location is suitable for businesses or shopping centers. The predominance of cars indicates a large potential market. With a high number of cars, this location is likely a hub of economic activity, allowing various types of businesses to thrive and attract many visitors.",
+                    "This location may be suitable for various retail businesses such as shopping malls, supermarkets, or department stores. Additionally, restaurants, cafes, or entertainment centers can also thrive here due to the high traffic volume and large potential market."
+                ];
+            case 'MIDDLE_LOW':
+                return [
+                    "This location may be suitable for schools or residential areas. With a high number of motorcycles, it indicates active individual mobility. This could indicate that the location is friendly to the local community or suitable for education with easy access for students and educators.",
+                    "This location is suitable for establishing middle or elementary schools. With high individual mobility, accessibility for students and parents becomes easier. Additionally, tutoring centers or training centers can also function well here."
+                ];
+            case 'INDUSTRIAL':
+                return [
+                    "This location is suitable for industries or warehouses. With the predominance of trucks, it indicates intensive logistic activities. This may be an industrial area or a distribution center where goods are transported and distributed on a large scale.",
+                    "This location can be ideal for government offices, post offices, or public service centers. Due to intensive logistic activities, the availability of space for warehouses or storage can also be an important consideration."
+                ];
+            case 'TOURISM':
+                return [
+                    "This location is suitable for the tourism sector. The presence of numerous buses indicates a significant flow of tourists. It can be a popular tourist destination or a starting point for travel to nearby attractions.",
+                    "This location is suitable for developing tourist attractions such as hotels, tourist sites, or recreational facilities. With a significant flow of tourists, hospitality businesses, restaurants, or souvenir shops can also thrive here."
+                ];
+            case 'MIXED':
+                return [
+                    "This location has a diverse range of activities. This could indicate a variety of functions or the complexity of activities in the area. It can be an attractive place for various users, such as businesses, residences, or community activity centers.",
+                    "This location can be an interesting place for various businesses, including corporate offices, grocery stores, restaurants, or even sports and recreational facilities. The complexity of activities in this area offers opportunities for various types of businesses and services."
+                ];
+            default:
+                return [];
+        }
+    };
+
+
     const onRefresh = () => {
         mutate();
     };
@@ -60,8 +93,11 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
+                    height: '100%',
+                    paddingBottom: 10,
                 }}
             >
+
                 <View
                     style={{
                         flexDirection: 'column',
@@ -72,7 +108,7 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
                     }}>
                     <Card
                         width={width - 40}
-                        height={280}
+                        height={300}
                     >
                         <View
                             style={{
@@ -103,12 +139,54 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id }) => {
 
                 <Card
                     width={width - 40}
-                    height={'100%'}
+                    height={840}
                 >
                     <DonutChartContainer isLoading={isLoading} analyticsData={[data.record.analytics]} />
                 </Card>
-            </View>
 
+                <View
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 10,
+                    }}
+                >
+                    {
+                        getDecision(data.record.analytics.decision).map((d, i) => (
+                            <View
+                                style={{
+                                    height: 150,
+                                }}
+                            >
+                                <Card
+                                    key={i}
+                                    width={width - 40}
+                                >
+                                    <View
+                                        style={{
+                                            overflow: 'scroll',
+                                            height: 150,
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                flex: 1,
+                                                color: 'black',
+                                                textAlign: 'left',
+                                                fontSize: 16,
+                                            }}
+                                        >{d}</Text>
+                                    </View>
+
+                                </Card>
+                            </View>
+
+                        ))
+                    }
+                </View>
+            </View>
         </ScrollView >
 
     )

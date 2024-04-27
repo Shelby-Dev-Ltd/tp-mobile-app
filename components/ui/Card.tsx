@@ -3,11 +3,13 @@ import { Dimensions, View } from "react-native";
 
 type CardProps = {
     children: ReactNode;
+    maxHeight?: number | '100%';
     height?: number | '100%';
     width?: number | '100%';
     marginBottom?: number;
     marginTop?: number;
     backgroundColor?: string;
+    paddingBottom?: number;
 }
 
 const { width: windowWidth } = Dimensions.get('window')
@@ -15,6 +17,7 @@ const { width: windowWidth } = Dimensions.get('window')
 const Card = ({
     children,
     height = "100%",
+    paddingBottom = 10,
     width = windowWidth,
     marginBottom = 10,
     marginTop = 0,
@@ -27,6 +30,7 @@ const Card = ({
                 width,
                 elevation: 3,
                 padding: 10,
+                paddingBottom,
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: 20,
