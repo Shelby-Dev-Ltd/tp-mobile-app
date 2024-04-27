@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import RecordCard from "./RecordCard";
 import { recordStyles } from "../../../styles/record";
 import { Record as RecordType } from "../../../types/record";
-import useRecords from "../../../data/records";
+import { useRecords } from "../../../data/records";
 import { LoaderScreen } from "react-native-ui-lib";
 import { NavigationType } from "../../../types/navigation";
 

@@ -1,5 +1,7 @@
 import useSWR from "swr";
-import { Record } from "../types/record";
+import { Record, RecordWithAnalytics } from "../types/record";
+import { AnalyticsData } from "../types/analytics";
+import { useEffect } from "react";
 
 const fetcher = async () => {
     try {
@@ -21,4 +23,24 @@ const useRecords = () => {
     return { data, error, isLoading, mutate };
 }
 
-export default useRecords
+const useRecordSingle = (id: number) => {
+    const fetcher = async () => {
+        try {
+            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records/${id}`);
+
+            const responseData: ApiResponse = await res.json();
+
+            const result = responseData.data || {};
+
+            return result as RecordWithAnalytics;
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+    const { data, error, isLoading, mutate } = useSWR(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records/ ${id}`, fetcher)
+
+    return { data, error, isLoading, mutate };
+}
+
+export { useRecords, useRecordSingle }

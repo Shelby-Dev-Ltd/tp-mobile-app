@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import DonutChart from '../../charts/DonutChart';
-import {useFont} from '@shopify/react-native-skia';
-import {useSharedValue, withTiming} from 'react-native-reanimated';
-import {calculatePercentage, generateRandomNumbers} from '../../../data/donutChart';
+import { useFont } from '@shopify/react-native-skia';
+import { useSharedValue, withTiming } from 'react-native-reanimated';
+import { calculatePercentage, generateRandomNumbers } from '../../../data/donutChart';
 import RenderItem from '../../charts/RenderItem';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAnalytics } from '../../../data/analytics';
+import { AnalyticsData } from '../../../types/analytics';
 
 interface Data {
   value: number;
@@ -19,57 +20,57 @@ const STROKE_WIDTH = 30;
 const OUTER_STROKE_WIDTH = 46;
 const GAP = 0.04;
 
-export const DonutChartContainer = ({analyticsData}) => {
-    
-    const n = 3;
-    const [data, setData] = useState<Data[]>([]);
-    const totalValue = useSharedValue(0);
-    const decimals = useSharedValue<number[]>([]);
-    const colors = ["#e28743", "#abdbe3", "#8A76F7"];
-    
-    const generateData = () => {
-        const totalCar = analyticsData.reduce((acc, item) => acc + item.CarCount, 0);
-        const totalBike = analyticsData.reduce((acc, item) => acc + item.BikeCount, 0);
-        const totalTruck = analyticsData.reduce((acc, item) => acc + item.TruckCount, 0);
-        const total = totalCar + totalBike + totalTruck;
-        
-        const generatePercentages = [
-            (totalCar / total) * 100,
-            (totalBike / total) * 100,
-            (totalTruck / total) * 100
-        ];
-        
-        const generateDecimals = generatePercentages.map(
-            number => Number(number.toFixed(0)) / 100
-        );
-        
-        totalValue.value = withTiming(total, { duration: 1000 });
-        decimals.value = [...generateDecimals];
-        
-        const arrayOfObjects = [
-            { value: totalCar, percentage: Math.round(generatePercentages[0]), color: colors[0] },
-            { value: totalBike, percentage: Math.round(generatePercentages[1]), color: colors[1] },
-            { value: totalTruck, percentage: Math.round(generatePercentages[2]), color: colors[2] }
-        ];
-        
-        setData(arrayOfObjects);
-    };
-    
-    const font = useFont(require('../../../assets/fonts/Roboto-Bold.ttf'), 60);
-    const smallFont = useFont(require('../../../assets/fonts/Roboto-Light.ttf'), 25);
+export const DonutChartContainer = ({ analyticsData }: { analyticsData: AnalyticsData[] }) => {
 
-    useEffect(() => {
-        generateData()
-      }, [analyticsData]);
-    
-    if (!font || !smallFont) {
-        return <View />;
-    }
+  const n = 3;
+  const [data, setData] = useState<Data[]>([]);
+  const totalValue = useSharedValue(0);
+  const decimals = useSharedValue<number[]>([]);
+  const colors = ["#e28743", "#abdbe3", "#8A76F7"];
 
-    return (
-        <SafeAreaView style={styles.container}>
+  const generateData = () => {
+    const totalCar = analyticsData.reduce((acc, item) => acc + item.CarCount, 0);
+    const totalBike = analyticsData.reduce((acc, item) => acc + item.BikeCount, 0);
+    const totalTruck = analyticsData.reduce((acc, item) => acc + item.TruckCount, 0);
+    const total = totalCar + totalBike + totalTruck;
+
+    const generatePercentages = [
+      (totalCar / total) * 100,
+      (totalBike / total) * 100,
+      (totalTruck / total) * 100
+    ];
+
+    const generateDecimals = generatePercentages.map(
+      number => Number(number.toFixed(0)) / 100
+    );
+
+    totalValue.value = withTiming(total, { duration: 1000 });
+    decimals.value = [...generateDecimals];
+
+    const arrayOfObjects = [
+      { value: totalCar, percentage: Math.round(generatePercentages[0]), color: colors[0] },
+      { value: totalBike, percentage: Math.round(generatePercentages[1]), color: colors[1] },
+      { value: totalTruck, percentage: Math.round(generatePercentages[2]), color: colors[2] }
+    ];
+
+    setData(arrayOfObjects);
+  };
+
+  const font = useFont(require('../../../assets/fonts/Roboto-Bold.ttf'), 60);
+  const smallFont = useFont(require('../../../assets/fonts/Roboto-Light.ttf'), 25);
+
+  useEffect(() => {
+    generateData()
+  }, [analyticsData]);
+
+  if (!font || !smallFont) {
+    return <View />;
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
       <ScrollView
-        contentContainerStyle={{alignItems: 'center'}}
+        contentContainerStyle={{ alignItems: 'center' }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.chartContainer}>
           <DonutChart
