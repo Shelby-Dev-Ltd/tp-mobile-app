@@ -39,6 +39,9 @@ const Card = ({
                 borderRadius: 4,
                 marginBottom,
                 marginTop,
+                shadowOffset: { height: -2, width: 0 },
+                shadowOpacity: 0.5,
+                shadowRadius: 5,
             }}
         >
             {children}
