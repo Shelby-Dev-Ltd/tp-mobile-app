@@ -135,14 +135,52 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
                     <View>
                         <View style={{ flexDirection: 'column', marginBottom: 6 }}>
                             <Text style={{ fontWeight: 'bold' }}>Name</Text>
-                            <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
-                                <TextInput value={name} onChangeText={(value) => setName(value)} editable={isEditing} />
+                            <View 
+                            style={{ 
+                                height: 44, 
+                                width: 250, 
+                                borderRadius: 10, 
+                                borderWidth: 1, 
+                                marginVertical: 6, 
+                                justifyContent: 'center', 
+                                paddingLeft: 8,
+                                borderColor: "grey"
+                                }}
+                                >
+                                <TextInput 
+                                value={name} 
+                                onChangeText={(value) => setName(value)} 
+                                editable={isEditing} 
+                                style={{
+                                    fontWeight: "600",
+                                    fontSize: 14
+                                }}
+                                />
                             </View>
                         </View>
                         <View style={{ flexDirection: 'column', marginBottom: 6 }}>
                             <Text style={{ fontWeight: 'bold' }}>Email</Text>
-                            <View style={{ height: 44, width: '100%', borderRadius: 4, borderWidth: 1, marginVertical: 6, justifyContent: 'center', paddingLeft: 8 }}>
-                                <TextInput value={email} onChangeText={(value) => setEmail(value)} editable={isEditing} />
+                            <View 
+                            style={{ 
+                                height: 44, 
+                                width: 250, 
+                                borderRadius: 10, 
+                                borderWidth: 1, 
+                                marginVertical: 6, 
+                                justifyContent: 'center', 
+                                paddingLeft: 8,
+                                borderColor: "grey"
+                                }}
+                                >
+                                <TextInput 
+                                value={email} 
+                                onChangeText={(value) => setEmail(value)} 
+                                editable={isEditing} 
+                                style={{
+                                    fontWeight: "600",
+                                    fontSize: 14
+                                }}
+                                />
                             </View>
                         </View>
                     </View>
@@ -156,35 +194,53 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
                         onPress={isEditing ? handleSaveChanges : handleEditClick}
                         style={{
                             height: 44,
-                            borderRadius: 50,
+                            borderRadius: 5,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            backgroundColor: isEditing ? '#69ff84' : '#2F80ED',
+                            backgroundColor: '#fff',
                             paddingVertical: 10,
                             marginVertical: 10,
-                            width: 100,
+                            width: 140,
+                            borderColor: isEditing ? '#25c458':'#007aff',
+                            borderWidth: 1
                         }}
                     >
-                        <Text>
-                            {isEditing ? "Save Changes" : "Edit"}
+                        <Text
+                        style={{
+                            color: isEditing ? '#25c458':'#007aff',
+                            fontSize: 14,
+                            fontWeight: '600',
+                        }}
+                        >
+                            {isEditing ? "Save" : "Edit"}
 
                         </Text>
                     </TouchableOpacity>
                     <Pressable
                         onPress={() => { logout(); navigation.replace('signup') }}
                         style={{
+                            height: 44,
+                            borderRadius: 5,
+                            alignItems: 'center',
                             justifyContent: 'center',
-                            flexDirection: 'row',
-                            gap: 4,
-                            backgroundColor: '#ff4d4d',
+                            backgroundColor: '#fff',
                             paddingVertical: 10,
                             marginVertical: 10,
-                            borderRadius: 50,
-                            width: 100,
+                            width: 140,
+                            borderColor: '#d62211',
+                            borderWidth: 1
                         }}
                     >
-                        <Ionicons name="exit-outline" style={{ transform: [{ rotate: '180deg' }] }} size={20} />
-                        <Text>Sign Out</Text>
+                        {/* <Ionicons name="exit-outline" style={{ transform: [{ rotate: '180deg' }] }} size={20} /> */}
+                        <Text
+                        style={{
+                            color: '#d62211',
+                            fontSize: 14,
+                            fontWeight: '600',
+                        }}
+                        >
+                            Sign Out
+                        </Text>
                     </Pressable>
                 </Card>
 
