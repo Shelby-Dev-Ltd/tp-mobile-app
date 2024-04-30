@@ -1,5 +1,5 @@
-import React from "react";
-import { FlatList, PanResponder, RefreshControl, ToastAndroid, View } from "react-native";
+import React, { ReactNode, useEffect, useState } from "react";
+import { FlatList, PanResponder, RefreshControl, Text, ToastAndroid, View } from "react-native";
 import RecordCard from "./RecordCard";
 import { Record as RecordType } from "../../../types/record";
 import { NavigationType } from "../../../types/navigation";
@@ -9,61 +9,39 @@ type RecordProps = {
     records: RecordType[];
     isLoading: boolean;
     onRefresh: () => void;
+    route: any;
 }
 
-const Record = ({ navigation, records, isLoading, onRefresh }: RecordProps) => {
+const Record = ({ route, navigation, records, isLoading, onRefresh }: RecordProps) => {
+    const params = route.params;
 
-    const panResponder = (id: number) => {
-        let dx = 0;
-    
-        return PanResponder.create({
-          onStartShouldSetPanResponder: () => true,
-          onPanResponderMove: (_, gestureState) => {
-            dx = gestureState.dx;
-          },
-          onPanResponderRelease: (_, gestureState) => {
-            if (dx > 50) {
-              deleteRecord(id);
-            }
-          },
-        });
-      };
-
-    const deleteRecord = async (id: number) => {
-        const response = await fetch(`/records/${id}`, {
-            method: 'DELETE',
-        });
-        if(response.status !== 200) {
-            console.error(response.status);
-            ToastAndroid.show('Failed to delete', ToastAndroid.LONG);
-        }
-    };
+    useEffect(() => {
+        if (params && params.refresh) {
+            onRefresh();
+        };
+    }, [params])
 
     return (
         <View>
-            
             <FlatList
-            data={records}
-            renderItem={({item}) => 
-                <View {...panResponder(item.id).panHandlers}>
+                data={records}
+                renderItem={({ item }) =>
                     <RecordCard
-                    id={item.id}
-                    address={item.address}
-                    date={item.date}
-                    isAnalyzed={item.analytics.id !== 1 ? true : false}
-                    onClick={() => navigation.navigate("recordDetail", { id: item.id })}
-                    deleteRecord={deleteRecord}
+                        id={item.id}
+                        address={item.address}
+                        date={item.date}
+                        isAnalyzed={item.analytics.id !== 1 ? true : false}
+                        onClick={() => navigation.navigate("recordDetail", { id: item.id })}
                     />
-                </View>
                 }
-            keyExtractor={item => item.id.toString()}
-            refreshControl={
-                <RefreshControl
-                    refreshing={isLoading}
-                    onRefresh={onRefresh}
-                    colors={['#2F80ED']}
-                />
-            }
+                keyExtractor={item => item.id.toString()}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isLoading}
+                        onRefresh={onRefresh}
+                        colors={['#2F80ED']}
+                    />
+                }
             />
         </View>
     );

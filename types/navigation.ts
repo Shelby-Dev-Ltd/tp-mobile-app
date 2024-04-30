@@ -7,7 +7,7 @@ type RootStackParamList = {
 
     home: undefined; //current screen
 
-    records: undefined;
+    records: { refresh?: boolean };
 
     video: undefined;
 

@@ -10,6 +10,7 @@ export default function RecordDetailScreen({ route, title, navigation, openedPag
 
     const content = (
         <RecordDetail
+            navigation={navigation}
             id={id}
         />
     );

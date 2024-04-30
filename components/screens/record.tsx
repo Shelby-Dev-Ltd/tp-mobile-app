@@ -7,7 +7,7 @@ import { Record as RecordType } from "../../types/record";
 import { useEffect } from "react";
 import { colorsPalette } from "react-native-ui-lib/src/style/colorsPalette";
 
-export default function RecordScreen({ title, navigation, openedPage }: screenProps) {
+export default function RecordScreen({ title, navigation, openedPage, route }: screenProps) {
 
     const { isLoading, mutate, data: records } = useRecords();
 
@@ -22,6 +22,7 @@ export default function RecordScreen({ title, navigation, openedPage }: screenPr
                 navigation={navigation}
                 isLoading={isLoading}
                 onRefresh={onRefresh}
+                route={route}
             />
         </View>)
 
