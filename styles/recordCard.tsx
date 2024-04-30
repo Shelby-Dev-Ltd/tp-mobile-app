@@ -17,7 +17,9 @@ export const recordCardStyles = StyleSheet.create({
     paddingTop: 10,
     gap: 10,
     position: "absolute",
-    top: 110
+    top: 110,
+    justifyContent: 'space-between',
+    width: '100%',
   },
   card: {
     backgroundColor: 'white',
