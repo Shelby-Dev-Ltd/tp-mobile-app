@@ -21,6 +21,7 @@ const Record = ({ navigation, records }: RecordProps) => {
                             id={record.id}
                             address={record.address}
                             date={record.date}
+                            isAnalyzed={record.analytics.id !== 1 ? true : false}
                             onClick={() => navigation.navigate("recordDetail", { id: record.id })}
                         />
                     )

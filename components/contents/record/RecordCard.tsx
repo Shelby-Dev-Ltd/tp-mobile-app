@@ -7,10 +7,11 @@ type cardProps = {
     address: string,
     date: string,
     id: number, //record id
+    isAnalyzed: boolean,
     onClick: (id: number) => void,
 }
 
-const RecordCard = ({ id, address, date, onClick }: cardProps) => {
+const RecordCard = ({ id, address, date, onClick, isAnalyzed }: cardProps) => {
     return (
         <Pressable
             onPress={() => onClick(id)}
@@ -35,25 +36,40 @@ const RecordCard = ({ id, address, date, onClick }: cardProps) => {
                         </Text>
                     </View>
                     <View style={recordCardStyles.dateContainer}>
-                        <Entypo name={"calendar"} size={20} color="grey" />
-                        <Text
+                        <View
                             style={{
-                                color: 'grey'
+                                flexDirection: 'row',
+                                justifyContent: 'flex-start',
+                                gap: 10,
                             }}
                         >
-                            {new Date(date.toString()).toLocaleString('en-US', {
-                                day: 'numeric',
-                                month: 'short',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                second: '2-digit',
-                            })}
-                        </Text>
+                            <Entypo name={"calendar"} size={20} color="grey" />
+                            <Text
+                                style={{
+                                    color: 'grey'
+                                }}
+                            >
+                                {new Date(date.toString()).toLocaleString('en-US', {
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit',
+                                })}
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                width: 16,
+                                height: 16,
+                                borderRadius: 50,
+                                backgroundColor: isAnalyzed ? '#26bf4f' : 'red'
+                            }}
+                        />
                     </View>
                 </View>
             </Card>
-
         </Pressable>
     );
 }

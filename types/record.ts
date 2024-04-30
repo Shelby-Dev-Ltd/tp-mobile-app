@@ -8,7 +8,7 @@ export type Record = {
     longitude: string;
     latitude: string,
     date: string;
-    analyticsId: number,
+    analytics: AnalyticsData,
 }
 
 export type RecordWithAnalytics = {
