@@ -8,6 +8,7 @@ import { app } from "../../../config/firebase";
 import { DoUploadToStorage } from "../../../services/storageService";
 import { useAuth } from "../../../contexts/AuthContext";
 import Card from "../../ui/Card";
+import Popup from "../../ui/Popup";
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,6 +16,11 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [isEditing, setIsEditing] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+
+    const handleDecline = () => 
+        setIsModalVisible(() => !isModalVisible);
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -216,8 +222,8 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
 
                         </Text>
                     </TouchableOpacity>
-                    <Pressable
-                        onPress={() => { logout(); navigation.replace('signup') }}
+                    <TouchableOpacity
+                        onPress={() => setIsModalVisible(true)}
                         style={{
                             height: 44,
                             borderRadius: 5,
@@ -241,7 +247,69 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
                         >
                             Sign Out
                         </Text>
-                    </Pressable>
+                    </TouchableOpacity>
+                    <Popup
+                    isVisible={isModalVisible}
+                    title="Are you sure you want to sign out?"
+                    >
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        gap: 10,
+                    }}>
+                        <TouchableOpacity
+                        onPress={handleDecline}
+                        style={{
+                            height: 44,
+                            borderRadius: 5,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: '#fff',
+                            paddingVertical: 10,
+                            marginVertical: 10,
+                            width: 140,
+                            borderColor: '#25c458',
+                            borderWidth: 1
+                        }}
+                    >
+                        <Text
+                        style={{
+                            color: '#25c458',
+                            fontSize: 14,
+                            fontWeight: '600',
+                        }}
+                        >
+                            No
+                        </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        onPress={() => { logout(); navigation.replace('signup') }}
+                        style={{
+                            height: 44,
+                            borderRadius: 5,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: '#fff',
+                            paddingVertical: 10,
+                            marginVertical: 10,
+                            width: 140,
+                            borderColor: '#d62211',
+                            borderWidth: 1
+                        }}
+                    >
+                        <Text
+                        style={{
+                            color: '#d62211',
+                            fontSize: 14,
+                            fontWeight: '600',
+                        }}
+                        >
+                            Yes
+                        </Text>
+                        </TouchableOpacity>
+
+                    </View>
+                    </Popup>
                 </Card>
 
             </View>
