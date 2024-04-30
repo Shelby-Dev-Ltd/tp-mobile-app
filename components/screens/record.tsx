@@ -17,20 +17,12 @@ export default function RecordScreen({ title, navigation, openedPage }: screenPr
 
     const content =
         (<View style={{ flex: 1 }}>
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        refreshing={isLoading}
-                        onRefresh={onRefresh}
-                        colors={['#2F80ED']}
-                    />
-                }
-            >
-                <Record
-                    records={records || []}
-                    navigation={navigation}
-                />
-            </ScrollView>
+            <Record
+                records={records || []}
+                navigation={navigation}
+                isLoading={isLoading}
+                onRefresh={onRefresh}
+            />
         </View>)
 
     return (
