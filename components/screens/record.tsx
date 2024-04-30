@@ -7,7 +7,7 @@ import { Record as RecordType } from "../../types/record";
 import { useEffect } from "react";
 import { colorsPalette } from "react-native-ui-lib/src/style/colorsPalette";
 
-export default function RecordScreen({ title, navigation, openedPage }: screenProps) {
+export default function RecordScreen({ title, navigation, openedPage, route }: screenProps) {
 
     const { isLoading, mutate, data: records } = useRecords();
 
@@ -17,20 +17,13 @@ export default function RecordScreen({ title, navigation, openedPage }: screenPr
 
     const content =
         (<View style={{ flex: 1 }}>
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        refreshing={isLoading}
-                        onRefresh={onRefresh}
-                        colors={['#2F80ED']}
-                    />
-                }
-            >
-                <Record
-                    records={records || []}
-                    navigation={navigation}
-                />
-            </ScrollView>
+            <Record
+                records={records || []}
+                navigation={navigation}
+                isLoading={isLoading}
+                onRefresh={onRefresh}
+                route={route}
+            />
         </View>)
 
     return (

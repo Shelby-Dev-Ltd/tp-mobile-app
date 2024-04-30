@@ -1,7 +1,8 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, PanResponder, PanResponderStatic, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { recordCardStyles } from "../../../styles/recordCard";
 import { Entypo } from "@expo/vector-icons";
 import Card from "../../ui/Card";
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 
 type cardProps = {
     address: string,
@@ -13,7 +14,7 @@ type cardProps = {
 
 const RecordCard = ({ id, address, date, onClick, isAnalyzed }: cardProps) => {
     return (
-        <Pressable
+        <TouchableOpacity
             onPress={() => onClick(id)}
         >
             <Card
@@ -70,7 +71,9 @@ const RecordCard = ({ id, address, date, onClick, isAnalyzed }: cardProps) => {
                     </View>
                 </View>
             </Card>
-        </Pressable>
+        </TouchableOpacity>
+
+
     );
 }
 
