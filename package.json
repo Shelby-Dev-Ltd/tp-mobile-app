@@ -48,7 +48,6 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "^15.1.0",
     "react-native-ui-lib": "^7.17.2",
-    "react-native-vision-camera": "^3.9.1",
     "swr": "^2.2.5",
     "tamagui": "^1.94.4"
   },
