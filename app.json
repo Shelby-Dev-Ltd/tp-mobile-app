@@ -28,7 +28,7 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.trafficpulse"
+      "package": "com.shelbydev.trafficpulse"
     },
     "web": {
       "favicon": "./assets/server-logo.png"
