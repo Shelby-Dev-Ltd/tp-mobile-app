@@ -4,10 +4,10 @@
     "slug": "tp-mobile-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/server-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/server-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,7 +19,7 @@
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "googleServicesFile": "./.serviceAccount.json",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -31,7 +31,7 @@
       "package": "com.trafficpulse"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/server-logo.png"
     },
     "plugins": [
       "@react-native-google-signin/google-signin",
