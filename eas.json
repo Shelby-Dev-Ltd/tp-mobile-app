@@ -9,8 +9,7 @@
       "android": {
         "config": "development-build-android.yml",
         "buildType": "apk",
-        "gradleCommand": ":app:assembleRelease",
-        "image": "ubuntu-18.04-jdk-11-ndk-r19c"
+        "gradleCommand": ":app:assembleRelease"
       }
     },
     "preview": {

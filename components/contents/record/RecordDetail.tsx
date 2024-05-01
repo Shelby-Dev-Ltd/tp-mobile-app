@@ -6,7 +6,6 @@ import DonutChartContainer from "../analytics/DonutChartContainer";
 import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Card from "../../ui/Card";
 import Popup from "../../ui/Popup";
-import { useDisclose } from 'native-base';
 import { NavigationType } from "../../../types/navigation";
 
 type RecordDetailProps = {
