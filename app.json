@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "shelby-dev",
     "name": "tp-mobile-app",
     "slug": "tp-mobile-app",
     "version": "1.0.0",
