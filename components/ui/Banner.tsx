@@ -1,77 +1,72 @@
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from "react-native";
-import React from "react";
-import { bannerStyles } from "../../styles/banner";
+import React, { useState, useEffect, useRef } from 'react';
+import { View, ScrollView, Text, Image, Dimensions, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { bannerStyles } from '../../styles/banner';
 
-interface BannerProps {
-    images: string[];
-}
+const images = [
+    "https://img.jakpost.net/c/2023/02/01/2023_02_01_135079_1675230408._large.jpg",
+    "https://www.insperity.com/wp-content/uploads/decision_making_process_1200x630-1.png",
+    "https://grammarist.com/wp-content/uploads/Grammarist-Article-Graphic-V4-2023-01-10T134943.720-1024x478.png"
+]
 
-export default class Banner extends React.Component<BannerProps> {
+const Banner: React.FC = () => {
+    const [active, setActive] = useState<number>(0);
+    const scrollView = useRef<ScrollView>(null);
+    const interval = useRef<NodeJS.Timeout>();
 
-    state = {
-        active: 0
-    }
-    scrollView: any;
-    interval: NodeJS.Timeout;
-    
+
+
     // Function to handle manual slide change
-    change = (event: { nativeEvent: { contentOffset: { x: number; }; layoutMeasurement: { width: number; }; }; }) => {
+    const change = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         const slide = Math.ceil(event.nativeEvent.contentOffset.x / event.nativeEvent.layoutMeasurement.width);
-        if (slide !== this.state.active) {
-            this.setState({ active: slide });
+        if (slide !== active) {
+            setActive(slide);
         }
     };
 
     // Function to handle auto-scroll
-    autoScroll = () => {
-        const { images } = this.props;
-        const { active } = this.state;
+    const autoScroll = () => {
         const nextSlide = (active + 1) % images.length;
-        this.setState({ active: nextSlide });
+        setActive(nextSlide);
         const screenWidth = Dimensions.get('window').width;
-        this.scrollView.scrollTo({ x: nextSlide * screenWidth, animated: true });
+        scrollView.current?.scrollTo({ x: nextSlide * screenWidth, animated: true });
     }
 
     // Start auto-scroll when component mounts
-    componentDidMount() {
-        this.interval = setInterval(this.autoScroll, 3000); // Adjust interval duration as needed
-    }
+    useEffect(() => {
+        interval.current = setInterval(autoScroll, 3000); // Adjust interval duration as needed
+        return () => clearInterval(interval.current);
+    }, []);
 
-    // Stop auto-scroll when component unmounts
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
-    render() {
-        return(
-            <View style={bannerStyles.container}>
-                <ScrollView 
-                    ref={(ref) => { this.scrollView = ref; }}
-                    pagingEnabled 
-                    horizontal
-                    onScroll={this.change} 
-                    showsHorizontalScrollIndicator={false}
-                    style={bannerStyles.scroll}>
-                    {
-                        this.props.images.map((image, index) => (
-                            <Image
-                                key={index}
-                                source={{uri: image}}
-                                style={bannerStyles.image}
-                            /> 
-                        ))
-                    }
-                </ScrollView>
-                <View style={bannerStyles.pagination}>
-                    {
-                        this.props.images.map((i, k) => (
-                            <Text key={k} style={k == this.state.active ? bannerStyles.pagingActiveText : bannerStyles.pagingText}>
-                                ⬤
-                            </Text>
-                        ))
-                    }
-                </View>
+    return (
+        <View style={bannerStyles.container}>
+            <ScrollView
+                ref={scrollView}
+                pagingEnabled
+                horizontal
+                onScroll={change}
+                showsHorizontalScrollIndicator={false}
+                style={bannerStyles.scroll}>
+                {
+                    images.map((image, index) => (
+                        <Image
+                            key={index}
+                            source={{ uri: image }}
+                            style={bannerStyles.image}
+                        />
+                    ))
+                }
+            </ScrollView>
+            <View style={bannerStyles.pagination}>
+                {
+                    images.map((i, k) => (
+                        <Text key={k} style={k == active ? bannerStyles.pagingActiveText : bannerStyles.pagingText}>
+                            ⬤
+                        </Text>
+                    ))
+                }
             </View>
-        );
-    }
-}
+        </View>
+    );
+};
+
+export default Banner;

@@ -9,11 +9,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import useVehicleCount from "../../data/home";
 import { useEffect } from "react";
 
-const images = [
-    "https://img.jakpost.net/c/2023/02/01/2023_02_01_135079_1675230408._large.jpg",
-    "https://www.insperity.com/wp-content/uploads/decision_making_process_1200x630-1.png",
-    "https://grammarist.com/wp-content/uploads/Grammarist-Article-Graphic-V4-2023-01-10T134943.720-1024x478.png"
-]
 
 const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
 
@@ -46,7 +41,7 @@ const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
                 <Welcome
                     user={user}
                 />
-                <Banner images={images} />
+                <Banner />
                 <VehicleCount
                     vehicles={data}
                 />
