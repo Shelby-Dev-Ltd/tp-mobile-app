@@ -23,6 +23,10 @@ const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
 
     const { data, mutate, isLoading } = useVehicleCount();
 
+
+
+    if (isLoading) return null;
+
     const onRefresh = () => {
         mutate();
     };
