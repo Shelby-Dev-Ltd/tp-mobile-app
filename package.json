@@ -26,6 +26,7 @@
     "@react-navigation/native-stack": "^6.9.18",
     "@react-navigation/stack": "^6.3.28",
     "@shopify/react-native-skia": "0.1.221",
+    "axios": "^1.6.8",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "~50.0.15",
     "expo-av": "~13.10.6",

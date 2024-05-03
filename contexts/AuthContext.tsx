@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { ToastAndroid } from 'react-native';
 import { User } from '../types/user';
+import axios from 'axios';
 
 type AuthContextType = {
     isLoggedIn: boolean;
@@ -30,34 +31,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = async () => {
         try {
-            const response = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/login`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: 1 // TODO: USE REAL USER ID HERE
-                }),
-                headers: {
-                    "Content-Type": 'application/json',
-                }
-            })
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/login`, {
+                id: 1 // TODO: USE REAL USER ID HERE
+            });
 
-            if (response.status !== 200 || !response.ok) {
-                setIsLoggedIn(false);
-                return console.error(response)
-            };
+            // if (response.status !== 200 || !response.data.ok) {
+            //     setIsLoggedIn(false);
+            //     console.error(response);
+            //     return console.error(response.data);
+            // }
 
-            const user: ApiResponse = await response.json();
+            const user = response.data.data.user;
 
             // Set user to local
-            setUser(user.data.user);
+            setUser(user);
 
             setIsLoggedIn(true);
             ToastAndroid.show('Logged in', ToastAndroid.LONG);
         } catch (e) {
             setUser(undefined);
             console.error(e);
-            return ToastAndroid.show(e, ToastAndroid.LONG);
+            return ToastAndroid.show(e.message, ToastAndroid.LONG);
         }
-
     };
 
     const update = async (email: string, name: string, photoUrl: string | undefined) => {
