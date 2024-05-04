@@ -16,7 +16,6 @@ import {
 } from "react-native-google-places-autocomplete";
 import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import serviceJson from "../../../config/serviceAccount";
-import { Constants } from "react-native-ui-lib";
 
 type RecordCreationProps = {
   // mediaId: number,
@@ -63,7 +62,7 @@ function InputAutocomplete({
           onPlaceSelected(details);
         }}
         query={{
-          key: "AIzaSyAXkEQ11G_jDlMd1WHH6B58hu1UD9ohJv0",
+          key: serviceJson.client[0].api_key,
           language: "id",
         }}
       />
