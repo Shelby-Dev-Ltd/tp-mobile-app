@@ -2,13 +2,14 @@ import useSWR from "swr";
 import { useAuth } from "../contexts/AuthContext";
 import { VehicleAPIResponse } from "../types/api/home";
 import { Vehicles } from "../types/home";
+import axios from "axios";
 
 
 
 const fetcher = async () => {
     try {
-        const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/analytics/count/1`)
-        const data: ApiResponse = await res.json();
+        const response = await axios.get(`${process.env.EXPO_PUBLIC_BASE_API_URL}/analytics/count/1`);
+        const data: ApiResponse = response.data;
 
         if (data.error) throw Error(data.status.toString());
 
@@ -39,7 +40,7 @@ const fetcher = async () => {
     } catch (e) {
         console.error(e);
     }
-}
+};
 
 const useVehicleCount = () => {
 

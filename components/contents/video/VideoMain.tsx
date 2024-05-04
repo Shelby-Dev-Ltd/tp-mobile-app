@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { DoUploadToStorage } from '../../../services/storageService';
 import { app } from '../../../config/firebase';
 import { NavigationType } from '../../../types/navigation';
+import axios from 'axios';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
@@ -90,30 +91,26 @@ export default function VideoMain({ navigation }: { navigation: NavigationType }
 
     const saveVideo = async (publicUrl: string) => {
         try {
-            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/upload-video`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    url: publicUrl,
-                }),
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/upload-video`, {
+                url: publicUrl,
+            }, {
                 headers: {
-                    'content-type': 'application/json',
+                    'Content-Type': 'application/json',
                 }
-            })
+            });
 
-            if (res.status.toString().slice(0, 1) !== '2') { // fails 
-                throw Error(res.status.toString());
+            const data: VideoResponse = response.data;
+
+            if (data.error) {
+                throw Error(data.status.toString());
             }
-
-            const data: VideoResponse = await res.json();
-
-            if (data.error) throw Error(data.status.toString());
 
             return data.data.media;
 
         } catch (e) {
             console.error(e);
         }
-    }
+    };
 
     const submitVideo = async () => {
         setIsUploadingVideo(true); //setIsLoading
@@ -140,25 +137,22 @@ export default function VideoMain({ navigation }: { navigation: NavigationType }
         try {
             setIsUploadingVideo(true);
 
-            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    user: { id: 1 }, // TODO PUT REAL USER HERE
-                    address,
-                    longitude,
-                    latitude,
-                    mediaId: currentMediaId,
-                }),
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records`, {
+                user: { id: 1 }, // TODO PUT REAL USER HERE
+                address,
+                longitude,
+                latitude,
+                mediaId: currentMediaId,
+            }, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
-            const data: ApiResponse = await res.json();
 
-            if (data.error) throw Error(data.status.toString());
+            const data: ApiResponse = response.data;
 
             navigation.pop();
-            return navigation.navigate('records');
+            navigation.navigate('records');
         } catch (e) {
             console.error('Error in onSubmit:', e);
         } finally {

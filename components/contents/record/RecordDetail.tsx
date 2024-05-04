@@ -7,6 +7,7 @@ import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Card from "../../ui/Card";
 import Popup from "../../ui/Popup";
 import { NavigationType } from "../../../types/navigation";
+import axios from "axios";
 
 type RecordDetailProps = {
     id: number;
@@ -15,7 +16,7 @@ type RecordDetailProps = {
 
 const { width, height } = Dimensions.get("window");
 
-export const RecordDetail: React.FC<RecordDetailProps> = ({ id, navigation, }) => {
+export const RecordDetail: React.FC<RecordDetailProps> = ({ id, navigation }) => {
     const { isLoading, data, mutate } = useRecordSingle(id);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -29,7 +30,7 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id, navigation, }) =
 
     if (isLoading) return <LoaderScreen />
 
-    if (data.isAnalyzing) {
+    if (data && 'isAnalyzing' in data && data.isAnalyzing) {
         return (
             <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text>{`Data for record ${id} is still being analyzed by our system..`}</Text>
@@ -83,9 +84,7 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id, navigation, }) =
 
     const deleteRecord = async (id: number) => {
         try {
-            await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records/${id}`, {
-                method: 'DELETE',
-            });
+            await axios.delete(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records/${id}`);
 
             ToastAndroid.show('Deleted', ToastAndroid.LONG);
             onClose();
