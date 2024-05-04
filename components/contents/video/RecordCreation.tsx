@@ -46,6 +46,8 @@ type InputAutocompleteProps = {
   onPlaceSelected: (details: GooglePlaceDetail | null) => void;
 };
 
+const api_key = serviceJson.client[0].api_key;
+
 function InputAutocomplete({
   label,
   placeholder,
@@ -62,7 +64,7 @@ function InputAutocomplete({
           onPlaceSelected(details);
         }}
         query={{
-          key: serviceJson.client[0].api_key,
+          key: api_key,
           language: "id",
         }}
       />
