@@ -22,6 +22,8 @@ export default function Signup({ navigation }: RootStack) {
       }
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   }
 
