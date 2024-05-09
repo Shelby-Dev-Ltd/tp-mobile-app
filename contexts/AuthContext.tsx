@@ -63,6 +63,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         } catch (e) {
             setUser(undefined);
+            console.error("ERROR LOGGING IN");
             console.error(e);
             ToastAndroid.show(e.message, ToastAndroid.LONG);
         }
