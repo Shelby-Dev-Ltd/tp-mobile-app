@@ -22,7 +22,7 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/server-logo.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -43,7 +43,9 @@
       "favicon": "./assets/server-logo.png"
     },
     "plugins": [
-      "@react-native-google-signin/google-signin",
+      [
+        "@react-native-google-signin/google-signin"
+      ],
       [
         "expo-image-picker",
         {

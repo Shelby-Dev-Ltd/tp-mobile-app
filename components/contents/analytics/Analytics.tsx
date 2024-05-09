@@ -18,7 +18,7 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
 
     if (isLoading) return <LoaderScreen />;
 
-    if (!analyticsData.length) return (
+    if (!analyticsData) return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>No data found!</Text></View>
     )
 

@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 import { ToastAndroid } from 'react-native';
 import { User } from '../types/user';
 import axios from 'axios';
+import { DoLogin } from '../services/authService';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 type AuthContextType = {
     isLoggedIn: boolean;
@@ -30,24 +32,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User>();
 
     const login = async () => {
-        try {
-            const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/login`, {
-                id: 1 // TODO: USE REAL USER ID HERE
-            });
+        if (user) {
+            return setIsLoggedIn(true);
+        }
 
-            // if (response.status !== 200 || !response.data.ok) {
-            //     setIsLoggedIn(false);
-            //     console.error(response);
-            //     return console.error(response.data);
-            // }
+        try {
+            const signin = await DoLogin();
+
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/login`, {
+                oauthId: signin.user.id,
+                email: signin.user.email,
+                name: signin.user.givenName + (signin.user.familyName || ''),
+                photoUrl: signin.user.photo,
+            });
 
             const user = response.data.data.user;
 
+            if (!user) throw Error('Failed to login');
+
+            console.log({ ...user, idToken: signin.idToken });
+
             // Set user to local
-            setUser(user);
+            setUser({ ...user, idToken: signin.idToken });
 
             setIsLoggedIn(true);
-            ToastAndroid.show('Logged in', ToastAndroid.LONG);
+
         } catch (e) {
             setUser(undefined);
             console.error(e);
@@ -57,7 +66,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const update = async (email: string, name: string, photoUrl: string | undefined) => {
         try {
-            const response = await axios.patch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/user/edit/${1}`, { // TODO: Use real user Id
+            const response = await axios.patch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/user/edit/${user.id}`, { // TODO: Use real user Id
                 email,
                 name,
                 photoUrl
@@ -79,10 +88,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
 
-    const logout = () => {
+    const logout = async () => {
         setUser(undefined);
         setIsLoggedIn(false);
-
+        await GoogleSignin.signOut();
     };
 
     return (

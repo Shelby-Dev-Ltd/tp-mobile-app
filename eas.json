@@ -5,12 +5,7 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "android": {
-        "config": "development-build-android.yml",
-        "buildType": "apk",
-        "gradleCommand": ":app:assembleRelease"
-      }
+      "distribution": "internal"
     },
     "preview": {
       "distribution": "internal"

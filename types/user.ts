@@ -1,7 +1,9 @@
 export type User = {
     name: string;
     email: string;
-    id: number;
+    id: string;
+    idToken: string;
+    oauthId: string;
     profile: {
         photoUrl: string,
     }

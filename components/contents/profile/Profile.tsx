@@ -19,7 +19,7 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
     const [isModalVisible, setIsModalVisible] = useState(false);
 
 
-    const handleDecline = () => 
+    const handleDecline = () =>
         setIsModalVisible(() => !isModalVisible);
 
     const handleEditClick = () => {
@@ -141,51 +141,51 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
                     <View>
                         <View style={{ flexDirection: 'column', marginBottom: 6 }}>
                             <Text style={{ fontWeight: 'bold' }}>Name</Text>
-                            <View 
-                            style={{ 
-                                height: 44, 
-                                width: 250, 
-                                borderRadius: 10, 
-                                borderWidth: 1, 
-                                marginVertical: 6, 
-                                justifyContent: 'center', 
-                                paddingLeft: 8,
-                                borderColor: "grey"
-                                }}
-                                >
-                                <TextInput 
-                                value={name} 
-                                onChangeText={(value) => setName(value)} 
-                                editable={isEditing} 
+                            <View
                                 style={{
-                                    fontWeight: "600",
-                                    fontSize: 14
+                                    height: 44,
+                                    width: 250,
+                                    borderRadius: 10,
+                                    borderWidth: 1,
+                                    marginVertical: 6,
+                                    justifyContent: 'center',
+                                    paddingLeft: 8,
+                                    borderColor: "grey"
                                 }}
+                            >
+                                <TextInput
+                                    value={name}
+                                    onChangeText={(value) => setName(value)}
+                                    editable={isEditing}
+                                    style={{
+                                        fontWeight: "600",
+                                        fontSize: 14
+                                    }}
                                 />
                             </View>
                         </View>
                         <View style={{ flexDirection: 'column', marginBottom: 6 }}>
                             <Text style={{ fontWeight: 'bold' }}>Email</Text>
-                            <View 
-                            style={{ 
-                                height: 44, 
-                                width: 250, 
-                                borderRadius: 10, 
-                                borderWidth: 1, 
-                                marginVertical: 6, 
-                                justifyContent: 'center', 
-                                paddingLeft: 8,
-                                borderColor: "grey"
-                                }}
-                                >
-                                <TextInput 
-                                value={email} 
-                                onChangeText={(value) => setEmail(value)} 
-                                editable={isEditing} 
+                            <View
                                 style={{
-                                    fontWeight: "600",
-                                    fontSize: 14
+                                    height: 44,
+                                    width: 250,
+                                    borderRadius: 10,
+                                    borderWidth: 1,
+                                    marginVertical: 6,
+                                    justifyContent: 'center',
+                                    paddingLeft: 8,
+                                    borderColor: "grey"
                                 }}
+                            >
+                                <TextInput
+                                    value={email}
+                                    onChangeText={(value) => setEmail(value)}
+                                    editable={false}
+                                    style={{
+                                        fontWeight: "600",
+                                        fontSize: 14
+                                    }}
                                 />
                             </View>
                         </View>
@@ -207,16 +207,16 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
                             paddingVertical: 10,
                             marginVertical: 10,
                             width: 140,
-                            borderColor: isEditing ? '#25c458':'#007aff',
+                            borderColor: isEditing ? '#25c458' : '#007aff',
                             borderWidth: 1
                         }}
                     >
                         <Text
-                        style={{
-                            color: isEditing ? '#25c458':'#007aff',
-                            fontSize: 14,
-                            fontWeight: '600',
-                        }}
+                            style={{
+                                color: isEditing ? '#25c458' : '#007aff',
+                                fontSize: 14,
+                                fontWeight: '600',
+                            }}
                         >
                             {isEditing ? "Save" : "Edit"}
 
@@ -239,76 +239,76 @@ const Profile: React.FC<ProfileProps> = ({ navigation, profile, logout, updatePr
                     >
                         {/* <Ionicons name="exit-outline" style={{ transform: [{ rotate: '180deg' }] }} size={20} /> */}
                         <Text
-                        style={{
-                            color: '#d62211',
-                            fontSize: 14,
-                            fontWeight: '600',
-                        }}
+                            style={{
+                                color: '#d62211',
+                                fontSize: 14,
+                                fontWeight: '600',
+                            }}
                         >
                             Sign Out
                         </Text>
                     </TouchableOpacity>
                     <Popup
-                    isVisible={isModalVisible}
-                    title="Are you sure you want to sign out?"
+                        isVisible={isModalVisible}
+                        title="Are you sure you want to sign out?"
                     >
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: 10,
-                    }}>
-                        <TouchableOpacity
-                        onPress={handleDecline}
-                        style={{
-                            height: 44,
-                            borderRadius: 5,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#fff',
-                            paddingVertical: 10,
-                            marginVertical: 10,
-                            width: 140,
-                            borderColor: '#25c458',
-                            borderWidth: 1
-                        }}
-                    >
-                        <Text
-                        style={{
-                            color: '#25c458',
-                            fontSize: 14,
-                            fontWeight: '600',
-                        }}
-                        >
-                            No
-                        </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                        onPress={() => { logout(); navigation.replace('signup') }}
-                        style={{
-                            height: 44,
-                            borderRadius: 5,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#fff',
-                            paddingVertical: 10,
-                            marginVertical: 10,
-                            width: 140,
-                            borderColor: '#d62211',
-                            borderWidth: 1
-                        }}
-                    >
-                        <Text
-                        style={{
-                            color: '#d62211',
-                            fontSize: 14,
-                            fontWeight: '600',
-                        }}
-                        >
-                            Yes
-                        </Text>
-                        </TouchableOpacity>
+                        <View style={{
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            gap: 10,
+                        }}>
+                            <TouchableOpacity
+                                onPress={handleDecline}
+                                style={{
+                                    height: 44,
+                                    borderRadius: 5,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: '#fff',
+                                    paddingVertical: 10,
+                                    marginVertical: 10,
+                                    width: 140,
+                                    borderColor: '#25c458',
+                                    borderWidth: 1
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: '#25c458',
+                                        fontSize: 14,
+                                        fontWeight: '600',
+                                    }}
+                                >
+                                    No
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => { logout(); navigation.replace('signup') }}
+                                style={{
+                                    height: 44,
+                                    borderRadius: 5,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: '#fff',
+                                    paddingVertical: 10,
+                                    marginVertical: 10,
+                                    width: 140,
+                                    borderColor: '#d62211',
+                                    borderWidth: 1
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: '#d62211',
+                                        fontSize: 14,
+                                        fontWeight: '600',
+                                    }}
+                                >
+                                    Yes
+                                </Text>
+                            </TouchableOpacity>
 
-                    </View>
+                        </View>
                     </Popup>
                 </Card>
 

@@ -21,6 +21,8 @@ const Record = ({ route, navigation, records, isLoading, onRefresh }: RecordProp
         };
     }, [params])
 
+    if (!records.length) return (<View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}><Text>No Records</Text></View>)
+
     return (
         <View>
             <FlatList

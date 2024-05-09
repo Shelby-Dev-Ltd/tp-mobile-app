@@ -32,7 +32,7 @@ const LatestRecords: React.FC<LatestRecordProps> = ({ navigation }) => {
                 </Pressable>
 
             </View>
-            {records.slice(0, 3).map((record, index) => (
+            {records && Array.isArray(records) && records.length ? records.slice(0, 3).map((record, index) => (
                 <RecordCard
                     key={index}
                     id={record.id}
@@ -41,7 +41,7 @@ const LatestRecords: React.FC<LatestRecordProps> = ({ navigation }) => {
                     isAnalyzed={record.analytics.id !== 1}
                     onClick={() => navigation.navigate("recordDetail", { id: record.id })}
                 />
-            ))}
+            )) : <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}><Text>No Records</Text></View>}
         </View>
     );
 }

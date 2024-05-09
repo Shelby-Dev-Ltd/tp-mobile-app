@@ -18,6 +18,8 @@ import { DoUploadToStorage } from '../../../services/storageService';
 import { app } from '../../../config/firebase';
 import { NavigationType } from '../../../types/navigation';
 import axios from 'axios';
+import { userInfo } from 'os';
+import { useAuth } from '../../../contexts/AuthContext';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
@@ -42,6 +44,8 @@ export default function VideoMain({ navigation }: { navigation: NavigationType }
             Alert.alert('Please allow all permissions');
         }
     };
+
+    const { user } = useAuth();
 
     useEffect(() => {
         if (startCamera) return
@@ -138,7 +142,7 @@ export default function VideoMain({ navigation }: { navigation: NavigationType }
             setIsUploadingVideo(true);
 
             const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records`, {
-                user: { id: 1 }, // TODO PUT REAL USER HERE
+                user: { id: user.id },
                 address,
                 longitude,
                 latitude,
