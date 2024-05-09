@@ -29,7 +29,7 @@ type AuthProviderProps = {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User | undefined>();
 
     const login = async () => {
         if (user) {
@@ -38,6 +38,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         try {
             const signin = await DoLogin();
+
+            if (signin === 'CANCELLED') return ToastAndroid.show('Cancelled', ToastAndroid.SHORT);
 
             const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/login`, {
                 oauthId: signin.user.id,
@@ -57,16 +59,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
             setIsLoggedIn(true);
 
+            return 'LOGGED';
+
         } catch (e) {
             setUser(undefined);
             console.error(e);
-            return ToastAndroid.show(e.message, ToastAndroid.LONG);
+            ToastAndroid.show(e.message, ToastAndroid.LONG);
         }
     };
 
     const update = async (email: string, name: string, photoUrl: string | undefined) => {
         try {
-            const response = await axios.patch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/user/edit/${user.id}`, { // TODO: Use real user Id
+            const response = await axios.patch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/user/edit/${user.id}`, {
                 email,
                 name,
                 photoUrl

@@ -42,7 +42,7 @@ export const DoLogin = async () => {
         return userInfo;
     } catch (error) {
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            console.error(error)
+            return 'CANCELLED';
         } else if (error.code === statusCodes.IN_PROGRESS) {
             console.error(error)
             // operation (e.g. sign in) is in progress already
