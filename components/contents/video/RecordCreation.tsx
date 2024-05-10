@@ -55,16 +55,18 @@ function InputAutocomplete({
     <>
       <Text>{label}</Text>
       <GooglePlacesAutocomplete
-        styles={{ textInput: styles.input }}
+        styles={{ textInput: styles.input, }}
         placeholder={placeholder || ""}
         fetchDetails
         onPress={(data, details = null) => {
           onPlaceSelected(details);
         }}
         query={{
-          key: serviceJson.client[0].api_key,
+          key: serviceJson.client[0].api_key[0].current_key,
           language: "id",
         }}
+        onNotFound={() => { console.log('NOT FOUND') }}
+        onFail={(e) => { console.log(e) }}
       />
     </>
   );
