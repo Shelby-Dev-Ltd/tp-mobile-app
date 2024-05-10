@@ -52,8 +52,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
             if (!user) throw Error('Failed to login');
 
-            console.log({ ...user, idToken: signin.idToken });
-
             // Set user to local
             setUser({ ...user, idToken: signin.idToken });
 

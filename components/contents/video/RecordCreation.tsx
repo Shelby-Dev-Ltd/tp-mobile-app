@@ -65,8 +65,8 @@ function InputAutocomplete({
           key: serviceJson.client[0].api_key[0].current_key,
           language: "id",
         }}
-        onNotFound={() => { console.log('NOT FOUND') }}
-        onFail={(e) => { console.log(e) }}
+        onNotFound={() => { console.error('NOT FOUND') }}
+        onFail={(e) => { console.error(e) }}
       />
     </>
   );
