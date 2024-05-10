@@ -1,11 +1,8 @@
-import { RefreshControl, ScrollView, Text, View } from "react-native";
+import { View } from "react-native";
 import Layout from "../layouts/Layout";
 import { screenProps } from "../../types/screenprops";
 import Record from "../contents/record/Record";
 import { useRecords } from "../../data/records";
-import { Record as RecordType } from "../../types/record";
-import { useEffect } from "react";
-import { colorsPalette } from "react-native-ui-lib/src/style/colorsPalette";
 
 export default function RecordScreen({ title, navigation, openedPage, route }: screenProps) {
 
