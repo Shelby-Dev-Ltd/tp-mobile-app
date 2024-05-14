@@ -1,6 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as WebBrowser from 'expo-web-browser';
 import { User } from '../types/user';
+import {
+    statusCodes,
+    GoogleSignin
+} from '@react-native-google-signin/google-signin';
 
 export const saveTokens = async (accessToken: string, refreshToken: string) => {
     try {
@@ -31,14 +35,23 @@ export const removeTokens = async () => {
     }
 };
 
-export const DoLogin = async (): Promise<User | Error> => {
+export const DoLogin = async () => {
     try {
-        // const login = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/auth/google`, {
-        //     method: 'GET'
-        // })
-
-    } catch (e) {
-        console.error(`authService: ${e}`);
-        return Error(e)
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        return userInfo;
+    } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            return 'CANCELLED';
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+            console.error(error)
+            // operation (e.g. sign in) is in progress already
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            console.error(error)
+            // play services not available or outdated
+        } else {
+            console.error(error)
+            // some other error happened
+        }
     }
-}
+};

@@ -15,6 +15,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { app } from './config/firebase';
 import RecordCreation from './components/contents/video/RecordCreation';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import serviceJson from './config/serviceAccount';
 
 const Stack = createStackNavigator();
 
@@ -28,8 +29,8 @@ export default function App() {
           <StatusBar style="auto" />
           <Routes />
           {/* <RecordCreation onSubmit={function (location: string): void {
-            throw new Error('Function not implemented.');
-          } }/> */}
+              throw new Error('Function not implemented.');
+            } }/> */}
         </NavigationContainer>
       </AuthProvider>
     </SafeAreaView>

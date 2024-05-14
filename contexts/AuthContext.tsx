@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { ToastAndroid } from 'react-native';
 import { User } from '../types/user';
+import axios from 'axios';
+import { DoLogin } from '../services/authService';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 type AuthContextType = {
     isLoggedIn: boolean;
@@ -26,52 +29,57 @@ type AuthProviderProps = {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User | undefined>();
 
     const login = async () => {
-        try {
-            const response = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/login`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: 1 // TODO: USE REAL USER ID HERE
-                }),
-                headers: {
-                    "Content-Type": 'application/json',
-                }
-            })
-
-            if (response.status !== 200 || !response.ok) console.error(response.statusText);
-
-            const user: ApiResponse = await response.json();
-
-            // Set user to local
-            setUser(user.data.user);
-
-            setIsLoggedIn(true);
-            ToastAndroid.show('Logged in', ToastAndroid.LONG);
-        } catch (e) {
-            setUser(undefined);
-            console.error(e);
-            return ToastAndroid.show(e, ToastAndroid.LONG);
+        if (user) {
+            return setIsLoggedIn(true);
         }
 
+        try {
+            const signin = await DoLogin();
+
+            if (signin === 'CANCELLED') return ToastAndroid.show('Cancelled', ToastAndroid.SHORT);
+
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/login`, {
+                oauthId: signin.user.id,
+                email: signin.user.email,
+                name: signin.user.givenName + (signin.user.familyName || ''),
+                photoUrl: signin.user.photo,
+            });
+
+            const user = response.data.data.user;
+
+            if (!user) throw Error('Failed to login');
+
+            // Set user to local
+            setUser({ ...user, idToken: signin.idToken });
+
+            setIsLoggedIn(true);
+
+            return 'LOGGED';
+
+        } catch (e) {
+            setUser(undefined);
+            console.error("ERROR LOGGING IN");
+            console.error(e);
+            ToastAndroid.show(e.message, ToastAndroid.LONG);
+        }
     };
 
     const update = async (email: string, name: string, photoUrl: string | undefined) => {
         try {
-            const response = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/user/edit/${1}`, { // TODO: Use real user Id
-                method: 'PATCH',
-                body: JSON.stringify({
-                    email,
-                    name,
-                    photoUrl
-                }),
+            const response = await axios.patch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/user/edit/${user.id}`, {
+                email,
+                name,
+                photoUrl
+            }, {
                 headers: {
-                    'Content-type': 'application/json',
+                    'Content-Type': 'application/json',
                 }
-            })
+            });
 
-            const result: ApiResponse = await response.json();
+            const result: ApiResponse = response.data;
             if (result.error) throw (result.error);
             const updatedUser = (result.data?.user as User || { name: '', email: '', id: 0, profile: { photoUrl: '' } }) as User;
             setUser(updatedUser);
@@ -80,12 +88,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             console.error(e);
             return null;
         }
-    }
+    };
 
-    const logout = () => {
+
+    const logout = async () => {
         setUser(undefined);
         setIsLoggedIn(false);
-
+        await GoogleSignin.signOut();
     };
 
     return (

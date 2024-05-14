@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Dimensions, Image, RefreshControl, ScrollView, Text, View } from "react-native";
 import { NavigationType } from "../../../types/navigation";
-import { imagePlaceholders } from "../../../config/placeholders";
-import { BezierLineChart } from "../../charts/BezierLineChart";
 import { useAnalytics } from "../../../data/analytics";
 import { LoaderScreen } from "react-native-ui-lib";
-import { DatasetsType } from "../../../types/chart";
-import { Dataset } from "react-native-chart-kit/dist/HelperTypes";
+import DonutChartContainer from "./DonutChartContainer";
+import Card from "../../ui/Card";
 
 type AnalyticsProps = {
     navigation: NavigationType
 }
+
+const { width, height } = Dimensions.get('window');
 
 const Analytics = ({ navigation }: AnalyticsProps) => {
 
@@ -18,25 +18,48 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
 
     if (isLoading) return <LoaderScreen />;
 
-    if (!analyticsData.length) return (
+    if (!analyticsData) return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>No data found!</Text></View>
     )
 
+    const onRefresh = () => {
+        mutate();
+    };
+
     return (
-        <ScrollView style={{ flex: 1 }}>
-            <View style={{ padding: 10 }}>
-                <View style={{ marginBottom: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginBottom: -30 }}></Text>
-                    <Image
-                        source={{ uri: imagePlaceholders.analytics.trafficThumbnail }}
-                    />
-                </View>
-                <View style={{ marginBottom: 20, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Monthly Basis</Text>
-                    <BezierLineChart
+        <ScrollView
+            style={{
+                flex: 1,
+                height,
+            }}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+                <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={onRefresh}
+                    colors={['#2F80ED']}
+                />
+            }
+        >
+            <View
+                style={{
+                    height: '100%',
+                    width: '100%',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                }}
+            >
+                <Card
+                    marginTop={10}
+                    marginBottom={10}
+                    width={width - 40}
+                >
+                    <DonutChartContainer
+                        isLoading={isLoading}
                         analyticsData={analyticsData}
                     />
-                </View>
+                </Card>
                 {/* TODO: ADD PIE CHART */}
                 {/* <View>
                     <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Pie Chart</Text>
@@ -55,8 +78,12 @@ const Analytics = ({ navigation }: AnalyticsProps) => {
                         absolute
                     />
                 </View> */}
+                {/* </View> */}
             </View>
-        </ScrollView>
+
+
+
+        </ScrollView >
     );
 }
 

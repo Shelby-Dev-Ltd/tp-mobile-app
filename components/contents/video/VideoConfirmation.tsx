@@ -1,6 +1,6 @@
 import { View, Image, Pressable, Text, Button, Dimensions, TouchableOpacity } from "react-native";
 import { Video, ResizeMode } from 'expo-av';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type videoConfirmationProps = {
     videoUrlLocal?: string,
@@ -9,44 +9,12 @@ type videoConfirmationProps = {
 }
 
 const VideoConfirmation = ({ videoUrlLocal, cancelVideo, submitVideo }: videoConfirmationProps) => {
-    const video = useRef(null);
+    const video = useRef<Video>();
     const [status, setStatus] = useState({});
 
     return (
         <>
             <View style={{ flex: 1, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <View
-                    style={{
-                        position: 'absolute',
-                        bottom: 100,
-                        right: 10,
-                        zIndex: 1,
-                    }}
-                >
-                    <TouchableOpacity
-                        onPress={() => submitVideo()}
-                        style={{
-                            borderRadius: 30,
-                            backgroundColor: '#2F80ED',
-                            paddingHorizontal: 20,
-                            paddingVertical: 5,
-                            minWidth: 120,
-                            minHeight: 40,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text
-                            style={{
-                                color: 'white',
-                                fontWeight: '700',
-                            }}
-                        >
-                            Proceed
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-
                 <View
                     style={{
                         flex: 1,
@@ -59,11 +27,41 @@ const VideoConfirmation = ({ videoUrlLocal, cancelVideo, submitVideo }: videoCon
                     <Video
                         ref={video}
                         source={{ uri: videoUrlLocal }}
-                        style={{ flex: 1, width: '100%', height: '100%' }}
+                        style={{ width: '100%', height: '90%' }}
                         useNativeControls
-                        resizeMode={ResizeMode.CONTAIN}
+                        resizeMode={ResizeMode.COVER}
                         onPlaybackStatusUpdate={status => setStatus(() => status)}
                     />
+                    <View
+                        style={{
+                            backgroundColor: 'black',
+                            width: '100%',
+                            bottom: 0,
+                            height: '10%',
+                        }}
+                    >
+                        <TouchableOpacity
+                            onPress={() => submitVideo()}
+                            style={{
+                                backgroundColor: '#2F80ED',
+                                paddingHorizontal: 20,
+                                paddingVertical: 5,
+                                width: '100%',
+                                height: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: 'white',
+                                    fontWeight: '700',
+                                }}
+                            >
+                                Proceed
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
             </View>

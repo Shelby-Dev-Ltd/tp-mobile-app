@@ -1,5 +1,6 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
 import serviceJson from './serviceAccount';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -10,6 +11,10 @@ const firebaseConfig = {
     messagingSenderId: serviceJson.project_info.project_number,
     appId: serviceJson.client[0].client_info.mobilesdk_app_id,
 };
+
+GoogleSignin.configure({
+    webClientId: serviceJson.client[0].oauth_client[0].client_id, // client ID of type WEB for your server. Required to get the idToken on the user object, and for offline access.
+});
 
 // Initialize Firebase
 

@@ -40,6 +40,14 @@ export const BezierLineChart: React.FC<LineChartProps> = ({ analyticsData }) => 
             color: () => "green"
         }
 
+        const newBusData: Dataset = {
+            data: analyticsData.map((data) => {
+                const { BusCount } = data;
+                return BusCount;
+            }),
+            color: () => "green"
+        }
+
         setLabels(newLabels);
         setDatasets([newBikeData, newCarData, newTruckData]);
 

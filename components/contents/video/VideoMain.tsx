@@ -16,11 +16,16 @@ import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { DoUploadToStorage } from '../../../services/storageService';
 import { app } from '../../../config/firebase';
+import { NavigationType } from '../../../types/navigation';
+import axios from 'axios';
+import { userInfo } from 'os';
+import { useAuth } from '../../../contexts/AuthContext';
+import { getVideoDuration } from '../../../helpers/duration';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
 
-export default function VideoMain({ navigation }) {
+export default function VideoMain({ navigation }: { navigation: NavigationType }) {
     let camera: Camera
     const isFocused = useIsFocused();
     // const device = useCameraDevice('back');
@@ -40,6 +45,8 @@ export default function VideoMain({ navigation }) {
             Alert.alert('Please allow all permissions');
         }
     };
+
+    const { user } = useAuth();
 
     useEffect(() => {
         if (startCamera) return
@@ -87,44 +94,42 @@ export default function VideoMain({ navigation }) {
     };
 
 
-    const saveVideo = async (publicUrl: string) => {
+    const saveVideo = async (url: string, duration: string) => {
         try {
-            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/upload-video`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    url: publicUrl,
-                }),
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/upload-video`, {
+                url,
+                duration,
+            }, {
                 headers: {
-                    'content-type': 'application/json',
+                    'Content-Type': 'application/json',
                 }
-            })
+            });
 
-            if (res.status.toString().slice(0, 1) !== '2') { // fails 
-                throw Error(res.status.toString());
+            const data: VideoResponse = response.data;
+
+            if (data.error) {
+                throw Error(data.status.toString());
             }
-
-            const data: VideoResponse = await res.json();
-
-            if (data.error) throw Error(data.status.toString());
 
             return data.data.media;
 
         } catch (e) {
             console.error(e);
         }
-    }
+    };
 
     const submitVideo = async () => {
         setIsUploadingVideo(true); //setIsLoading
         try {
             // const uri = Platform.OS === 'android' ? capturedVideoPath : capturedVideoPath.replace('file://', '');
             const res = await UploadToCloudStore(capturedVideoPath);
+            const duration = await getVideoDuration(capturedVideoPath);
 
             const fullPath = res.ref.fullPath;
             const publicUrlLink = 'https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/captures';
             const publicUrl = `${publicUrlLink}%2F${fullPath.slice(fullPath.indexOf('/') + 1)}?alt=media`;
 
-            const { id: mediaId } = await saveVideo(publicUrl);
+            const { id: mediaId } = await saveVideo(publicUrl, duration);
 
             setCurrentMediaId(mediaId);
         } catch (e) {
@@ -139,22 +144,22 @@ export default function VideoMain({ navigation }) {
         try {
             setIsUploadingVideo(true);
 
-            const res = await fetch(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    user: { id: 1 }, // TODO PUT REAL USER HERE
-                    address,
-                    mediaId: currentMediaId,
-                }),
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records`, {
+                user: { id: user.id },
+                address,
+                longitude,
+                latitude,
+                mediaId: currentMediaId,
+            }, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
-            const data: ApiResponse = await res.json();
 
-            if (data.error) throw Error(data.status.toString());
+            const data: ApiResponse = response.data;
 
-            return navigation.navigate('records');
+            navigation.pop();
+            navigation.navigate('records');
         } catch (e) {
             console.error('Error in onSubmit:', e);
         } finally {

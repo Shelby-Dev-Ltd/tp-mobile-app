@@ -16,7 +16,6 @@ import {
 } from "react-native-google-places-autocomplete";
 import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import serviceJson from "../../../config/serviceAccount";
-import { Constants } from "react-native-ui-lib";
 
 type RecordCreationProps = {
   // mediaId: number,
@@ -56,16 +55,19 @@ function InputAutocomplete({
     <>
       <Text>{label}</Text>
       <GooglePlacesAutocomplete
-        styles={{ textInput: styles.input }}
+        styles={{ textInput: styles.input, }}
         placeholder={placeholder || ""}
         fetchDetails
         onPress={(data, details = null) => {
+          console.log(details);
           onPlaceSelected(details);
         }}
         query={{
-          key: "AIzaSyAXkEQ11G_jDlMd1WHH6B58hu1UD9ohJv0",
+          key: serviceJson.client[0].api_key[0].current_key,
           language: "id",
         }}
+        onNotFound={() => { console.error('NOT FOUND') }}
+        onFail={(e) => { console.error(e) }}
       />
     </>
   );
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
     padding: 8,
     alignSelf: "center",
     borderRadius: 8,
-    marginTop: 60,
+    marginTop: 95,
   },
   searchBoxField: {
     borderColor: "#777",

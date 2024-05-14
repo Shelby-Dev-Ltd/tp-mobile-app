@@ -1,2 +1,2 @@
-import * as serviceJson from '../.serviceAccount.json';
+import * as serviceJson from '../google-services.json';
 export default serviceJson;
