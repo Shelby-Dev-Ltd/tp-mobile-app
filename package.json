@@ -50,6 +50,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
     "react-native-ui-lib": "^7.17.2",
+    "react-native-video-duration": "^0.1.2",
     "swr": "^2.2.5",
     "tamagui": "^1.94.4"
   },

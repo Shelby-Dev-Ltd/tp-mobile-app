@@ -28,13 +28,128 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id, navigation }) =>
         setIsOpen(false);
     };
 
+    const deleteRecord = async (id: number) => {
+        try {
+            await axios.delete(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records/${id}`);
+
+            ToastAndroid.show('Deleted', ToastAndroid.LONG);
+            onClose();
+            navigation.navigate('records', { refresh: true });
+        } catch (e) {
+            console.error(e);
+            ToastAndroid.show('Failed to delete', ToastAndroid.LONG);
+        }
+    };
+
+    const onRefresh = () => {
+        mutate();
+    };
+
     if (isLoading) return <LoaderScreen />
 
     if (data && 'isAnalyzing' in data && data.isAnalyzing) {
         return (
-            <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>{`Data for record ${id} is still being analyzed by our system..`}</Text>
-            </View>
+            <>
+                <View
+                    style={{
+                        flexDirection: 'column',
+                        flex: 1,
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        height: "100%",
+                    }}>
+                    <View />
+                    <Text>{`Data for record ${id} is still being analyzed by our system..`}</Text>
+                    <TouchableOpacity
+                        onPress={() => onOpen()}
+                        style={{
+                            width: '100%',
+                            height: 50,
+                            backgroundColor: '#ff3056',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: 'white',
+                                fontSize: 16,
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            Delete
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                {
+                    isOpen ?
+                        <Popup
+                            isVisible={isOpen}
+                            title="Are you sure you want to delete record?"
+                        >
+                            <View style={{
+                                flexDirection: "row",
+                                justifyContent: "center",
+                                gap: 10,
+                            }}>
+                                <TouchableOpacity
+                                    onPress={() => onClose()}
+                                    style={{
+                                        height: 44,
+                                        borderRadius: 5,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        backgroundColor: '#fff',
+                                        paddingVertical: 10,
+                                        marginVertical: 10,
+                                        width: 140,
+                                        borderColor: '#25c458',
+                                        borderWidth: 1
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            color: '#25c458',
+                                            fontSize: 14,
+                                            fontWeight: '600',
+                                        }}
+                                    >
+                                        No
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => deleteRecord(id)}
+                                    style={{
+                                        height: 44,
+                                        borderRadius: 5,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        backgroundColor: '#fff',
+                                        paddingVertical: 10,
+                                        marginVertical: 10,
+                                        width: 140,
+                                        borderColor: '#d62211',
+                                        borderWidth: 1
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            color: '#d62211',
+                                            fontSize: 14,
+                                            fontWeight: '600',
+                                        }}
+                                    >
+                                        Yes
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </Popup>
+                        : <View />
+                }
+
+            </>
+
+
         )
     }
 
@@ -80,23 +195,6 @@ export const RecordDetail: React.FC<RecordDetailProps> = ({ id, navigation }) =>
             default:
                 return [];
         }
-    };
-
-    const deleteRecord = async (id: number) => {
-        try {
-            await axios.delete(`${process.env.EXPO_PUBLIC_BASE_API_URL}/records/${id}`);
-
-            ToastAndroid.show('Deleted', ToastAndroid.LONG);
-            onClose();
-            navigation.navigate('records', { refresh: true });
-        } catch (e) {
-            console.error(e);
-            ToastAndroid.show('Failed to delete', ToastAndroid.LONG);
-        }
-    };
-
-    const onRefresh = () => {
-        mutate();
     };
 
     return (

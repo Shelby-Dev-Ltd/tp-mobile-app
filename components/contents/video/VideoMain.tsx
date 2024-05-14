@@ -20,6 +20,7 @@ import { NavigationType } from '../../../types/navigation';
 import axios from 'axios';
 import { userInfo } from 'os';
 import { useAuth } from '../../../contexts/AuthContext';
+import { getVideoDuration } from '../../../helpers/duration';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
@@ -93,10 +94,11 @@ export default function VideoMain({ navigation }: { navigation: NavigationType }
     };
 
 
-    const saveVideo = async (publicUrl: string) => {
+    const saveVideo = async (url: string, duration: string) => {
         try {
             const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/upload-video`, {
-                url: publicUrl,
+                url,
+                duration,
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -121,12 +123,13 @@ export default function VideoMain({ navigation }: { navigation: NavigationType }
         try {
             // const uri = Platform.OS === 'android' ? capturedVideoPath : capturedVideoPath.replace('file://', '');
             const res = await UploadToCloudStore(capturedVideoPath);
+            const duration = await getVideoDuration(capturedVideoPath);
 
             const fullPath = res.ref.fullPath;
             const publicUrlLink = 'https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/captures';
             const publicUrl = `${publicUrlLink}%2F${fullPath.slice(fullPath.indexOf('/') + 1)}?alt=media`;
 
-            const { id: mediaId } = await saveVideo(publicUrl);
+            const { id: mediaId } = await saveVideo(publicUrl, duration);
 
             setCurrentMediaId(mediaId);
         } catch (e) {
