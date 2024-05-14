@@ -25,7 +25,9 @@ const parseSecondsToHHMMSS = (totalSeconds: number): string => {
 
 const parseHHMMSSToSeconds = (hhmmss: string): number => {
     const [hours, minutes, seconds] = hhmmss.split(':').map(Number);
-    return (hours * 3600) + (minutes * 60) + seconds;
+    const totalSeconds = (hours * 3600) + (minutes * 60) + Math.round(seconds);
+    console.log(hhmmss);
+    return totalSeconds;
 }
 
 const getVideoDuration = async (url: string) => {
@@ -39,4 +41,4 @@ const getVideoDuration = async (url: string) => {
     }
 };
 
-export { parseDuration, serializeDuration, getVideoDuration, parseHHMMSSToSeconds };
+export { parseDuration, serializeDuration, getVideoDuration, parseHHMMSSToSeconds, parseSecondsToHHMMSS };
