@@ -10,7 +10,8 @@
     "build:dev": "eas build --profile development --platform android",
     "build:preview": "eas build --profile preview --platform android",
     "build:prod": "eas build --profile production --platform android",
-    "eas-build-pre-install": "echo $GOOGLE_SERVICES_BASE64 | base64 --decode > ./google-services.json"
+    "eas-build-pre-install": "echo $GOOGLE_SERVICES_BASE64 | base64 --decode > ./google-services.json",
+    "eas-build-pre-install-ios": "echo $GOOGLE_SERVICES_INFO_BASE64 | base64 --decode > ./GoogleService-Info.plist"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
