@@ -17,7 +17,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.shelbydev.trafficpulse"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
