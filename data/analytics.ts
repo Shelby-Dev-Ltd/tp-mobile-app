@@ -4,10 +4,10 @@ import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 
 const useAnalytics = () => {
+    const { user } = useAuth();
+
     const fetcher = async () => {
         try {
-            const { user } = useAuth();
-
             const response = await axios.post(`${process.env.EXPO_PUBLIC_BASE_API_URL}/analytics/data`, {
                 userId: user.id,
             });

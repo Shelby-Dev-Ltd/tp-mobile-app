@@ -23,6 +23,13 @@ const parseSecondsToHHMMSS = (totalSeconds: number): string => {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
+const parseHHMMSSToSeconds = (hhmmss: string): number => {
+    const [hours, minutes, seconds] = hhmmss.split(':').map(Number);
+    const totalSeconds = (hours * 3600) + (minutes * 60) + Math.round(seconds);
+    console.log(hhmmss);
+    return totalSeconds;
+}
+
 const getVideoDuration = async (url: string) => {
     try {
         const seconds = await gvd(url);
@@ -34,4 +41,4 @@ const getVideoDuration = async (url: string) => {
     }
 };
 
-export { parseDuration, serializeDuration, getVideoDuration };
+export { parseDuration, serializeDuration, getVideoDuration, parseHHMMSSToSeconds, parseSecondsToHHMMSS };

@@ -1,4 +1,5 @@
 import { AnalyticsData } from "./analytics";
+import { MediaData } from "./media";
 
 export type Record = {
     id: number;
@@ -21,6 +22,7 @@ export type RecordWithAnalytics = {
         latitude: string,
         date: string;
         analytics: AnalyticsData,
+        media: MediaData,
     },
     isAnalyzing: boolean,
 

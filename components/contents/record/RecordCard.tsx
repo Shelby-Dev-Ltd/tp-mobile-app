@@ -43,7 +43,7 @@ const RecordCard = ({ id, address, date, onClick, isAnalyzed }: cardProps) => {
                                 justifyContent: 'flex-start',
                                 gap: 10,
                             }}
-                        >
+                            >
                             <Entypo name={"calendar"} size={20} color="grey" />
                             <Text
                                 style={{

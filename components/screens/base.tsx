@@ -19,9 +19,9 @@ export default function BaseScreen() {
         options={{
           title: "Traffic Pulse",
           headerLeft: () =>
-            <View style={{ width: 50, height: 50 }}>
+            <View style={{ width: 50, height: 60, padding: 4 }}>
               <Image
-                style={{ width: 50, height: 50 }}
+                style={{ width: 50, height: 60, transform: [{ scale: 0.7 }] }}
                 source={require("../../assets/server-logo.png")}
               />
             </View>,

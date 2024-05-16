@@ -8,3 +8,6 @@ build:
     - run:
         name: Install prebuild
         command: npm run eas-build-pre-install
+    - run:
+        name: Install prebuild iOS
+        command: npm run eas-build-pre-install-ios

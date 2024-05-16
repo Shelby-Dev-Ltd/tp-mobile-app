@@ -59,7 +59,6 @@ function InputAutocomplete({
         placeholder={placeholder || ""}
         fetchDetails
         onPress={(data, details = null) => {
-          console.log(details);
           onPlaceSelected(details);
         }}
         query={{

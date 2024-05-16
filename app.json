@@ -17,13 +17,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.shelbydev.trafficpulse"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/server-logo.png",
-        "backgroundColor": "#ffffff00"
+        "backgroundColor": "#ffffff"
       },
       "permissions": [
         "android.permission.CAMERA",
