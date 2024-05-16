@@ -7,7 +7,7 @@ import VehicleCount from "../contents/home/VehicleCount";
 import LatestRecords from "../contents/record/LatestRecords";
 import { useAuth } from "../../contexts/AuthContext";
 import useVehicleCount from "../../data/home";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
@@ -18,10 +18,24 @@ const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
 
     const { data, mutate, isLoading } = useVehicleCount();
 
+    const [bannerImages, setBannerImages] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (!bannerImages.length) {
+            const unique = new Date();
+            setBannerImages([
+                `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner1.png?alt=media&date=${unique}`,
+                `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner2.png?alt=media&date=${unique}`,
+                `https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner3.png?alt=media&date=${unique}`
+            ])
+        }
+    }, [bannerImages])
+
     if (isLoading) return null;
 
     const onRefresh = () => {
         mutate();
+        setBannerImages([]);
     };
 
     const content = (
@@ -39,7 +53,7 @@ const HomeScreen = ({ title, navigation, openedPage }: screenProps) => {
                 <Welcome
                     user={user}
                 />
-                <Banner />
+                <Banner bannerImages={bannerImages} />
                 <VehicleCount
                     vehicles={data}
                 />

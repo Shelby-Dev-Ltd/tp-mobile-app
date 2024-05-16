@@ -2,18 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, Text, Image, Dimensions, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { bannerStyles } from '../../styles/banner';
 
-const images = [
-    "https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner1.png?alt=media",
-    "https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner2.png?alt=media",
-    "https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner3.png?alt=media"
-]
-
-const Banner: React.FC = () => {
+const Banner: React.FC<{ bannerImages: string[] }> = ({ bannerImages }) => {
     const [active, setActive] = useState<number>(0);
     const scrollView = useRef<ScrollView>(null);
     const interval = useRef<NodeJS.Timeout>();
-
-
 
     // Function to handle manual slide change
     const change = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -25,7 +17,7 @@ const Banner: React.FC = () => {
 
     // Function to handle auto-scroll
     const autoScroll = () => {
-        const nextSlide = (active + 1) % images.length;
+        const nextSlide = (active + 1) % bannerImages.length;
         setActive(nextSlide);
         const screenWidth = Dimensions.get('window').width;
         scrollView.current?.scrollTo({ x: nextSlide * screenWidth, animated: true });
@@ -47,7 +39,7 @@ const Banner: React.FC = () => {
                 showsHorizontalScrollIndicator={false}
                 style={bannerStyles.scroll}>
                 {
-                    images.map((image, index) => (
+                    bannerImages.map((image, index) => (
                         <Image
                             key={index}
                             source={{ uri: image }}
@@ -58,7 +50,7 @@ const Banner: React.FC = () => {
             </ScrollView>
             <View style={bannerStyles.pagination}>
                 {
-                    images.map((i, k) => (
+                    bannerImages.map((i, k) => (
                         <Text key={k} style={k == active ? bannerStyles.pagingActiveText : bannerStyles.pagingText}>
                             ⬤
                         </Text>
