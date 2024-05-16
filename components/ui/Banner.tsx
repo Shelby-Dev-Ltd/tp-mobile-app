@@ -3,9 +3,9 @@ import { View, ScrollView, Text, Image, Dimensions, NativeSyntheticEvent, Native
 import { bannerStyles } from '../../styles/banner';
 
 const images = [
-    "https://img.jakpost.net/c/2023/02/01/2023_02_01_135079_1675230408._large.jpg",
-    "https://www.insperity.com/wp-content/uploads/decision_making_process_1200x630-1.png",
-    "https://grammarist.com/wp-content/uploads/Grammarist-Article-Graphic-V4-2023-01-10T134943.720-1024x478.png"
+    "https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner1.png?alt=media",
+    "https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner2.png?alt=media",
+    "https://firebasestorage.googleapis.com/v0/b/traffic-pulse-app.appspot.com/o/banner%2Fbanner3.png?alt=media"
 ]
 
 const Banner: React.FC = () => {
